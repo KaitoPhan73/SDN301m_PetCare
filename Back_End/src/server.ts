@@ -2,8 +2,6 @@ import express, { Express, Request, Response } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import router from "./routes/api";
-import { getUsers } from "./controllers/UserController";
-import configViewEngine from "./config/viewEngine";
 
 dotenv.config();
 
@@ -20,13 +18,7 @@ mongoose
     console.error("Failed to connect to MongoDB", err);
   });
 
-//config req.body
-app.use(express.json()); // for json
-app.use(express.urlencoded({ extended: true })); // for form data
-
-//config template engine
-configViewEngine(app);
-
+app.use(express.json());
 app.use("/", router);
 
 //test connection

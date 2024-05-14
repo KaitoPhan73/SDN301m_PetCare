@@ -1,16 +1,15 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { IUser } from "../types/user";
 
-interface IUser extends Document {
-  users: string;
-  password: number;
-  fullname: string;
-  role: string;
-}
-
-const UserSchema: Schema = new Schema({
-  name: { type: String, required: true },
-  age: { type: Number, required: true },
-});
+const UserSchema: Schema = new Schema(
+  {
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    fullname: { type: String, required: true },
+    role: { type: String, required: true },
+  },
+  { versionKey: false }
+);
 
 const User = mongoose.model<IUser>("User", UserSchema, "User");
 
