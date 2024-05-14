@@ -17,6 +17,7 @@ mongoose
   .catch((err) => {
     console.error("Failed to connect to MongoDB", err);
   });
+app.use(express.json());
 app.use("/", router);
 
 app.listen(port, () => {
