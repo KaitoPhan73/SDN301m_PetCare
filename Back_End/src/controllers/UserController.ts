@@ -1,19 +1,27 @@
 import { Request, Response } from "express";
 import User from "../models/User";
+import { paginate } from "../utils/paginationExtension";
 import { IUser } from "../types/user";
+import { TPagination } from "../types/pagination";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {
-    const users = await User.find();
-    console.log("cccccc", users);
-    if (users.length > 0) {
-      res.status(200).json({ users, message: "Users found" });
-    } else {
-      res.status(404).json({ message: "Users not found" });
-    }
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const limit = parseInt(req.query.limit as string, 10) || 10;
+
+    const { page: _, limit: __, ...otherQueries } = req.query;
+
+    const options = {
+      page,
+      limit,
+      ...otherQueries,
+    };
+
+    const result: TPagination<IUser> = await paginate(User, options);
+
+    res.status(200).json(result);
   } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Service error" });
   }
 };
 
@@ -39,7 +47,12 @@ export const insertUser = async (
   try {
     const { username, password, fullname, role } = req.body;
 
-    console.log("test", req.body);
+    const existUser = await User.findOne({ username: username });
+
+    if (existUser) {
+      res.status(400).json({ message: "User already exists" });
+      return;
+    }
     // Tạo một người dùng mới
     const newUser: IUser = new User({
       username,
