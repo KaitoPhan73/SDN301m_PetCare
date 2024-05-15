@@ -16,6 +16,7 @@
     "express": "^4.19.2",
     "moment-timezone": "^0.5.45",
     "mongoose": "^8.3.4",
+    "mongoose-paginate-v2": "^1.8.0",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
