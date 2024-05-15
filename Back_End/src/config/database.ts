@@ -1,15 +1,13 @@
-// require("dotenv").config();
+// // database.js
+// import mongoose from 'mongoose';
 
-// const mysql = require("mysql2/promise");
+// const connectDB = async () => {
+//   try {
+//     await mongoose.connect("mongodb://localhost:27017/PetCare");
+//     console.log("Connected to MongoDB");
+//   } catch (err) {
+//     console.error("Failed to connect to MongoDB", err);
+//   }
+// };
 
-// const connection = mysql.createPool({
-//   host: process.env.DB_HOST,
-//   port: process.env.DB_PORT,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-//   database: process.env.DB_NAME,
-//   waitForConnections: true,
-//   connectionLimit: 10,
-//   queueLimit: 0,
-// });
-// module.exports = connection;
+// export default connectDB;
