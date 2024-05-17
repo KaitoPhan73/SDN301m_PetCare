@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import User from "../models/User";
 import { paginate } from "../utils/paginationExtension";
 import { IUser } from "../types/user";
 import { TPagination } from "../types/pagination";
+import { User } from "../models";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -45,7 +45,7 @@ export const insertUser = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { username, password, fullname, role } = req.body;
+    const { username, password, fullName, role } = req.body;
 
     const existUser = await User.findOne({ username: username });
 
@@ -57,7 +57,7 @@ export const insertUser = async (
     const newUser: IUser = new User({
       username,
       password,
-      fullname,
+      fullName,
       role: role,
     });
 

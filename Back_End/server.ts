@@ -1,7 +1,8 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
-import router from "./routes/api";
-import connectDB from "./config/database";
+import router from "./src/routes/index";
+import connectDB from "./src/config/database";
+// import mongoose from "mongoose";
 
 dotenv.config();
 
