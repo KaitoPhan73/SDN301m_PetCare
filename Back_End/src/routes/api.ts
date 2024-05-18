@@ -3,6 +3,7 @@ import { getUsers, getUser, insertUser, updateUser } from "../controllers/UserCo
 import { deleteFeedBack, getFeedBack, insertFeedBack, updateFeedBack } from "../controllers/feedbackController";
 import { deleteRoom, getRoom, insertRoom, updateRoom } from "../controllers/roomController";
 
+
 const router: Router = express.Router();
 
 //user api
@@ -12,7 +13,7 @@ router.get("/user/:userId", getUser);
 
 router.post("/user", insertUser);
 
-router.put("/user/:userId", updateUser);
+router.patch("/user/:userId", updateUser);
 
 //feedback api
 router.get("/feedbacks", getFeedBack);
