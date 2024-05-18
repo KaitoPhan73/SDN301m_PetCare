@@ -1,6 +1,16 @@
 import express, { Request, Response, Router } from "express";
-import { getUsers, getUser, insertUser, updateUser } from "../controllers/UserController";
-import { deleteFeedBack, getFeedBack, insertFeedBack, updateFeedBack } from "../controllers/feedbackController";
+import {
+  getUsers,
+  getUser,
+  insertUser,
+  updateUser,
+} from "../controllers/UserController";
+import {
+  deleteFeedBack,
+  getFeedBack,
+  insertFeedBack,
+  updateFeedBack,
+} from "../controllers/feedbackController";
 
 const router: Router = express.Router();
 
@@ -11,7 +21,7 @@ router.get("/user/:userId", getUser);
 
 router.post("/user", insertUser);
 
-router.put("/user/:userId", updateUser);
+router.patch("/user/:userId", updateUser);
 
 //feedback api
 router.get("/feedbacks", getFeedBack);

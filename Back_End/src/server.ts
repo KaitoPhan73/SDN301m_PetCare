@@ -9,14 +9,6 @@ const app: Express = express();
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
 
-
-// mongoose.connect("mongodb://localhost:27017/PetCare",{
-//     family: 4,
-// }).then(() => {
-//     console.log("connection successfully ");
-// })
-
-
 app.use(express.json());
 app.use("/", router);
 
