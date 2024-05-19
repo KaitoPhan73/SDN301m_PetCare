@@ -1,5 +1,5 @@
 // src/services/userService.ts
-import User from "../models/user";
+import User from "../models/User";
 import { IUser } from "../types/user";
 import { TPagination } from "../types/pagination";
 import { paginate } from "../utils/paginationExtension";

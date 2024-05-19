@@ -46,7 +46,6 @@ export const insertUser = async (
 ): Promise<void> => {
   try {
     const { username, password, fullname, role } = req.body;
-
     const existUser = await userService.getUserById(username);
 
     if (existUser) {
@@ -60,7 +59,6 @@ export const insertUser = async (
       fullname,
       role,
     } as IUser;
-
     const createdUser = await userService.insertUser(newUser);
 
     res
