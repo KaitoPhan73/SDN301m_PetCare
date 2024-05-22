@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { userService } from "../services/userService";
 import { IUser } from "../types/user";
 import { TPagination } from "../types/pagination";
+import { User } from "../models";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {

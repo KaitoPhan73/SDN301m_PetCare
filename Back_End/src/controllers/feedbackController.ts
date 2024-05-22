@@ -1,7 +1,7 @@
 import { IFeedBack } from "./../types/feedback";
 import { Request, Response } from "express";
-import Feedback from "../models/FeedBack";
-import moment from "moment-timezone";
+import moment from 'moment-timezone';
+import { Feedback } from '../models';
 
 export const getFeedBack = async (
   req: Request,

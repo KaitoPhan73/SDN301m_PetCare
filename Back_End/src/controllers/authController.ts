@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import User from "../models/User";
 import { IUser } from "../types/user";
 import { userService } from "../services/userService";
 import { Token } from "../utils/generateToken";
@@ -11,6 +10,7 @@ import {
   verifyToken,
 } from "../services/authService";
 import jwt from "jsonwebtoken";
+import { User } from "../models";
 
 export const AuthController = {
   login: async (req: Request, res: Response): Promise<void> => {
@@ -161,7 +161,7 @@ export const AuthController = {
           email: email.toLowerCase(),
           role: role,
           username: username,
-          status: "Active",
+          status: true,
           password: hashPassword,
         });
 

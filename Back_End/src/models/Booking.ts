@@ -5,13 +5,11 @@ const BookingSchema: Schema = new Schema(
   {
     createDate: { type: Date, required: true, default: Date.now },
     modifiedDate: { type: Date, required: true, default: Date.now },
-    userId: { type: mongoose.Types.ObjectId, ref: 'User', required: true }, 
-    status: { type: String, default: BookingStatus.Pending }, 
-    // bookingStatus: { type: String, enum: Object.values(BookingStatus) }, 
+    userId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
+    status: { type: String, default: BookingStatus.Pending },
+    // bookingStatus: { type: String, enum: Object.values(BookingStatus) },
   },
   { versionKey: false }
 );
 
-const Booking = mongoose.model<IBooking>("Booking", BookingSchema, "Booking");
-
-export = Booking;
+export default BookingSchema;

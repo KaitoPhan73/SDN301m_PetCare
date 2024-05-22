@@ -15,6 +15,6 @@ const RoomSchema: Schema = new Schema(
   { versionKey: false }
 );
 
-const Room = mongoose.model<IRoom>("Room", RoomSchema, "Room");
 
-export = Room;
+
+export default RoomSchema
