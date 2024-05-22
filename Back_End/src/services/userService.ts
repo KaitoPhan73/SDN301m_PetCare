@@ -24,4 +24,32 @@ const updateUser = async (
   return User.findByIdAndUpdate(userId, update, { new: true });
 };
 
-export const userService = { getUsers, getUserById, insertUser, updateUser };
+export const findUserByUserName = async (
+  userName: string
+): Promise<IUser | null> => {
+  try {
+    const user: IUser | null = await User.findOne({ username: userName });
+    return user;
+  } catch (error) {
+    throw new Error("Error fetching user");
+  }
+};
+
+export const findUserByEmail= async (
+  email: string
+): Promise<IUser | null> => {
+  try {
+    const user: IUser | null = await User.findOne({ email: email });
+    return user;
+  } catch (error) {
+    throw new Error("Error fetching user");
+  }
+};
+export const userService = {
+  getUsers,
+  getUserById,
+  insertUser,
+  updateUser,
+  findUserByUserName,
+  findUserByEmail
+};
