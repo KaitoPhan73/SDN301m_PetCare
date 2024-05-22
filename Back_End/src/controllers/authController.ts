@@ -55,7 +55,7 @@ export const AuthController = {
         accessToken: accessToken,
         user: {
           username: user.username,
-          fullname: user.fullname,
+          email: user.email,
           role: user.role,
         },
       });

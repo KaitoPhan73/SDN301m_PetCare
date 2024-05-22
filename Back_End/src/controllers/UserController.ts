@@ -45,8 +45,8 @@ export const insertUser = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { username, password, fullname, role } = req.body;
-    const existUser = await userService.getUserById(username);
+    const { username, password, email, role } = req.body;
+    const existUser = await userService.findUserByUserName(username);
 
     if (existUser) {
       res.status(400).json({ message: "User already exists" });
@@ -56,7 +56,7 @@ export const insertUser = async (
     const newUser = {
       username,
       password,
-      fullname,
+      email,
       role,
     } as IUser;
     const createdUser = await userService.insertUser(newUser);
