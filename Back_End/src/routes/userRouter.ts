@@ -4,7 +4,7 @@ import {
   getUsers,
   insertUser,
   updateUser,
-} from "../controllers/userController";
+} from "../controllers/UserController";
 
 const router: Router = express.Router();
 router.get("/get-all", getUsers);
@@ -15,4 +15,4 @@ router.post("/", insertUser);
 
 router.put("/:userId", updateUser);
 
-export default router
+export default router;
