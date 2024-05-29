@@ -9,6 +9,7 @@ import { IRoom } from "../types/room";
 import RoomSchema from "./Room";
 import { IBooking } from "../types/booking";
 import BookingSchema from "./Booking";
+import { IBookingDetail } from "../types/bookingDetail";
 
 const User = mongoose.model<IUser>("User", UserSchema, "User");
 const Feedback = mongoose.model<IFeedBack>(
@@ -19,5 +20,10 @@ const Feedback = mongoose.model<IFeedBack>(
 const Service = mongoose.model<IService>("Service", ServiceSchema, "Service");
 const Room = mongoose.model<IRoom>("Room", RoomSchema, "Room");
 const Booking = mongoose.model<IBooking>("Booking", BookingSchema, "Booking");
+const BookingDetail = mongoose.model<IBookingDetail>(
+  "BookingDetail",
+  BookingSchema,
+  "BookingDetail"
+);
 
-export { User, Feedback, Service, Room, Booking };
+export { User, Feedback, Service, Room, Booking, BookingDetail };
