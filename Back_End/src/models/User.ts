@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { IUser } from "../types/user";
 
-const UserSchema: Schema = new Schema({
+const userSchema: Schema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
   fullname: { type: String, required: true },
@@ -9,7 +9,6 @@ const UserSchema: Schema = new Schema({
   role: { type: String, required: true },
 });
 
-// Tạo model của người dùng
-const user = mongoose.model<IUser>("User", UserSchema);
+const user = mongoose.model<IUser>("User", userSchema, "User");
 
 export default user;

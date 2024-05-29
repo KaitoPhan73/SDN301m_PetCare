@@ -47,7 +47,8 @@ export const insertUser = async (
   try {
     const { username, password, fullname, role } = req.body;
 
-    const existUser = await userService.getUserById(username);
+    console.log(req.body);
+    const existUser = await userService.getUserByUserName(username);
 
     if (existUser) {
       res.status(400).json({ message: "User already exists" });

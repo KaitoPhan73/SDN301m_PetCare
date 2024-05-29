@@ -1,8 +1,22 @@
 import express, { Request, Response, Router } from "express";
-import { getUsers, getUser, insertUser, updateUser } from "../controllers/UserController";
-import { deleteFeedBack, getFeedBack, insertFeedBack, updateFeedBack } from "../controllers/feedbackController";
-import { deleteRoom, getRoom, insertRoom, updateRoom } from "../controllers/roomController";
-
+import {
+  getUsers,
+  getUser,
+  insertUser,
+  updateUser,
+} from "../controllers/UserController";
+import {
+  deleteFeedBack,
+  getFeedBack,
+  insertFeedBack,
+  updateFeedBack,
+} from "../controllers/feedbackController";
+import {
+  deleteRoom,
+  getRoom,
+  insertRoom,
+  updateRoom,
+} from "../controllers/roomController";
 
 const router: Router = express.Router();
 
@@ -32,6 +46,5 @@ router.get("/rooms", getRoom);
 router.patch("/room/:roomId", updateRoom);
 
 router.delete("/room/:roomId", deleteRoom);
-
 
 export default router;
