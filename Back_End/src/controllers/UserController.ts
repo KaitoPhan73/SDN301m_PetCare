@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { userService } from "../services/userService";
 import { IUser } from "../types/user";
 import { TPagination } from "../types/pagination";
+import { User } from "../models";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -45,10 +46,8 @@ export const insertUser = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { username, password, fullname, role } = req.body;
-
-    console.log(req.body);
-    const existUser = await userService.getUserByUserName(username);
+    const { username, password, email, role } = req.body;
+    const existUser = await userService.findUserByUserName(username);
 
     if (existUser) {
       res.status(400).json({ message: "User already exists" });
@@ -58,10 +57,9 @@ export const insertUser = async (
     const newUser = {
       username,
       password,
-      fullname,
+      email,
       role,
     } as IUser;
-
     const createdUser = await userService.insertUser(newUser);
 
     res

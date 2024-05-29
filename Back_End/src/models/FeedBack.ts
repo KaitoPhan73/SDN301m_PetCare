@@ -13,6 +13,6 @@ const FeedBackSchema: Schema = new Schema(
   { versionKey: false }
 );
 
-const Feedback = mongoose.model<IFeedBack>("FeedBack", FeedBackSchema, "FeedBack");
 
-export = Feedback;
+
+export default FeedBackSchema
