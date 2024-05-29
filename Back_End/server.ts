@@ -14,6 +14,7 @@ const hostname = process.env.HOST_NAME;
 
 
 app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 app.use("/", router);
 
 connectDB();
