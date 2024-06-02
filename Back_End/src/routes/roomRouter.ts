@@ -1,10 +1,18 @@
 const express = require("express");
 import { Router } from "express";
-import { deleteRoom, getRoom, insertRoom, updateRoom } from "../controllers/roomController";
+import {
+  deleteRoom,
+  getRoom,
+  getRooms,
+  insertRoom,
+  updateRoom,
+} from "../controllers/roomController";
 
 const router: Router = express.Router();
 
-router.get("/", getRoom);
+router.get("/", getRooms);
+
+router.get("/:roomId", getRoom);
 
 router.post("/", insertRoom);
 

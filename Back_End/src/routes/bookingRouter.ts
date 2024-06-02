@@ -1,11 +1,18 @@
 const express = require("express");
 import { Router } from "express";
-import { deleteBooking, getBooking, insertBooking, updateBooking } from "../controllers/bookingController";
+import {
+  deleteBooking,
+  getBooking,
+  getBookings,
+  insertBooking,
+  updateBooking,
+} from "../controllers/bookingController";
 
 const router: Router = express.Router();
 
+router.get("/", getBookings);
 
-router.get("/", getBooking);
+router.get("/:bookingId", getBooking);
 
 router.post("/", insertBooking);
 

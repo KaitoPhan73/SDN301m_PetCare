@@ -1,14 +1,23 @@
 import { Booking } from "../models";
 import { BookingStatus, IBooking } from "../types/booking";
 import moment from "moment-timezone";
+import { TPagination } from "../types/pagination";
+import { paginate } from "../utils/paginationExtension";
 
-export const getAllBookings = async (): Promise<IBooking[]> => {
+export const getBookings = async (
+  options: any
+): Promise<TPagination<IBooking>> => {
   try {
-    const bookings = await Booking.find();
-    return bookings;
+    return paginate(Booking, options);
   } catch (error) {
     throw new Error("Error fetching bookings");
   }
+};
+
+export const getBookingById = async (
+  bookingId: string
+): Promise<IBooking | null> => {
+  return Booking.findById(bookingId);
 };
 
 export const createBooking = async (
