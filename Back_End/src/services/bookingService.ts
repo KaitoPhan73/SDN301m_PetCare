@@ -14,6 +14,12 @@ export const getBookings = async (
   }
 };
 
+export const getBookingById = async (
+  bookingId: string
+): Promise<IBooking | null> => {
+  return Booking.findById(bookingId);
+};
+
 export const createBooking = async (
   bookingData: IBooking
 ): Promise<IBooking> => {
