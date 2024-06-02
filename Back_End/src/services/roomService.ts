@@ -1,14 +1,21 @@
 import { Room } from "../models";
+import { TPagination } from "../types/pagination";
 import { IRoom } from "../types/room";
 import moment from "moment-timezone";
+import { paginate } from "../utils/paginationExtension";
 
-export const getAllRooms = async (): Promise<IRoom[]> => {
+export const getAllRooms = async (
+  options: any
+): Promise<TPagination<IRoom>> => {
   try {
-    const rooms = await Room.find();
-    return rooms;
+    return paginate(Room, options);
   } catch (error) {
     throw new Error("Error fetching rooms");
   }
+};
+
+export const getRoomById = async (roomId: string): Promise<IRoom | null> => {
+  return Room.findById(roomId);
 };
 
 export const createRoom = async (roomData: IRoom): Promise<IRoom> => {

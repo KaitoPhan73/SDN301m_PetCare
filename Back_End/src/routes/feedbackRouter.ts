@@ -10,7 +10,7 @@ const express = require("express");
 
 const router: Router = express.Router();
 
-router.get("/get-all", getFeedBack);
+router.get("/", getFeedBack);
 
 router.post("/", insertFeedBack);
 

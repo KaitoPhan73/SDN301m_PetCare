@@ -1,4 +1,4 @@
-import { getUsers } from "@/app/actions/users";
+import { getUsers } from "@/app/actions/getUsers";
 import CustomTable from "@/components/FeTable/CustomTable";
 import TableRender from "@/components/FeTable/TableRender";
 import { TUserBase } from "@/types/User";

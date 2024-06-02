@@ -12,8 +12,8 @@ export default function HomePage({ data }: Prop) {
     <div className="w-full mx-auto">
       <Banner />
       <div className="max-w-container mx-auto px-40 pt-20">
-        <ListCartItem dataSource={data} />
-        <ItemArrow dataSource={data} />
+        <ListCartItem dataSource={data.rooms} />
+        <ItemArrow dataSource={data.rooms} />
       </div>
     </div>
   );

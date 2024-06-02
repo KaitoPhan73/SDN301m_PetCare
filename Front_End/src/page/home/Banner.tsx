@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Image from "@/components/designLayouts/Image";
 import Link from "next/link";
 import Slider from "react-slick";
+
 const CustomSlide = ({
   Subtext,
   imgSrc,
@@ -23,12 +24,14 @@ const CustomSlide = ({
       display: "flex",
       justifyContent: "center",
       alignItems: "center", // Center vertically
+      padding: "50px 0",
     }}
   >
     <div
       style={{
-        maxWidth: "450px", // Adjust the maxWidth as needed
-        marginRight: "100px", // Add margin between text/button and image
+        maxWidth: "700px", // Adjust the maxWidth as needed
+        marginRight: "50px", // Add margin between text/button and image
+        paddingLeft: "50px",
       }}
     >
       <h1
@@ -51,21 +54,19 @@ const CustomSlide = ({
         {Subtext}
       </p>
 
-      <Link href="/about">
+      <Link href={buttonLink}>
         <button className="bg-blue-500 text-white text-lg font-bodyFont w-[185px] h-[50px] hover:bg-black duration-300 font-bold">
           {buttonText}
         </button>
       </Link>
     </div>
-    <div style={{ marginLeft: "100px" }}>
+    <div style={{ marginLeft: "50px" }}>
       <Image imgSrc={imgSrc} />
     </div>
   </div>
 );
 
 const Banner = () => {
-  const baseImgUrl =
-    "https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg";
   const [dotActive, setDocActive] = useState(0);
   const settings = {
     dots: false,
@@ -158,32 +159,35 @@ const Banner = () => {
     ],
   };
 
+  const baseImgUrl =
+    "https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg";
   const slides = [
     {
       imgSrc: baseImgUrl,
-      text: "Enhance Your Printing Experience",
+      text: "Your PetCare Center",
       Subtext:
-        "Explore our premium printers and consumables for exceptional results",
+        "This is a website concept for a Pet care institute. Hope you guys will like it. Let me know your thought on that. Your feedback and appreciation is always welcome 🙂",
       buttonLink: "/offer",
       buttonText: "Shop Now",
     },
     {
       imgSrc: baseImgUrl,
-      text: "Quality Printing Solutions",
+      text: "Exceptional Pet Care Services",
       Subtext:
-        "Discover our wide range of printers and consumables designed for professional printing needs.",
+        "Provide your furry friends with the love and attention they deserve. Our dedicated team offers comprehensive pet care services to keep your pets happy, healthy, and thriving.",
       buttonLink: "/shop",
       buttonText: "Shop Now",
     },
     {
       imgSrc: baseImgUrl,
-      text: "Efficiency Redefined",
+      text: "Tailored Pet Services",
       Subtext:
-        "Maximize productivity with our advanced printers and high-quality consumables. ",
+        "Discover a range of personalized services designed to meet the unique needs of your beloved pets. From grooming to training, we provide top-quality care for every aspect of your pet's well-being.",
       buttonLink: "/contact",
       buttonText: "Shop Now",
     },
   ];
+
   return (
     <div className="w-full bg-black">
       <Slider {...settings}>

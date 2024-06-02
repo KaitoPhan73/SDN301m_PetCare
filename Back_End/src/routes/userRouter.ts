@@ -7,7 +7,7 @@ import {
 } from "../controllers/UserController";
 
 const router: Router = express.Router();
-router.get("/get-all", getUsers);
+router.get("/ ", getUsers);
 
 router.get("/:userId", getUser);
 

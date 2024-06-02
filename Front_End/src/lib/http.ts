@@ -197,8 +197,6 @@ const httpServer = createHttpClient("");
 const httpMock = createHttpClient(
   "https://660bbdb3ccda4cbc75dd950a.mockapi.io/api/isc"
 );
-const httpInvoice = createHttpClient(
-  "https://reso-invoice.onrender.com/api/v1"
-);
+const httpInvoice = createHttpClient("http://localhost:8080");
 
 export { httpServer, httpMock, httpInvoice };

@@ -1,5 +1,5 @@
 // src/services/userService.ts
-import {User} from "../models";
+import { User } from "../models";
 import { IUser } from "../types/user";
 import { TPagination } from "../types/pagination";
 import { paginate } from "../utils/paginationExtension";
@@ -35,9 +35,7 @@ export const findUserByUserName = async (
   }
 };
 
-export const findUserByEmail= async (
-  email: string
-): Promise<IUser | null> => {
+export const findUserByEmail = async (email: string): Promise<IUser | null> => {
   try {
     const user: IUser | null = await User.findOne({ email: email });
     return user;
@@ -51,5 +49,5 @@ export const userService = {
   insertUser,
   updateUser,
   findUserByUserName,
-  findUserByEmail
+  findUserByEmail,
 };
