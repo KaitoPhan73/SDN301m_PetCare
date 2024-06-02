@@ -35,6 +35,24 @@ export const getBookings = async (
   }
 };
 
+export const getBooking = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const bookingId = req.params.bookingId;
+    const booking = await bookingService.getBookingById(bookingId);
+    if (booking !== null) {
+      res.status(200).json({ booking, message: "booking found" });
+    } else {
+      res.status(404).json({ message: "booking not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching booking:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 export const insertBooking = async (
   req: Request,
   res: Response

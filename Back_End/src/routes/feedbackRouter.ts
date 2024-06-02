@@ -1,21 +1,24 @@
 import { Router } from "express";
 import {
-  deleteFeedBack,
-  getFeedBack,
-  insertFeedBack,
-  updateFeedBack,
+  deleteFeedback,
+  getFeedback,
+  getFeedbacks,
+  insertFeedback,
+  updateFeedback,
 } from "../controllers/feedbackController";
 
 const express = require("express");
 
 const router: Router = express.Router();
 
-router.get("/", getFeedBack);
+router.get("/", getFeedbacks);
 
-router.post("/", insertFeedBack);
+router.get("/:feedbackId", getFeedback);
 
-router.put("/:feedbackId", updateFeedBack);
+router.post("/", insertFeedback);
 
-router.delete("/:feedbackId", deleteFeedBack);
+router.put("/:feedbackId", updateFeedback);
+
+router.delete("/:feedbackId", deleteFeedback);
 
 export default router;
