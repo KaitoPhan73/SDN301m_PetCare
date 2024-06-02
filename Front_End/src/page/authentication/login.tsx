@@ -20,12 +20,13 @@ import {
   Lock,
 } from "@mui/icons-material";
 import { useSnackbar } from "notistack";
+import InputField from "@/components/form/InputField";
+import authApi from "@/actions/auth";
+import { LoginBody, TLoginBody } from "@/schemaValidations/auth.schema";
 import { useDispatch } from "react-redux";
-import { LoginBody, TLoginBody } from "../../schemaValidations/auth.schema";
-import authApi from "../../actions/auth";
-import { setUser } from "../../redux/User/userSlice";
-import { InputField } from "@/components/form";
+import { setUser } from "@/redux/User/userSlice";
 import PATHS from "@/route/paths";
+
 type Props = {
   postData: any;
 };

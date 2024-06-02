@@ -16,6 +16,7 @@ const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
 
 app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 app.use("/", router);
 
 connectDB();

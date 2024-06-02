@@ -72,6 +72,40 @@ export const AuthController = {
         message: "Failed to do something exceptional with google",
       });
     }
+    const user: IUser | null = await userService.findUserByEmail(email);
+
+    if (!user) {
+      res.status(500).json({
+        message: "This account does not exist.",
+      });
+      return;
+    }
+    const accessToken = await Token.generateAccessToken({
+      username: user?.username,
+      role: user?.role,
+    });
+
+    const refreshToken = await Token.generateRefreshToken({
+      username: user?.username,
+      role: user?.role,
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      sameSite: "none",
+      secure: true,
+    });
+
+    res.status(200).json({
+      message: "Login successfully!",
+      accessToken: accessToken,
+      user: {
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
+    });
   },
   refreshToken: async (
     req: Request,

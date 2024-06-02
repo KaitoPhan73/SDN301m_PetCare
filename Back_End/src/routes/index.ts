@@ -5,6 +5,7 @@ import serviceRouter from "./serviceRouter";
 import authRouter from "./authRouter";
 import bookingRouter from "./bookingRouter";
 import roomRouter from "./roomRouter";
+import imageRouter from "./imageRouter";
 import paymentRouter from "./paymentRouter";
 
 const router: Router = express.Router();
@@ -14,6 +15,7 @@ router.use("/service", serviceRouter);
 router.use("/auth", authRouter);
 router.use("/room", roomRouter);
 router.use("/booking", bookingRouter);
+router.use("/image", imageRouter);
 router.use("/payment", paymentRouter);
 
 export default router;

@@ -12,16 +12,20 @@ const getUserById = async (userId: string): Promise<IUser | null> => {
   return User.findById(userId);
 };
 
-const insertUser = async (userData: IUser): Promise<IUser> => {
-  const newUser = new User(userData);
+const getUserByUserName = async (username: string): Promise<IUser | null> => {
+  return User.findOne({ username: username });
+};
+
+const insertUser = async (data: IUser): Promise<IUser> => {
+  const newUser = new User(data);
   return newUser.save();
 };
 
 const updateUser = async (
   userId: string,
-  update: Partial<IUser>
+  data: Partial<IUser>
 ): Promise<IUser | null> => {
-  return User.findByIdAndUpdate(userId, update, { new: true });
+  return User.findByIdAndUpdate(userId, { $set: data }, { new: true });
 };
 
 export const findUserByUserName = async (

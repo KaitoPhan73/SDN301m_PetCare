@@ -32,6 +32,7 @@ export type TUser = {
   status: string;
   brandName: string;
 };
+<<<<<<< HEAD
 
 export type User = {
   createdAt: string;
@@ -41,3 +42,5 @@ export type User = {
   id: string;
   badge: boolean;
 };
+=======
+>>>>>>> 50d63dc22eb4b76d916a4aa5d919802afbfe16df

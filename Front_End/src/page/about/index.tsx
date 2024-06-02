@@ -1,35 +1,62 @@
+// "use client";
+// import React from "react";
+// import { useSelector, useDispatch } from "react-redux";
+// import { RootState } from "@/redux/store";
+// import {
+//   increment,
+//   decrement,
+//   incrementByAmount,
+// } from "@/redux/Counter/counterSilce";
+// export default function AboutPage() {
+//   const count = useSelector((state: RootState) => state.counter.value);
+//   const dispatch = useDispatch();
+//   return (
+//     <div>
+//       <div>
+//         <button
+//           aria-label="Increment value"
+//           onClick={() => dispatch(increment())}
+//         >
+//           Increment
+//         </button>
+//         <span>{count}</span>
+//         <button
+//           aria-label="Decrement value"
+//           onClick={() => dispatch(decrement())}
+//         >
+//           Decrement
+//         </button>
+//       </div>
+//     </div>
+//   );
+// }
+
 "use client";
-import React, { useEffect, useState } from "react";
-import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
-import Link from "next/link";
 
-const About = () => {
-  // const location = useLocation();
-  // const [prevLocation, setPrevLocation] = useState("");
-  // useEffect(() => {
-  //   setPrevLocation(location.state.data);
-  // }, [location]);
+import CustomTable from "@/components/FeTable/CustomTable";
+import { TBrandBase } from "@/types/Brand";
+import { TableColumnsType } from "antd";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/redux/store";
+import {
+  increment,
+  decrement,
+  incrementByAmount,
+} from "@/redux/Counter/counterSilce";
+export default function AboutPage() {
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
   return (
-    <div className="max-w-container mx-auto px-4">
-      <div className="pb-10">
-        <h1 className="max-w-[600px] text-base text-lightText mb-2">
-          <span className="text-primeColor font-semibold text-lg">
-            Our mission
-          </span>{" "}
-          is to minimize our environmental footprint while providing
-          high-quality products and services to our customers. We strive to
-          incorporate sustainability principles into every aspect of our
-          operations, from sourcing and manufacturing to packaging and
-          distribution.
-        </h1>
-        <Link href="/shop">
-          <button className="w-52 h-10 bg-black text-white hover:bg-black duration-300">
-            Continue Shopping
-          </button>
-        </Link>
-      </div>
-    </div>
+    <></>
+    // <CustomTable
+    //   onDelete
+    //   onEdit
+    //   columns={columns}
+    //   props={props}
+    //   rowKey="id"
+    //   // dataSource={arr}
+    //   getData={getBrands}
+    // />
   );
-};
-
-export default About;
+}

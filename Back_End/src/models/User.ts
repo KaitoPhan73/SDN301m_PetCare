@@ -9,4 +9,4 @@ const UserSchema: Schema = new Schema({
   role: { type: String, required: true },
 });
 
-export default UserSchema
+export default UserSchema;

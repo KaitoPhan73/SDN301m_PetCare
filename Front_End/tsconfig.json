@@ -24,6 +24,7 @@
       "@/redux/*": ["./src/redux/*"],
     }
   },
+
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/redux/Cart/cartSlice.tsx", "src/page/productDetail/ProductsOnSale.js"],
   "exclude": ["node_modules"]
 }
