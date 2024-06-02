@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterSilce from "./Counter/counterSilce";
 import userSlice from "./User/userSlice";
-
 const store = configureStore({
   reducer: {
     counter: counterSilce,
