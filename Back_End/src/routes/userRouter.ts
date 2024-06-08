@@ -4,10 +4,10 @@ import {
   getUsers,
   insertUser,
   updateUser,
-} from "../controllers/userController";
+} from "../controllers/UserController";
 
 const router: Router = express.Router();
-router.get("/ ", getUsers);
+router.get("/", getUsers);
 
 router.get("/:userId", getUser);
 

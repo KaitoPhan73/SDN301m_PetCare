@@ -7,29 +7,14 @@ const ROOT_USER = "/users";
 
 const PATH_DASHBOARD = {
   root: ROOT_DASHBOARD,
-  brand: path(ROOT_DASHBOARD, "/brand"),
-  user: path(ROOT_DASHBOARD, "/users"),
-  invoice: path(ROOT_DASHBOARD, "/invoice"),
-  invoicetemplate: path(ROOT_DASHBOARD, "/invoicetemplate"),
+  admin: path(ROOT_DASHBOARD, "/admin"),
+  manager: path(ROOT_DASHBOARD, "/manager"),
 };
 
-const PATH_USER = {
-  root: ROOT_USER,
-  contact: path(ROOT_DASHBOARD, "/contact"),
-  about: path(ROOT_DASHBOARD, "/about"),
-};
 
-const PATH_COMPANY = {
-  root: ROOT_COMPANY,
-  organizations: path(ROOT_COMPANY, "/organizations"),
-  partners: path(ROOT_COMPANY, "/partners"),
-  stores: path(ROOT_COMPANY, "/stores"),
-};
 
 const PATHS = {
   PATH_DASHBOARD,
-  PATH_USER,
-  PATH_COMPANY,
 };
 
 export default PATHS;

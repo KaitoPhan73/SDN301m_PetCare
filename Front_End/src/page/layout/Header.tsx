@@ -6,6 +6,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 const { Header } = Layout;
 type Props = {
@@ -31,6 +32,11 @@ const HeaderCustom = ({ style, setCollapsed, collapsed }: Props) => {
         </Col>
         <Col>
           <Avatar size={36} icon={<UserOutlined />} />
+        </Col>
+        <Col>
+          <Button type="text" icon={<LogoutOutlined />}>
+            Logout
+          </Button>
         </Col>
       </Row>
     </Header>

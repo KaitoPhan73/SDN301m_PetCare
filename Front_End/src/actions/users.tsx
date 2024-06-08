@@ -1,17 +1,16 @@
 import { httpPetCare } from "@/lib/http";
+import { TUser } from "@/schemaValidations/user.schema";
 import { TTableResponse } from "@/types/Table";
-import { TUserBase } from "@/types/User";
-
-const getUsers = async (sessionToken: string, params?: any) => {
-  "use server";
-  return httpPetCare.get<TTableResponse<TUserBase>>("brands", {
-    params,
-    headers: { Authorization: `Bearer ${sessionToken}` },
-  });
-};
 
 const userApi = {
-  getUsers,
+  getUsers: (params?: any) => {
+    return httpPetCare.get<TTableResponse<TUser>>("/user", {
+      params,
+    });
+  },
+  getUserById: (id: string) => {
+    return httpPetCare.get<TUser>(`/user`);
+  },
 };
 
 export default userApi;

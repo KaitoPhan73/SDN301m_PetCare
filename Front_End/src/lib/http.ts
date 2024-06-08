@@ -97,6 +97,7 @@ const createHttpClient = (defaultBaseUrl: string) => {
     console.log("fullUrl", fullUrl);
     const res = await fetch(fullUrl, {
       ...options,
+      cache: "no-store",
       headers: {
         ...baseHeaders,
         ...options?.headers,
