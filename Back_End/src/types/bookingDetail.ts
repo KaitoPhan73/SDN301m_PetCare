@@ -10,7 +10,7 @@ export interface IBookingDetail extends Document {
   checkInData: Date;
   checkOutData: Date;
   price: Number;
-  serviceId: ObjectId;
+  packageId: ObjectId;
   bookingId: ObjectId;
   RoomId: ObjectId;
   isCompleted: BookingDetailStatus;

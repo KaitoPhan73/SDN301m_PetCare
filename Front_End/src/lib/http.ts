@@ -196,8 +196,6 @@ const httpServer = createHttpClient("");
 const httpMock = createHttpClient(
   "https://660bbdb3ccda4cbc75dd950a.mockapi.io/api"
 );
-const httpInvoice = createHttpClient(
-  "https://reso-invoice.onrender.com/api/v1"
-);
+const httpPetCare = createHttpClient("http://localhost:8080/petcare/api");
 
-export { httpServer, httpMock, httpInvoice };
+export { httpServer, httpMock, httpPetCare };
