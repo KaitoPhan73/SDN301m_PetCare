@@ -19,7 +19,6 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
     };
 
     const result: TPagination<IUser> = await userService.getUsers(options);
-
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: "Service error" });

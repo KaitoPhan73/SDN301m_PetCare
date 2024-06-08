@@ -7,7 +7,7 @@ type Props = {
 export default function FooterCustom({ style }: Props) {
   return (
     <Footer style={style}>
-      Ant Design ©{new Date().getFullYear()} Created by Ant UED
+      {/* Ant Design ©{new Date().getFullYear()} Created by Ant UED */}
     </Footer>
   );
 }
