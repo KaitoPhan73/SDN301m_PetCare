@@ -8,7 +8,7 @@ import Image from "@/components/designLayouts/Image";
 import Badge from "./Badge";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { addToCart } from "@/redux/Cart/cartSlice";
+// import { addToCart } from "@/redux/Cart/cartSlice";
 import { TProduct } from "@/schemaValidations/product.schema";
 // import { addToCart } from "../../../redux/orebiSlice";
 // import { toast } from "react-toastify";
@@ -43,17 +43,16 @@ const Item = ({ props }: Props) => {
               </span>
             </li>
             <li
-              onClick={
-                () =>
-                  dispatch(
-                    addToCart({
-                      id: props.id,
-                      name: props.name,
-                      price: props.price,
-                      image: props.image,
-                    })
-                  )
-                // console.log("Add to cart")
+              onClick={() =>
+                // dispatch(
+                //   addToCart({
+                //     id: props.id,
+                //     name: props.name,
+                //     price: props.price,
+                //     image: props.image,
+                //   })
+                // )
+                console.log("Add to cart")
               }
               className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full"
             >
