@@ -5,17 +5,22 @@ import BookingDetail from "./Detail";
 
 interface BookingDetailsProps {
   fields: any[]; // Assuming this matches your fields structure
-  handleRemove: any;
+  handleRemoveById: any;
 }
 
 const BookingDetails: React.FC<BookingDetailsProps> = ({
-  handleRemove,
+  handleRemoveById,
   fields,
 }) => {
   return (
     <Grid container spacing={2}>
       {fields.map((item, index) => (
-        <BookingDetail item={item} index={index} handleRemove={handleRemove} />
+        <BookingDetail
+          key={item.id}
+          item={item}
+          index={index}
+          handleRemoveById={handleRemoveById}
+        />
       ))}
     </Grid>
   );

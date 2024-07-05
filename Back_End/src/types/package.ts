@@ -7,6 +7,7 @@ export interface IPackage extends Document {
   images: string;
   discount: number;
   services: ObjectId[];
+  totalTime: number;
   createdAt: Date;
   updatedAt: Date;
 }

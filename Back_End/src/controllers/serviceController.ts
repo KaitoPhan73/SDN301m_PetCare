@@ -54,13 +54,14 @@ export module ServiceController {
     res: Response
   ): Promise<void> => {
     try {
-      const { description, name, price, images } = req.body;
+      const { description, name, price, image, time } = req.body;
 
       const data: IService = new Service({
         description,
         name,
         price,
-        images,
+        image,
+        time,
       });
 
       const newService = await insertOne(data);

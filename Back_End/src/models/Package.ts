@@ -11,6 +11,7 @@ const PackageSchema: Schema = new Schema(
     services: [
       { type: mongoose.Types.ObjectId, ref: "Service", required: true },
     ],
+    totalTime: { type: Number, require: true },
   },
   { timestamps: true }
 );

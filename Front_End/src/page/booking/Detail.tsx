@@ -8,10 +8,14 @@ import CloseIcon from "@mui/icons-material/Close";
 type Props = {
   item: any;
   index: number;
-  handleRemove: (index: number) => void; // Chỉnh sửa props để nhận index
+  handleRemoveById: (id: string) => void; // Chỉnh sửa props để nhận index
 };
 
-export default function BookingDetail({ item, index, handleRemove }: Props) {
+export default function BookingDetail({
+  item,
+  index,
+  handleRemoveById,
+}: Props) {
   const [roomName, setRoomName] = useState<string>();
   const [packageName, setPackageName] = useState<string>();
 
@@ -40,7 +44,7 @@ export default function BookingDetail({ item, index, handleRemove }: Props) {
             </Grid>
             <Grid item>
               <IconButton
-                onClick={() => handleRemove(index)}
+                onClick={() => handleRemoveById(item.id)}
                 style={{ marginLeft: "auto" }}
               >
                 <CloseIcon />

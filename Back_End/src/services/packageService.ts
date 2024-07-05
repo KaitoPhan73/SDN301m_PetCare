@@ -25,6 +25,19 @@ export const insertOne = async (data: IPackage): Promise<IPackage> => {
       )
     );
 
+    const serviceTimes = await Promise.all(
+      data.services.map((serviceId) =>
+        Service.findById(serviceId).select("time").exec()
+      )
+    );
+
+    const totalTime = serviceTimes.reduce((total, service) => {
+      if (service) {
+        return total + service.time;
+      }
+      return total;
+    }, 0);
+
     const totalPrice = servicePrices.reduce((total, service) => {
       if (service) {
         return total + service.price;
@@ -38,6 +51,7 @@ export const insertOne = async (data: IPackage): Promise<IPackage> => {
     const newPackage = new Package({
       ...data,
       price: discountedPrice,
+      totalTime: totalTime,
     });
     const savedPackage = await newPackage.save();
     return savedPackage;
