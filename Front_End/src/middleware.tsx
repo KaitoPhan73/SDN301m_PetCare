@@ -14,7 +14,7 @@ export function middleware(request: NextRequest) {
   }
   // Đăng nhập rồi thì không cho vào login/register nữa
   if (authPaths.some((path) => pathname.startsWith(path)) && accessToken) {
-    return NextResponse.redirect(new URL("/dashboard/brand", request.url));
+    return NextResponse.redirect(new URL("/dashboard/admin", request.url));
   }
   return NextResponse.next();
 }
