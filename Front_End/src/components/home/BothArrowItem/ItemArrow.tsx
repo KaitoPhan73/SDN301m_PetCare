@@ -12,7 +12,6 @@ type Props = {
 };
 
 const ItemArrow = ({ dataSource }: Props) => {
-  console.log("dataSource", dataSource);
   const settings = {
     infinite: true,
     speed: 500,
@@ -49,7 +48,7 @@ const ItemArrow = ({ dataSource }: Props) => {
   };
   return (
     <div className="w-full pb-16">
-      <Heading heading="New Arrivals" />
+      <Heading heading="ROOMS" />
       <Slider {...settings}>
         {dataSource.map((data: TProduct) => (
           <div className="px-2">

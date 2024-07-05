@@ -1,125 +1,87 @@
 "use client";
-import React from "react";
-import { useDispatch } from "react-redux";
-import { User } from "@/types/User";
-import { addToCart } from "@/redux/Cart/cartSlice";
+import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
+import { FaDownload } from "react-icons/fa";
+import ProductInfoPage from "./ProductInfo";
+import ProductsOnSale from "./ProductsOnSale";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { TBookingRequest } from "@/schemaValidations/booking.schema";
+import { useSnackbar } from "notistack";
+import { use, useState } from "react";
+import { useRouter } from "next/navigation";
+import ModalAdd from "./detail/ModalAdd";
+
 type Props = {
   data: any;
 };
+
 const ProductDetailPage = ({ data }: Props) => {
-  const highlightStyle = {
-    color: "#d0121a", // Change this to the desired color
-    fontWeight: "bold", // Change this to the desired font weight
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
+  const handleAdd = () => {
+    setIsModalOpen(true);
   };
 
-  const renderDescription = () => {
-    if (!data.name) {
-      return null; // or handle accordingly if product.des is not defined
+  const handleModalCancel = () => {
+    setIsModalOpen(false);
+  };
+  const methods = useForm<TBookingRequest>({
+    defaultValues: {
+      userId: "sdsds",
+      bookingDetails: [],
+    },
+  });
+  const { handleSubmit } = methods;
+
+  const onSubmit = async (formData: TBookingRequest) => {
+    console.log(formData);
+    const body = { ...formData };
+    const watchId = data._id;
+    const res = await CommentApi.createComment(watchId, body);
+    console.log(res);
+    if (res.status === 201) {
+      enqueueSnackbar("Create comment successfully", { variant: "success" });
+      router.refresh();
+    } else {
+      enqueueSnackbar("Fail to create Comment"), { variant: "error" };
     }
-
-    const description = data.name
-      .split(/:(.*?)-/)
-      .map((part: any, index: any) => {
-        return (
-          <span key={index} style={index % 2 === 1 ? highlightStyle : {}}>
-            {part}
-          </span>
-        );
-      });
-
-    return <>{description}</>;
+    setIsModalOpen(false);
   };
-  const dispatch = useDispatch();
+
   return (
-    <div className="flex flex-col gap-5">
-      <h2 className="text-4xl font-semibold">{data.name}</h2>
-      <p className="text-2xl font-semibold">
-        {data.name} $
-        <span className="text-xl font-semibold line-through ml-2">540</span>
-        <span className="text-xs ml-2 inline-flex items-center px-3 py-1 rounded-full bg-green-600 text-white">
-          Save 100
-        </span>
-      </p>
-      <hr />
-      <p className="text-base text-gray-600">{renderDescription()}</p>
+    <FormProvider {...methods}>
+      <div className="w-full mx-auto border-b-[1px] border-b-gray-300">
+        <div className="max-w-container mx-auto px-20 pt-4">
+          <div className="xl:-mt-10 -mt-7">
+            <Breadcrumbs title="helllo" />
+          </div>
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-4 h-full -mt-5 xl:-mt-8 pb-10 bg-gray-100 p-4">
+            <div className="h-full xl:col-span-2">
+              <ProductsOnSale dataSource={data.services} />
+            </div>
 
-      <div className="flex items-center">
-        <p className="text-sm mr-2"> leave a review </p>
+            <div className="h-full xl:col-span-5">
+              <img
+                className="w-full h-full"
+                src={data.image}
+                alt={data.image}
+              />
+            </div>
 
-        <svg
-          className="w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-        </svg>
-        <svg
-          className="w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-        </svg>
-        <svg
-          className="w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-        </svg>
-        <svg
-          className="w-4 h-4 text-yellow-300 ms-1"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-        </svg>
-        <svg
-          className="w-4 h-4 ms-1 text-gray-300 dark:text-gray-500"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 22 20"
-        >
-          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-        </svg>
+            <div className="h-full w-full md:col-span-2 xl:col-span-5 xl:px-4 flex flex-col gap-6 justify-center">
+              <ProductInfoPage data={data} handleAdd={handleAdd} />
+            </div>
+
+            <ModalAdd
+              isModalOpen={isModalOpen}
+              handleModalCancel={handleModalCancel}
+              handleModalOk={() => handleSubmit(onSubmit)()}
+              packageId={data._id}
+            />
+          </div>
+        </div>
       </div>
-
-      <p className="text-base text-green-600 font-medium">En Stock</p>
-      <p className="font-medium text-lg">
-        <span className="font-normal">Colors:</span> {data.name}
-      </p>
-      <button
-        onClick={() =>
-          dispatch(
-            addToCart({
-              // _id: productInfo.id,
-              // name: productInfo.productName,
-              // quantity: 1,
-              // image: productInfo.img,
-              // badge: productInfo.badge,
-              // price: productInfo.price,
-              // colors: productInfo.color,
-            })
-          )
-        }
-        className="w-full py-4 bg-blue-500 hover:bg-blue-600 duration-300 text-white text-lg font-titleFont"
-      >
-        Add to Cart
-      </button>
-      <p className="font-normal text-sm">
-        <span className="text-base font-medium"> Categories:</span> Spring
-        collection, Streetwear, Women Tags: featured SKU: N/A
-      </p>
-    </div>
+    </FormProvider>
   );
 };
 

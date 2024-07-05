@@ -1,20 +1,18 @@
+"use client";
 import React from "react";
 import { Container } from "@mui/material";
 import Banner from "./Banner";
 import ItemArrow from "@/components/home/BothArrowItem/ItemArrow";
-import ListCartItem from "@/components/home/ListCardItem/ListCartItem";
+import ListCardItem from "@/components/home/ListCardItem/ListCardItem";
 type Prop = {
-  data: any;
+  children: React.ReactNode;
 };
 
-export default function HomePage({ data }: Prop) {
+export default function HomePage({ children }: Prop) {
   return (
     <div className="w-full mx-auto">
       <Banner />
-      <div className="max-w-container mx-auto px-40 pt-20">
-        <ListCartItem dataSource={data.rooms} />
-        <ItemArrow dataSource={data.rooms} />
-      </div>
+      <div className="max-w-container mx-auto px-40 pt-20">{children}</div>
     </div>
   );
 }

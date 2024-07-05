@@ -5,5 +5,8 @@ export interface IPackage extends Document {
   name: string;
   price: number;
   images: string;
+  discount: number;
   services: ObjectId[];
+  createdAt: Date;
+  updatedAt: Date;
 }

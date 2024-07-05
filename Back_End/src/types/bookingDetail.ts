@@ -15,4 +15,6 @@ export interface IBookingDetail extends Document {
   RoomId: ObjectId;
   isCompleted: BookingDetailStatus;
   bookingDetailStatus: String;
+  createdAt: Date;
+  updatedAt: Date;
 }

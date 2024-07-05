@@ -19,7 +19,7 @@ const BookingSchema: Schema = new Schema(
     },
     isCompleted: { type: String, default: BookingDetailStatus.Pending },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 export default BookingSchema;

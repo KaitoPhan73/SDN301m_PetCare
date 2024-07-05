@@ -42,14 +42,7 @@ export module ServiceController {
       const id = req.params.id.trim();
       const service = await getOne(id);
 
-      if (service !== null) {
-        res.status(200).json({
-          message: "Fetch service successfully",
-          data: service,
-        });
-      } else {
-        res.status(404).json({ message: "Service not found" });
-      }
+      res.status(200).json(service);
     } catch (error) {
       console.error("Error fetching a service", error);
       res.status(500).json({ message: "Server Error" });
@@ -62,7 +55,6 @@ export module ServiceController {
   ): Promise<void> => {
     try {
       const { description, name, price, images } = req.body;
-
 
       const data: IService = new Service({
         description,

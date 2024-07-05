@@ -17,7 +17,13 @@ export const getBookings = async (
 export const getBookingById = async (
   bookingId: string
 ): Promise<IBooking | null> => {
-  return Booking.findById(bookingId);
+  try {
+    const booking = await Booking.findById(bookingId).exec();
+    return booking;
+  } catch (error) {
+    console.error("Error fetching booking:", error);
+    return null;
+  }
 };
 
 export const createBooking = async (
@@ -27,27 +33,14 @@ export const createBooking = async (
     const nowInVietnam = moment.tz("Asia/Ho_Chi_Minh");
     const newBooking: IBooking = new Booking({
       ...bookingData,
-      createDate: nowInVietnam.toDate(),
-      modifiedDate: nowInVietnam.toDate(),
       status: BookingStatus.Pending,
     });
-    console.log("newBooking", newBooking);
     await newBooking.save();
     return newBooking;
   } catch (error) {
     throw new Error(`Error creating Booking: ${error}`);
   }
 };
-
-// export const createBooking = async (bookingData: IBooking): Promise<IBooking> => {
-//     try {
-//         const newBooking: IBooking = new Booking(bookingData);
-//         await newBooking.save();
-//         return newBooking;
-//     } catch (error) {
-//         throw new Error(`Error creating Booking: `);
-//     }
-// };
 
 export const deleteBookingById = async (bookingId: string): Promise<void> => {
   try {

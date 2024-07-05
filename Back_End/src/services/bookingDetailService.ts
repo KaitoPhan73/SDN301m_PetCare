@@ -6,11 +6,8 @@ export const createBookingDetail = async (
   bookingData: IBookingDetail
 ): Promise<IBookingDetail> => {
   try {
-    const nowInVietnam = moment.tz("Asia/Ho_Chi_Minh");
     const newBookingDetail: IBookingDetail = new BookingDetail({
       ...bookingData,
-      createDate: nowInVietnam.toDate(),
-      modifiedDate: nowInVietnam.toDate(),
       status: BookingDetailStatus.Pending,
     });
     console.log("newBookingDetail", newBookingDetail);

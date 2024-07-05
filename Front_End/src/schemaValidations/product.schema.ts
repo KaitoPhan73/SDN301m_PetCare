@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 const ProductSchema = z.object({
-  createdAt: z.string(),
   name: z.string(),
   title: z.string(),
   image: z.string().url(),
@@ -12,4 +11,10 @@ const ProductSchema = z.object({
   id: z.string(),
 });
 
-export type TProduct = z.TypeOf<typeof ProductSchema>;
+export type TProductRequest = z.TypeOf<typeof ProductSchema>;
+
+export type TProductResponse = TProductRequest & {
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+};

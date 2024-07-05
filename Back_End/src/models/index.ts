@@ -29,4 +29,4 @@ const BookingDetail = mongoose.model<IBookingDetail>(
   "BookingDetail"
 );
 
-export { User, Feedback, Service, Room, Booking, BookingDetail };
+export { User, Feedback, Service, Room, Booking, BookingDetail, Package };

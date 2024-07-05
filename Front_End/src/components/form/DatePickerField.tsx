@@ -1,34 +1,47 @@
-/* eslint-disable react/prop-types */
-import { DatePicker } from "@mui/lab";
+import React from "react";
 import { TextField } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Controller, useFormContext } from "react-hook-form";
+import dayjs from "dayjs";
+
+interface DatePickerFieldProps {
+  name: string;
+  label: string;
+  defaultValue?: Date | null;
+  [x: string]: any;
+}
 
 const DatePickerField = ({
   name,
   label,
-  defaultValue = "",
-  transform,
+  defaultValue = new Date(),
   ...props
-}: any) => {
+}: DatePickerFieldProps) => {
   const { control } = useFormContext();
+
   return (
-    <Controller
-      control={control}
-      defaultValue={defaultValue}
-      render={({ field, fieldState }) => (
-        <DatePicker
-          label={label}
-          renderInput={(params: any) => (
-            <TextField {...params} {...props} error={false} />
-          )}
-          {...field}
-          onChange={(e: any) =>
-            field.onChange(transform ? transform.output(e) : e)
-          }
-        />
-      )}
-      name={name}
-    />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Controller
+        control={control}
+        name={name}
+        defaultValue={defaultValue}
+        render={({
+          field: { onChange, value, ...restField },
+          fieldState: { error },
+        }) => (
+          <DatePicker
+            label={label}
+            value={value ? dayjs(value) : dayjs()}
+            onChange={(newValue) => {
+              const date = newValue ? newValue.toDate() : new Date();
+              onChange(date);
+            }}
+          />
+        )}
+      />
+    </LocalizationProvider>
   );
 };
 

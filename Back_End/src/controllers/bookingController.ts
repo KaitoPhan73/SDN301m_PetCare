@@ -23,9 +23,8 @@ export const getBookings = async (
     const booking: TPagination<IBooking> = await bookingService.getBookings(
       options
     );
-    console.log("cccccc", booking);
     if (booking.total > 0) {
-      res.status(200).json({ booking, message: "Booking found" });
+      res.status(200).json(booking);
     } else {
       res.status(404).json({ message: "Booking not found" });
     }
@@ -43,7 +42,7 @@ export const getBooking = async (
     const bookingId = req.params.bookingId;
     const booking = await bookingService.getBookingById(bookingId);
     if (booking !== null) {
-      res.status(200).json({ booking, message: "booking found" });
+      res.status(200).json(booking);
     } else {
       res.status(404).json({ message: "booking not found" });
     }
@@ -59,15 +58,10 @@ export const insertBooking = async (
 ): Promise<void> => {
   try {
     const bookingData: IBooking = req.body;
-    console.log("bookingData", bookingData);
     const newBooking: IBooking = await bookingService.createBooking(
       bookingData
     );
-    console.log("bookingData", newBooking);
-    res.status(201).json({
-      booking: newBooking,
-      message: "Booking created successfully",
-    });
+    res.status(201).json(newBooking);
   } catch (error) {
     console.error("Error creating booking:", error);
     res.status(500).json({ message: "Server error" });

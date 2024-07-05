@@ -8,8 +8,14 @@ const getUsers = async (options: any): Promise<TPagination<IUser>> => {
   return paginate(User, options);
 };
 
-const getUserById = async (userId: string): Promise<IUser | null> => {
-  return User.findById(userId);
+export const getUserById = async (userId: string): Promise<IUser | null> => {
+  try {
+    const user = await User.findById(userId).exec();
+    return user;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return null;
+  }
 };
 
 const getUserByUserName = async (username: string): Promise<IUser | null> => {

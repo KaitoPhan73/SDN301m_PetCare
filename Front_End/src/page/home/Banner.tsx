@@ -25,6 +25,7 @@ const CustomSlide = ({
       justifyContent: "center",
       alignItems: "center", // Center vertically
       padding: "50px 0",
+      maxHeight: "500px",
     }}
   >
     <div
@@ -163,21 +164,24 @@ const Banner = () => {
     "https://buffer.com/library/content/images/size/w1200/2023/10/free-images.jpg";
   const slides = [
     {
-      imgSrc: baseImgUrl,
+      imgSrc:
+        "https://www.smartpractice.com/Images/Products/PC/PhotoLg/92124ST.jpg",
+      text: "WELCOME TO PETCARE CENTER",
+      Subtext:
+        "we are dedicated to providing exceptional care and services for all your beloved pets. Our team of experts is committed to ensuring the health and happiness of your furry friends. Visit us today to learn more about our services and how we can help you care for your pets.",
+      buttonLink: "/about",
+      buttonText: "About Us",
+    },
+    {
+      imgSrc:
+        "https://petcenternj.com/wp-content/uploads/2022/10/cute-puppies.jpg",
       text: "Your PetCare Center",
       Subtext:
         "This is a website concept for a Pet care institute. Hope you guys will like it. Let me know your thought on that. Your feedback and appreciation is always welcome 🙂",
       buttonLink: "/offer",
       buttonText: "Shop Now",
     },
-    {
-      imgSrc: baseImgUrl,
-      text: "Exceptional Pet Care Services",
-      Subtext:
-        "Provide your furry friends with the love and attention they deserve. Our dedicated team offers comprehensive pet care services to keep your pets happy, healthy, and thriving.",
-      buttonLink: "/shop",
-      buttonText: "Shop Now",
-    },
+
     {
       imgSrc: baseImgUrl,
       text: "Tailored Pet Services",
