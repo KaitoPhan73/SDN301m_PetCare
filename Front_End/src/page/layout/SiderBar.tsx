@@ -15,7 +15,7 @@ function getItem(
     label,
   } as MenuItem;
 }
-const { UserSiderBarConfig, AdminSiderBarConfig } = SiderBarConfig;
+const { UserSiderBarConfig, AdminSiderBarConfig, ManagerSideBarConfig } = SiderBarConfig;
 const admin = "admin";
 
 const SiderConfigs: MenuItem[] | null = admin

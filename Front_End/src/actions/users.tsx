@@ -1,34 +1,17 @@
-<<<<<<< HEAD
-import { httpMock } from "@/lib/http";
+import { httpServer } from "@/lib/http";
+import { IUser } from "@/schemaValidations/user.schema";
 import { TTableResponse } from "@/types/Table";
-import { TUserBase } from "@/types/User";
-import { get } from "lodash";
 
 const userApi = {
   getUsers: (params?: any) => {
-    return httpMock.get<TTableResponse<TUserBase>>("/student/users", {
+    return httpServer.get<TTableResponse<IUser>>("user", {
       params,
     });
   },
-  getUser: (id: string) => {
-    return httpMock.get<TUserBase>(`/student/users/${id}`);
+  getUser: (userId: string) => {
+    
+    return httpServer.get<IUser>(`user/${userId}`);
   },
-=======
-import { httpInvoice, httpMock } from "@/lib/http";
-import { TTableResponse } from "@/types/Table";
-import { TUserBase } from "@/types/User";
-
-const getUsers = async (sessionToken: string, params?: any) => {
-  "use server";
-  return httpInvoice.get<TTableResponse<TUserBase>>("brands", {
-    params,
-    headers: { Authorization: `Bearer ${sessionToken}` },
-  });
-};
-
-const userApi = {
-  getUsers,
->>>>>>> 50d63dc22eb4b76d916a4aa5d919802afbfe16df
 };
 
 export default userApi;

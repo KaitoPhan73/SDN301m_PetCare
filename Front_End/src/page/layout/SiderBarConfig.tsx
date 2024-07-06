@@ -65,5 +65,39 @@ const UserSiderBarConfig = [
     icon: <FileOutlined />,
   },
 ];
-const SiderBarConfig = { AdminSiderBarConfig, UserSiderBarConfig };
+
+const ManagerSideBarConfig = [
+  {
+    label: "Home",
+    key: "1",
+    icon: <PieChartOutlined />,
+  },
+  // {
+  //   label: <Link href={"/dashboard"}>Dashboard</Link>,
+  //   key: "2",
+  //   icon: <DesktopOutlined />,
+  // },
+  {
+    label: "Dashboard",
+    key: "sub1",
+    icon: <UserOutlined />,
+    children: [
+      customMenuItem(PATH_DASHBOARD.brand, "Brand"),
+      customMenuItem(PATH_DASHBOARD.user, "User Manager"),
+      customMenuItem(PATH_DASHBOARD.invoice, "Invoice Manager"),
+      customMenuItem(PATH_DASHBOARD.invoicetemplate, "Invoice Template"),
+    ],
+  },
+  {
+    label: "Company",
+    key: "sub2",
+    icon: <CoffeeOutlined />,
+    children: [
+      customMenuItem(PATH_COMPANY.organizations, "Organizations"),
+      customMenuItem(PATH_COMPANY.partners, "Partners"),
+      customMenuItem(PATH_COMPANY.stores, "Stores"),
+    ],
+  },
+]
+const SiderBarConfig = { AdminSiderBarConfig, UserSiderBarConfig, ManagerSideBarConfig };
 export default SiderBarConfig;

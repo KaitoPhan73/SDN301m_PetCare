@@ -9,23 +9,23 @@ const getUsers = async (options: any): Promise<TPagination<IUser>> => {
 };
 
 const getUserById = async (userId: string): Promise<IUser | null> => {
-  return User.findById(userId);
+  return await User.findById(userId);
 };
 
 const getUserByUserName = async (username: string): Promise<IUser | null> => {
-  return User.findOne({ username: username });
+  return await User.findOne({ username: username });
 };
 
 const insertUser = async (data: IUser): Promise<IUser> => {
   const newUser = new User(data);
-  return newUser.save();
+  return await newUser.save();
 };
 
 const updateUser = async (
   userId: string,
   data: Partial<IUser>
 ): Promise<IUser | null> => {
-  return User.findByIdAndUpdate(userId, { $set: data }, { new: true });
+  return await User.findByIdAndUpdate(userId, { $set: data }, { new: true });
 };
 
 export const findUserByUserName = async (
