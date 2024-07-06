@@ -1,10 +1,12 @@
 import mongoose, { Schema, Document, ObjectId } from "mongoose";
 import { IBooking, BookingStatus } from "../types/booking";
 
-const BookingSchema: Schema = new Schema(
+const BookingSchema = new Schema(
   {
     userId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
-    status: { type: String, default: BookingStatus.Pending },
+    status: { type: String, default: "Pending" },
+    totalPrice: { type: Number, required: true },
+    bookingDetails: [{ type: mongoose.Types.ObjectId, ref: "BookingDetail" }],
   },
   { versionKey: false, timestamps: true }
 );

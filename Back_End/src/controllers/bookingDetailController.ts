@@ -10,12 +10,34 @@ export const insertBookingDetail = async (
     const bookingData: IBookingDetail = req.body;
     const newBooking: IBookingDetail =
       await bookingDetailService.createBookingDetail(bookingData);
-    res.status(201).json({
-      booking: newBooking,
-      message: "Booking created successfully",
-    });
+    res.status(201).json(newBooking);
   } catch (error) {
-    console.error("Error creating booking:", error);
+    console.error("Error creating booking Detail:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const updateBookingDetail = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const bookingDetailId: string = req.params.id;
+    const updateData: Partial<IBookingDetail> = req.body;
+
+    const updatedBookingDetail: IBookingDetail | null =
+      await bookingDetailService.updateOne(bookingDetailId, updateData);
+
+    if (!updatedBookingDetail) {
+      res.status(404).json({
+        message: `Booking Detail with id ${bookingDetailId} not found.`,
+      });
+      return;
+    }
+
+    res.status(200).json(updatedBookingDetail);
+  } catch (error) {
+    console.error("Error updating booking Detail:", error);
     res.status(500).json({ message: "Server error" });
   }
 };

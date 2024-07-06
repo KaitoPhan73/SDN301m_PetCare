@@ -25,7 +25,10 @@ import FullScreenToggle from "@/components/ToggleFull";
 import { TRoomResponse } from "@/schemaValidations/room.schema";
 import BookingDetails from "./BookingDetails";
 import BookingApi from "@/actions/booking";
-import { TBookingDetailRequest } from "@/schemaValidations/booking-detail.schema";
+import {
+  TBookingDetailForBookingRequest,
+  TBookingDetailRequest,
+} from "@/schemaValidations/booking-detail.schema";
 import BookingDetailApi from "@/actions/booking-detail";
 import RoomApi from "@/actions/room";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -34,6 +37,8 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs, { Dayjs } from "dayjs";
 import PackageApi from "@/actions/package";
 import { formatDate } from "@/lib/utils";
+import { useSnackbar } from "notistack";
+import { useRouter } from "next/navigation";
 
 type Props = {
   data: {
@@ -43,9 +48,11 @@ type Props = {
 };
 
 export default function BookingPage({ data }: Props) {
+  const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
   const methods = useForm<TBookingRequest>({
     defaultValues: {
-      userId: "sdsds",
+      userId: "6688eca1e04b57a20ec4266f",
       bookingDetails: [],
     },
   });
@@ -54,25 +61,51 @@ export default function BookingPage({ data }: Props) {
   const onSubmit = async (data: TBookingRequest) => {
     console.log(data);
     try {
-      const responseBooking = await BookingApi.createBooking(data.userId);
-      const bookingId = responseBooking.payload._id;
+      const createdBookingDetails: TBookingDetailForBookingRequest[] = [];
 
-      fields.forEach(async (item) => {
+      const bookingDetails = data.bookingDetails;
+
+      for (const item of bookingDetails) {
         const bookingDetail: TBookingDetailRequest = {
-          bookingId: bookingId,
           packageId: item.packageId,
           roomId: item.roomId,
           checkInDate: item.checkInDate,
           price: item.price,
         };
 
-        await BookingDetailApi.createBookingDetail(bookingDetail);
-      });
+        const createdDetail = await BookingDetailApi.createBookingDetail(
+          bookingDetail
+        );
+        createdBookingDetails.push(createdDetail.payload);
+      }
+      // Thêm các bookingDetails vào data.bookingDetails
+      data.bookingDetails = createdBookingDetails.map((detail) => ({
+        _id: detail._id,
+        packageId: detail.packageId,
+        roomId: detail.roomId,
+        checkInDate: detail.checkInDate,
+        price: detail.price,
+      }));
+
+      // Tạo booking chính với bookingDetails đã được thêm vào
+      const response = await BookingApi.createBooking(data);
+      console.log("response", response);
+      if (response.status === 201) {
+        enqueueSnackbar("Quý khách đã booking thành công. Cảm ơn quý khách", {
+          variant: "success",
+        });
+        router.refresh();
+        while (fields.length > 0) {
+          remove(0); // Xóa từng phần tử đầu tiên của mảng fields
+        }
+      }
     } catch (error) {
+      enqueueSnackbar("Đã xảy ra lỗi khi booking. Vui lòng thử lại", {
+        variant: "error",
+      });
       console.log("Error:", error);
     }
   };
-
   const { fields, append, remove } = useFieldArray<TBookingRequest>({
     control,
     name: "bookingDetails",
@@ -122,102 +155,77 @@ export default function BookingPage({ data }: Props) {
   const handleConfirmDateRoomSelection = async () => {
     if (!selectedPackage || !checkInDate || !roomId) return;
 
-    // Lấy totalTime của gói sản phẩm hiện tại
     const packageTotalTime = selectedPackage.totalTime;
     const roomCheckInTime = dayjs(checkInDate);
+    const roomCheckOutTime = roomCheckInTime.add(packageTotalTime, "minute");
 
     let isConflictingRoom = false;
 
-    // Duyệt qua từng item trong fields
     for (const item of fields) {
-      // Lấy totalTime của gói sản phẩm hiện có trong booking detail
       const existingPackageTotalTime = await fetchPackage(item.packageId);
-
-      // Tính thời gian dự kiến check-out của phòng hiện tại
-      const roomCheckOutTime = roomCheckInTime.add(packageTotalTime, "minute");
-
-      const bookingDetailCheckInTime = dayjs(item.checkInDate).add(
+      const existingCheckInTime = dayjs(item.checkInDate);
+      const existingCheckOutTime = existingCheckInTime.add(
         existingPackageTotalTime,
         "minute"
       );
-      const minutesRemaining = roomCheckInTime.diff(
-        bookingDetailCheckInTime,
-        "minute"
-      );
 
-      const minutesRemaining2 = roomCheckInTime.diff(
-        dayjs(item.checkInDate),
-        "minute"
-      );
-      console.log("minutesRemaining", minutesRemaining);
-      console.log("minutesRemaining2", minutesRemaining2);
-      // Kiểm tra xem có xung đột thời gian
-
-      if (minutesRemaining < 0 && item.roomId === roomId) {
-        // Tính thời gian dự kiến có thể đặt sau
-        const futureTime = dayjs(item.checkInDate).add(
-          existingPackageTotalTime,
-          "minute"
-        );
-        console.log("futureTime", futureTime);
-        // Hiển thị thông báo xung đột
+      if (
+        roomCheckOutTime.isAfter(existingCheckInTime) &&
+        roomCheckInTime.isBefore(existingCheckOutTime) &&
+        item.roomId === roomId
+      ) {
         alert(
-          `Phòng này đã được đặt vào lúc ${formatDate(
-            item.checkInDate
-          )}. Chỉ có thể đặt lúc ${formatDate(
-            futureTime.toDate()
-          )}. Vui lòng chọn thời gian khác hoặc phòng khác.`
+          `Thời gian check-in, checkout của bạn (${formatDate(
+            roomCheckInTime.toDate()
+          )} - ${formatDate(
+            roomCheckOutTime.toDate()
+          )}) đã tồn tại với thời gian đã tồn tại khoảng (${formatDate(
+            existingCheckInTime.toDate()
+          )} - ${formatDate(
+            existingCheckOutTime.toDate()
+          )}) của phòng này. Vui lòng chọn giờ khác hoặc phòng khác.`
         );
 
         isConflictingRoom = true;
-        break; // Dừng vòng lặp khi có xung đột
+        break;
       }
+
       if (
-        roomCheckInTime.toDate() < dayjs(item.checkInDate).toDate() &&
+        roomCheckInTime.isBefore(existingCheckInTime) &&
+        roomCheckOutTime.isAfter(existingCheckInTime) &&
         item.roomId === roomId
       ) {
-        if (roomCheckOutTime.toDate() >= dayjs(item.checkInDate).toDate()) {
-          alert(
-            `Gói của bạn có thể đụng độ với một gói đã đặt trước đó. Vui lòng chọn thời gian khác hoặc phòng khác.`
-          );
+        alert(
+          `Thời gian check-in, checkout của bạn (${formatDate(
+            roomCheckInTime.toDate()
+          )} - ${formatDate(
+            roomCheckOutTime.toDate()
+          )}) đã tồn tại với thời gian đã tồn tại khoảng (${formatDate(
+            existingCheckInTime.toDate()
+          )} - ${formatDate(
+            existingCheckOutTime.toDate()
+          )}) của phòng này. Vui lòng chọn giờ khác hoặc phòng khác.`
+        );
 
-          isConflictingRoom = true;
-          return false;
-        }
-      }
-
-      // Tính toán khoảng thời gian tối thiểu mà phải chờ
-      const minTimeDifference = Math.abs(existingPackageTotalTime);
-
-      // Kiểm tra thời gian giữa các lần đặt phòng có đủ lớn không
-      if (!(minutesRemaining >= 0 || item.roomId !== roomId)) {
-        // Nếu không thỏa điều kiện, đánh dấu là không hợp lệ
         isConflictingRoom = true;
         break;
       }
     }
 
-    // Nếu có xung đột thời gian hoặc không hợp lệ, không thực hiện đặt phòng mới
     if (isConflictingRoom) {
       return;
     }
-
-    // Lấy giá phòng từ API
     const responseRoomPrice = await fetchRoom(roomId);
 
-    // Tạo thông tin booking detail mới
     const newBookingDetail = {
-      bookingId: "",
       packageId: selectedPackage._id,
       roomId: roomId,
       checkInDate: checkInDate.toDate(),
       price: selectedPackage.price + responseRoomPrice,
     };
 
-    // Thêm booking detail mới vào danh sách
     append(newBookingDetail);
 
-    // Đặt lại trạng thái của form sau khi thêm mới
     setCheckInDate(null);
     setRoomId("");
     setShowDateRoomSelection(false);
