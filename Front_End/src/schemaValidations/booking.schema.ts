@@ -1,9 +1,9 @@
 import { z } from "zod";
-import BookingDetailSchema from "./booking-detail.schema";
+import BookingDetailForBookingSchema from "./booking-detail.schema";
 
 const BookingSchema = z.object({
   userId: z.string(),
-  bookingDetails: z.array(BookingDetailSchema),
+  bookingDetails: z.array(BookingDetailForBookingSchema),
 });
 
 export type TBookingRequest = z.TypeOf<typeof BookingSchema>;
