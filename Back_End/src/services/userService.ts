@@ -38,6 +38,7 @@ export const findUserByUserName = async (
 ): Promise<IUser | null> => {
     try {
         const user: IUser | null = await User.findOne({username: userName});
+        console.log(userName)
         return user;
     } catch (error) {
         throw new Error("Error fetching user");
@@ -66,6 +67,14 @@ export const enableUserById = async (id: string): Promise<IUser | null> => {
         throw new Error("Error disable user");
     }
 }
+export const updatePassword = async (user: IUser, newPassword: string): Promise<IUser | null> => {
+    try {
+        user.password = newPassword;
+        return await user.save()
+    } catch (error) {
+        throw new Error("Error update pass user");
+    }
+}
 export const userService = {
     getUsers,
     getUserById,
@@ -75,5 +84,6 @@ export const userService = {
     findUserByEmail,
     getEmployees,
     disableUserById,
-    enableUserById
+    enableUserById,
+    updatePassword
 };
