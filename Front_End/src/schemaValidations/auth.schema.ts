@@ -1,5 +1,5 @@
 import { message } from "antd";
-import z from "zod";
+import z, { boolean } from "zod";
 
 export const AuthBase = z.object({
   accessToken: z.string(),
@@ -18,6 +18,9 @@ export const LoginBody = z
   })
   .strict();
 
+ 
+
+ 
 export type TLoginBody = z.TypeOf<typeof LoginBody>;
 export const LoginResponse = AuthBase;
 

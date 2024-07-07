@@ -7,16 +7,17 @@ import HeaderCustom from "./Header";
 import { usePathname } from "next/navigation";
 const { Content, Sider } = Layout;
 
-const SilderBar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const SilderBar: React.FC<{ children: React.ReactNode, role:string }> = ({ children, role }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const itemsSidebar = items(role) ?? []
   const pathname = usePathname();
   useEffect(() => {
     setSelectedKeys([pathname]);
 
-    const findOpenKeys: any = (items: any, path: any) => {
-      for (let item of items) {
+    const findOpenKeys: any = (itemsSidebar: any, path: any) => {
+      for (let item of itemsSidebar) {
         if (item.children) {
           for (let child of item.children) {
             if (child.key === path) {
@@ -32,7 +33,7 @@ const SilderBar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       return [];
     };
 
-    setOpenKeys(findOpenKeys(items, pathname));
+    setOpenKeys(findOpenKeys(itemsSidebar, pathname));
   }, [pathname]);
 
   const onOpenChange = (keys: any) => {
@@ -53,7 +54,7 @@ const SilderBar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <Menu
           theme="dark"
           mode="inline"
-          items={items}
+          items={itemsSidebar}
           selectedKeys={selectedKeys}
           openKeys={openKeys}
           onOpenChange={onOpenChange}
@@ -67,8 +68,8 @@ const SilderBar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         />
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+            {/*<Breadcrumb.Item>User</Breadcrumb.Item>*/}
+            {/*<Breadcrumb.Item>Bill</Breadcrumb.Item>*/}
           </Breadcrumb>
           <div
             style={{

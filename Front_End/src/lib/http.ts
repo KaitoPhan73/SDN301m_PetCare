@@ -204,7 +204,7 @@ const createHttpClient = (defaultBaseUrl: string) => {
   };
 };
 
-const httpServer = createHttpClient("");
+const httpServer = createHttpClient("http://localhost:8080/petcare/api");
 const httpMock = createHttpClient(
   "https://660bbdb3ccda4cbc75dd950a.mockapi.io/api"
 );

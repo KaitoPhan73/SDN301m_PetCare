@@ -1,12 +1,11 @@
 import { z } from "zod";
 
-const UserSchema = z.object({
-  id: z.string(),
-  username: z.string(),
-  password: z.string(),
-  email: z.string().email(),
-  status: z.string(),
-  role: z.string(),
+export const UserSchema = z.object({
+  // _id: z.string(),
+  username: z.string({required_error: "Username is required"}),
+  email: z.string({required_error: "Email is required"}),
+  role: z.string({required_error: "Role is required"}),
+  status: z.boolean({required_error: "Status is required"}),
 });
 
-export type TUser = z.infer<typeof UserSchema>;
+// export type IUser = z.TypeOf<typeof UserSchema>;

@@ -1,4 +1,3 @@
-"use client"
 import PATHS from "@/route/paths";
 import {
   PieChartOutlined,
@@ -11,6 +10,7 @@ import {
 import { CoffeeMakerOutlined } from "@mui/icons-material";
 import Link from "next/link";
 const { PATH_DASHBOARD } = PATHS;
+const { PATH_COMPANY,PATH_MANAGER } = PATHS;
 
 const customMenuItem = (path: string, name: string) => {
   return {
@@ -34,9 +34,21 @@ const AdminSiderBarConfig = [
     key: "sub1",
     icon: <UserOutlined />,
     children: [
-      customMenuItem(PATH_DASHBOARD.admin, "Admin DashBoard"),
-      customMenuItem(PATH_DASHBOARD.manager, "Manager Manager"),
-
+      customMenuItem(PATH_DASHBOARD.brand, "Brand"),
+      customMenuItem(PATH_DASHBOARD.user, "User Manager"),
+      customMenuItem(PATH_DASHBOARD.invoice, "Invoice Manager"),
+      // customMenuItem(PATH_DASHBOARD.user, "User"),
+      customMenuItem(PATH_DASHBOARD.invoicetemplate, "Invoice Template"),
+    ],
+  },
+  {
+    label: "Company",
+    key: "sub2",
+    icon: <CoffeeOutlined />,
+    children: [
+      customMenuItem(PATH_COMPANY.organizations, "Organizations"),
+      customMenuItem(PATH_COMPANY.partners, "Partners"),
+      customMenuItem(PATH_COMPANY.stores, "Stores"),
     ],
   },
 ];
@@ -53,5 +65,39 @@ const UserSiderBarConfig = [
     icon: <FileOutlined />,
   },
 ];
-const SiderBarConfig = { AdminSiderBarConfig, UserSiderBarConfig };
+
+const ManagerSideBarConfig = [
+  {
+    label: "Home",
+    key: "1",
+    icon: <PieChartOutlined />,
+  },
+  // {
+  //   label: <Link href={"/dashboard"}>Dashboard</Link>,
+  //   key: "2",
+  //   icon: <DesktopOutlined />,
+  // },
+  {
+    label: "Dashboard",
+    key: "sub1",
+    icon: <UserOutlined />,
+    children: [
+      // customMenuItem(PATH_DASHBOARD.brand, "Brand"),
+      customMenuItem(PATH_MANAGER.employees, "Employee Manager"),
+      customMenuItem(PATH_MANAGER.partners, "Partners Manager"),
+      // customMenuItem(PATH_DASHBOARD.invoicetemplate, "Invoice Template"),
+    ],
+  },
+  {
+    label: "Company",
+    key: "sub2",
+    icon: <CoffeeOutlined />,
+    children: [
+      customMenuItem(PATH_COMPANY.organizations, "Organizations"),
+      customMenuItem(PATH_COMPANY.partners, "Partners"),
+      customMenuItem(PATH_COMPANY.stores, "Stores"),
+    ],
+  },
+]
+const SiderBarConfig = { AdminSiderBarConfig, UserSiderBarConfig, ManagerSideBarConfig };
 export default SiderBarConfig;
