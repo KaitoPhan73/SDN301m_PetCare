@@ -16,7 +16,6 @@ type FullScreenToggleProps = {
 };
 
 const CustomDialog = styled(Dialog)({
-  width: "70%",
   maxWidth: "none",
   "& .MuiDialogContent-root": {
     overflowY: "auto",

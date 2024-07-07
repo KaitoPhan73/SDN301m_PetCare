@@ -13,7 +13,7 @@ interface Props {
   props: TProductResponse;
 }
 
-const Item = ({ props }: Props) => {
+const ItemRoom = ({ props }: Props) => {
   const router = useRouter();
   const id = props._id;
   const handleProductDetails = () => {
@@ -30,20 +30,10 @@ const Item = ({ props }: Props) => {
         <div className="absolute top-6 left-8 bg-black">
           {true && <Badge text="New" />}
         </div>
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button
-            className="rounded-full w-full max-w-[150px] py-3 text-center justify-center items-center bg-black font-semibold text-lg text-white flex transition-all duration-500 hover:bg-gray-200 hover:text-black"
-            onClick={handleProductDetails}
-          >
-            <span className="px-2">View Details</span>
-          </button>
-        </div>
       </div>
       <div className="max-w-80 py-6 flex flex-col gap-1 border-[1px] border-t-0 px-4">
         <div className="flex items-center justify-between font-titleFont">
-          <h2 className="text-lg text-primeColor font-bold truncate ">
-            {props.name}
-          </h2>
+          <h2 className="text-lg text-primeColor font-bold">{props.name}</h2>
           <p className="text-[#767676] text-[14px]">
             {formatPriceVND(props.price)}
           </p>
@@ -53,4 +43,4 @@ const Item = ({ props }: Props) => {
   );
 };
 
-export default Item;
+export default ItemRoom;

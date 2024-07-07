@@ -60,6 +60,12 @@ export const formatDate = (date: any) => {
   return `${day}/${month}/${year} ${hours}:${minutes}`;
 };
 
+export const formatTime = (minutes: any) => {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  return `${hours > 0 ? `${hours} hour ` : ""}${remainingMinutes} minutes`;
+};
+
 // export const decodeJWT = <Payload = any>(token: string) => {
 //   return jwt.decode(token) as Payload;
 // };

@@ -1,7 +1,10 @@
-import BookingPage from "@/page/booking";
+// import BookingPage from "@/page/booking";
 import React from "react";
 import PackageApi from "@/actions/package";
 import RoomApi from "@/actions/room";
+import dynamic from "next/dynamic";
+const BookingPage = dynamic(() => import("@/page/booking"), { ssr: false });
+
 export default async function page() {
   const params = {
     page: 1,

@@ -5,8 +5,7 @@ import Heading from "../Item/Heading";
 import Item from "../Item/Item";
 import SampleNextArrow from "./SampleNextArrow";
 import SamplePrevArrow from "./SamplePrevArrow";
-import { User } from "@/types/User";
-import { TProduct } from "@/schemaValidations/product.schema";
+import ItemRoom from "../Item/Item-room";
 type Props = {
   dataSource: any;
 };
@@ -50,9 +49,9 @@ const ItemArrow = ({ dataSource }: Props) => {
     <div className="w-full pb-16">
       <Heading heading="ROOMS" />
       <Slider {...settings}>
-        {dataSource.map((data: TProduct) => (
+        {dataSource.map((data: any) => (
           <div className="px-2">
-            <Item props={data} />
+            <ItemRoom props={data} />
           </div>
         ))}
       </Slider>

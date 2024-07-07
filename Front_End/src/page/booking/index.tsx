@@ -1,6 +1,6 @@
 // File: BookingPage.tsx
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Grid,
@@ -39,7 +39,12 @@ import PackageApi from "@/actions/package";
 import { formatDate } from "@/lib/utils";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/navigation";
-
+import PackageSelection from "./PackageSelection";
+import { useDispatch } from "react-redux";
+import { addToCart, deleteItem } from "@/redux/Cart/cartSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { DialogPayment } from "@/components/dialog-payment";
 type Props = {
   data: {
     dataPakages: TPackageResponse[];
@@ -114,7 +119,7 @@ export default function BookingPage({ data }: Props) {
   const [showDateRoomSelection, setShowDateRoomSelection] = useState(false);
   const [selectedPackage, setSelectedPackage] =
     useState<TPackageResponse | null>(null);
-
+  const dispatch = useDispatch();
   const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
   const [roomId, setRoomId] = useState<string>("");
 
@@ -133,13 +138,16 @@ export default function BookingPage({ data }: Props) {
     setShowDateRoomSelection(true);
   };
 
+  const handleClosePackageSelection = () => setShowPackageSelection(false);
+
   const handleRemoveById = (id: string) => {
     // Tìm chỉ mục của phần tử cần xoá dựa trên id
     const indexToRemove = fields.findIndex((field) => field.id === id);
-
-    if (indexToRemove !== -1) {
-      remove(indexToRemove);
-    }
+    dispatch(deleteItem(id));
+    // if (indexToRemove !== -1) {
+    //   // remove(indexToRemove);
+    //   dispatch(deleteItem(id));
+    // }
   };
 
   const fetchRoom = async (id: string) => {
@@ -225,14 +233,13 @@ export default function BookingPage({ data }: Props) {
     };
 
     append(newBookingDetail);
-
+    dispatch(addToCart(newBookingDetail));
     setCheckInDate(null);
     setRoomId("");
     setShowDateRoomSelection(false);
   };
-
+  const carts = useSelector((state: RootState) => state.cart.products);
   console.log("fields", fields);
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <FormProvider {...methods}>
@@ -246,53 +253,60 @@ export default function BookingPage({ data }: Props) {
             />
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
-            <Page title="Booking">
-              <Grid item xs={6}>
-                <Button
-                  variant="contained"
-                  onClick={handleOpenPackageSelection}
-                >
-                  Chọn combo
-                </Button>
+            <Page title="Booking" spacing={2}>
+              <Grid container item xs={12}>
+                {carts.length > 0 ? (
+                  <>
+                    <Grid item xs={6}>
+                      <Button
+                        variant="contained"
+                        onClick={handleOpenPackageSelection}
+                      >
+                        Chọn combo
+                      </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                      {/* <Button
+                        variant="contained"
+                        onClick={handleSubmit(onSubmit)}
+                      >
+                        Booking Now
+                      </Button> */}
+                      <DialogPayment />
+                    </Grid>
+                  </>
+                ) : (
+                  <Grid item xs={6}>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      onClick={handleOpenPackageSelection}
+                    >
+                      Click here to start Booking
+                    </Button>
+                  </Grid>
+                )}
               </Grid>
-              {fields.length > 0 && (
-                <Grid item xs={6}>
-                  <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-                    Booking
-                  </Button>
-                </Grid>
-              )}
 
-              <Grid item xs={12}>
-                <BookingDetails
-                  fields={fields}
-                  handleRemoveById={handleRemoveById}
-                />
+              <Grid container item xs={12} spacing={2}>
+                <Grid item xs={12}>
+                  <BookingDetails
+                    fields={fields}
+                    handleRemoveById={handleRemoveById}
+                  />
+                </Grid>
               </Grid>
             </Page>
           </Grid>
         </Grid>
 
         {/* First FullScreenToggle for package selection */}
-        <FullScreenToggle
-          title="Chọn gói dịch vụ"
+        <PackageSelection
+          dataPackages={data.dataPakages}
+          onSelectPackage={handleSelectPackage}
           open={showPackageSelection}
-          onClose={() => setShowPackageSelection(false)}
-        >
-          <Grid container spacing={2}>
-            {data.dataPakages.map((item: TPackageResponse) => (
-              <Grid item key={item._id} xs={12} sm={6} md={4}>
-                <Card onClick={() => handleSelectPackage(item)}>
-                  <CardContent>
-                    <Typography variant="h5" component="div">
-                      {item.name}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </FullScreenToggle>
+          onClose={handleClosePackageSelection}
+        />
 
         {/* Second FullScreenToggle for date and room selection */}
         <FullScreenToggle

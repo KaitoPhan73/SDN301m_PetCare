@@ -1,14 +1,15 @@
 "use client";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { User } from "@/types/User";
 import { TPackageResponse } from "@/schemaValidations/package.schema";
-import { formatPriceVND } from "@/lib/utils";
+import { formatPriceVND, formatTime } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 type Props = {
   data: TPackageResponse;
-  handleAdd: () => void;
 };
-const ProductInfoPage = ({ data, handleAdd }: Props) => {
+const ProductInfoPage = ({ data }: Props) => {
+  const router = useRouter();
+
   const highlightStyle = {
     color: "#d0121a", // Change this to the desired color
     fontWeight: "bold", // Change this to the desired font weight
@@ -40,17 +41,22 @@ const ProductInfoPage = ({ data, handleAdd }: Props) => {
         {data.discount > 0 && (
           <>
             <span className="text-xl font-semibold line-through ml-2">
-              {formatPriceVND(data.price + data.discount * data.price)}
+              {formatPriceVND(data.price + (data.discount * data.price) / 100)}
             </span>
             <span className="text-xs ml-2 inline-flex items-center px-3 py-1 rounded-full bg-green-600 text-white">
-              Save {data.discount}
+              Save {data.discount} %
             </span>
           </>
         )}
       </p>
+      <p className="text-base text-gray-600">
+        <strong>Time: </strong>
+        {formatTime(data.totalTime)}
+      </p>
+
       <hr />
       <button
-        onClick={() => handleAdd()}
+        onClick={() => router.push(`/booking`)}
         className="w-full py-4 bg-blue-500 hover:bg-blue-600 duration-300 text-white text-lg font-titleFont"
       >
         Booking Now
