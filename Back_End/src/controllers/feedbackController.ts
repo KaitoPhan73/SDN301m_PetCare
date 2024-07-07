@@ -22,11 +22,9 @@ export const getFeedbacks = async (
     const feedbacks: TPagination<IFeedBack> =
       await feedbackService.getFeedbacks(options);
 
-    if (feedbacks.totalPages > 0) {
-      res.status(200).json({ feedbacks, message: "Feedbacks found" });
-    } else {
-      res.status(404).json({ message: "Feedbacks not found" });
-    }
+    
+      res.status(200).json( feedbacks);
+
   } catch (error) {
     console.error("Error fetching feedbacks:", error);
     res.status(500).json({ message: "Server error" });

@@ -90,3 +90,23 @@ export const updateUser = async (
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const getUserById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = req.params.userId;
+    const user = await userService.getUserById(userId);
+    if (user !== null) {
+      res.status(200).json({ user, message: "User found" });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
