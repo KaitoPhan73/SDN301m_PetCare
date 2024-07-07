@@ -4,6 +4,7 @@ const path = (root: string, sublink: string) => {
 const ROOT_DASHBOARD = "/dashboard";
 const ROOT_COMPANY = "/company";
 const ROOT_USER = "/users";
+const ROOT_MANAGER = "/manager";
 
 const PATH_DASHBOARD = {
   root: ROOT_DASHBOARD,
@@ -26,10 +27,16 @@ const PATH_COMPANY = {
   stores: path(ROOT_COMPANY, "/stores"),
 };
 
+const PATH_MANAGER = {
+  root: ROOT_MANAGER,
+  employees: path(ROOT_MANAGER, "/employee"),
+  partners: path(ROOT_MANAGER, "/partners"),
+}
 const PATHS = {
   PATH_DASHBOARD,
   PATH_USER,
   PATH_COMPANY,
+  PATH_MANAGER
 };
 
 export default PATHS;

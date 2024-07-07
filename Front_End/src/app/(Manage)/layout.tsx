@@ -13,5 +13,5 @@ export default function DashBoardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <SilderBar>{children}</SilderBar>;
+  return <SilderBar role={"admin"}>{children}</SilderBar>;
 }

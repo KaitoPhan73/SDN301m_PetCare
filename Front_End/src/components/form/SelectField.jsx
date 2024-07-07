@@ -35,12 +35,12 @@ const SelectField = ({
           <Select
             multiple={multiple}
             id={name}
-            helperText={fieldState.error ? fieldState.error.message : props.helperText}
+            helpertext={fieldState.error ? fieldState.error.message : props.helperText}
             label={label}
             {...field}
             {...props}
             error={Boolean(fieldState.error)}
-            value={field.value || []}
+            value={field.value || (multiple ? [] : false)}
           >
             {children ??
               options?.map(({ label, value, id }) => (

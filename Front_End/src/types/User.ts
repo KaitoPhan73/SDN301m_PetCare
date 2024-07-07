@@ -25,10 +25,11 @@ export type TUserBase = {
 };
 
 export type TUser = {
-  id: string;
+  _id: string;
   name: string;
   username: string;
   role: string;
-  status: string;
+  status: boolean;
   brandName: string;
+  email: string;
 };

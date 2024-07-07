@@ -4,13 +4,15 @@ import React, { ReactNode, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ModalDelete from "./ModelDelete";
 import ModalUpdateStatus from "./ModalUpdateStatus";
-import { IUser } from "@/schemaValidations/user.schema";
+// import { IUser } from "@/schemaValidations/user.schema";
 import Link from "next/link";
+import {TUser} from "@/types/User";
 interface Props {
-  record: IUser;
+  record: TUser;
+  handleChange: ()=> void
 }
 
-const Operation = ({ record }: Props) => {
+const Operation = ({ record, handleChange }: Props) => {
   let items: MenuProps["items"] = [
     {
       key: "1",
@@ -20,7 +22,7 @@ const Operation = ({ record }: Props) => {
             className=" flex items-center w-full bg-yelow-300"
             type="text"
           >
-            <Link href={`/dashboard/user/edit/${record._id}`}>Edit</Link>
+            <Link href={`/manager/employee/${record._id}`}>Edit</Link>
           </Button>
         </div>
       ),
@@ -33,7 +35,7 @@ const Operation = ({ record }: Props) => {
       ...items,
       {
         key: "2",
-        label: <ModalUpdateStatus record={record} />,
+        label: <ModalUpdateStatus record={record} handleChange={handleChange}/>,
       },
     ]
   }else {
@@ -41,13 +43,14 @@ const Operation = ({ record }: Props) => {
       ...items,
       {
         key: "2",
-        label: <ModalDelete record={record} />,
+        label: <ModalDelete record={record} handleChange={handleChange}/>,
       },
     ]
   }
 
   const getPopupContainer = (triggerNode: HTMLElement) =>
     triggerNode.parentNode as HTMLElement;
+  if (record.role === "manager") return null
   return (
     <Dropdown
       menu={{ items }}

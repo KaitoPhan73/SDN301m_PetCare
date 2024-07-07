@@ -3,7 +3,7 @@ export async function POST(request: Request) {
   const accessToken = body.accessToken as string;
   if (!accessToken) {
     return Response.json(
-      { message: "Không nhận được session token" },
+      { message: "Session token not found." },
       {
         status: 400,
       }

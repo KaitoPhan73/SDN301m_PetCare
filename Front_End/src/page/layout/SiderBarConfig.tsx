@@ -10,7 +10,7 @@ import {
 import { CoffeeMakerOutlined } from "@mui/icons-material";
 import Link from "next/link";
 const { PATH_DASHBOARD } = PATHS;
-const { PATH_COMPANY } = PATHS;
+const { PATH_COMPANY,PATH_MANAGER } = PATHS;
 
 const customMenuItem = (path: string, name: string) => {
   return {
@@ -82,10 +82,10 @@ const ManagerSideBarConfig = [
     key: "sub1",
     icon: <UserOutlined />,
     children: [
-      customMenuItem(PATH_DASHBOARD.brand, "Brand"),
-      customMenuItem(PATH_DASHBOARD.user, "User Manager"),
-      customMenuItem(PATH_DASHBOARD.invoice, "Invoice Manager"),
-      customMenuItem(PATH_DASHBOARD.invoicetemplate, "Invoice Template"),
+      // customMenuItem(PATH_DASHBOARD.brand, "Brand"),
+      customMenuItem(PATH_MANAGER.employees, "Employee Manager"),
+      customMenuItem(PATH_MANAGER.partners, "Partners Manager"),
+      // customMenuItem(PATH_DASHBOARD.invoicetemplate, "Invoice Template"),
     ],
   },
   {
