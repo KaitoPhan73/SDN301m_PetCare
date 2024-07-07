@@ -15,11 +15,7 @@ export const getRooms = async (req: Request, res: Response): Promise<void> => {
       ...otherQueries,
     };
     const result: TPagination<IRoom> = await roomService.getAllRooms(options);
-    if (result.total > 0) {
-      res.status(200).json({ result, message: "Rooms found" });
-    } else {
-      res.status(404).json({ message: "Rooms not found" });
-    }
+    res.status(200).json(result);
   } catch (error) {
     console.error("Error fetching rooms:", error);
     res.status(500).json({ message: "Server error" });
@@ -31,7 +27,7 @@ export const getRoom = async (req: Request, res: Response): Promise<void> => {
     const roomId = req.params.roomId;
     const room = await roomService.getRoomById(roomId);
     if (room !== null) {
-      res.status(200).json({ room, message: "Room found" });
+      res.status(200).json(room);
     } else {
       res.status(404).json({ message: "Room not found" });
     }

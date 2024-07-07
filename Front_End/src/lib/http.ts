@@ -97,6 +97,7 @@ const createHttpClient = (defaultBaseUrl: string) => {
     console.log("fullUrl", fullUrl);
     const res = await fetch(fullUrl, {
       ...options,
+      cache: "no-store",
       headers: {
         ...baseHeaders,
         ...options?.headers,
@@ -144,6 +145,10 @@ const createHttpClient = (defaultBaseUrl: string) => {
         }
       } else {
         throw new HttpError(data);
+      }
+    } else {
+      if (data.payload === null) {
+        redirect("/not-founds");
       }
     }
 
@@ -196,8 +201,6 @@ const httpServer = createHttpClient("http://localhost:8080/petcare/api");
 const httpMock = createHttpClient(
   "https://660bbdb3ccda4cbc75dd950a.mockapi.io/api"
 );
-const httpInvoice = createHttpClient(
-  "https://reso-invoice.onrender.com/api/v1"
-);
+const httpPetCare = createHttpClient("http://localhost:8080/petcare/api");
 
-export { httpServer, httpMock, httpInvoice };
+export { httpServer, httpMock, httpPetCare };

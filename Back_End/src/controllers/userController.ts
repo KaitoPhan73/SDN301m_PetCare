@@ -105,7 +105,7 @@ export const disableUser = async (
 ): Promise<void> => {
     try {
         const userId = req.params.userId;
-       const user = await disableUserById(userId)
+        const user = await disableUserById(userId)
         res.status(200).json({
             user,
             message: "User disabled successfully"

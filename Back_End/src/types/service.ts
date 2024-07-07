@@ -4,5 +4,8 @@ export interface IService extends Document {
   description: string;
   name: string;
   price: number;
-  images: string[];
+  image: string;
+  time: number;
+  createdAt: Date;
+  updatedAt: Date;
 }

@@ -8,18 +8,19 @@ import Image from "@/components/designLayouts/Image";
 import Badge from "./Badge";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { addToCart } from "@/redux/Cart/cartSlice";
-import { TProduct } from "@/schemaValidations/product.schema";
+// import { addToCart } from "@/redux/Cart/cartSlice";
+import { TProductResponse } from "@/schemaValidations/product.schema";
+import { formatPriceVND } from "@/lib/utils";
 // import { addToCart } from "../../../redux/orebiSlice";
 // import { toast } from "react-toastify";
 interface Props {
-  props: TProduct;
+  props: TProductResponse;
 }
 
 const Item = ({ props }: Props) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const id = props.id;
+  const id = props._id;
   const handleProductDetails = () => {
     router.push(`/product/${id}`);
   };
@@ -31,7 +32,7 @@ const Item = ({ props }: Props) => {
         <div>
           <Image className="w-full h-full" imgSrc={props.image} />
         </div>
-        <div className="absolute top-6 left-8">
+        <div className="absolute top-6 left-8 bg-black">
           {true && <Badge text="New" />}
         </div>
         <div className="w-full h-32 absolute bg-white -bottom-[130px] group-hover:bottom-0 duration-700">
@@ -43,17 +44,16 @@ const Item = ({ props }: Props) => {
               </span>
             </li>
             <li
-              onClick={
-                () =>
-                  dispatch(
-                    addToCart({
-                      id: props.id,
-                      name: props.name,
-                      price: props.price,
-                      image: props.image,
-                    })
-                  )
-                // console.log("Add to cart")
+              onClick={() =>
+                // dispatch(
+                //   addToCart({
+                //     id: props.id,
+                //     name: props.name,
+                //     price: props.price,
+                //     image: props.image,
+                //   })
+                // )
+                console.log("Add to cart")
               }
               className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full"
             >
@@ -77,11 +77,13 @@ const Item = ({ props }: Props) => {
       <div className="max-w-80 py-6 flex flex-col gap-1 border-[1px] border-t-0 px-4">
         <div className="flex items-center justify-between font-titleFont">
           <h2 className="text-lg text-primeColor font-bold">{props.name}</h2>
-          <p className="text-[#767676] text-[14px]">${props.price}</p>
+          <p className="text-[#767676] text-[14px]">
+            {formatPriceVND(props.price)}
+          </p>
         </div>
-        <div>
+        {/* <div>
           <p className="text-[#767676] text-[14px]">{props.title}</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
