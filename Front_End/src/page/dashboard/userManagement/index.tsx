@@ -9,7 +9,7 @@ interface Props {
     data: any;
 }
 
-export default function UserPage({ props, data }: Props) {
+export default function UserManagementPage({ props, data }: Props) {
     console.log("log::", data);
     const columns: TableColumnsType<TUserBase> = [
         {

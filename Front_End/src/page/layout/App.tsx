@@ -57,6 +57,7 @@ const SilderBar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           selectedKeys={selectedKeys}
           openKeys={openKeys}
           onOpenChange={onOpenChange}
+          style={{}}
         />
       </Sider>
       <Layout>

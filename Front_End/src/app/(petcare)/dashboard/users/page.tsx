@@ -1,6 +1,7 @@
 
 import userApi from "@/actions/users";
-import UserPage from "@/page/dashboard/admin";
+import FeedBackManagementPage from "@/page/dashboard/feedbackManagement";
+import UserManagementPage from "@/page/dashboard/userManagement";
 import { cookies } from "next/headers";
 import React from "react";
 
@@ -16,7 +17,7 @@ export default async function Admin(props: any) {
 
   return (
     <>
-      <UserPage props={props} data={response.payload} /> 
+      <UserManagementPage props={props} data={response.payload} /> 
     </>
   );
 }

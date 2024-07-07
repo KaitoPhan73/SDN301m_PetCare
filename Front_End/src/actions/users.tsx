@@ -9,7 +9,7 @@ const userApi = {
     });
   },
   getUserById: (id: string) => {
-    return httpPetCare.get<TUser>(`/user`);
+    return httpPetCare.get<TUser>(`/user/${id}`);
   },
 };
 

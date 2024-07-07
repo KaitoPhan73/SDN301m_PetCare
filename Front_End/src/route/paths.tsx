@@ -7,8 +7,8 @@ const ROOT_USER = "/users";
 
 const PATH_DASHBOARD = {
   root: ROOT_DASHBOARD,
-  admin: path(ROOT_DASHBOARD, "/admin"),
-  manager: path(ROOT_DASHBOARD, "/manager"),
+  users: path(ROOT_DASHBOARD, "/users"),
+  feedbacks: path(ROOT_DASHBOARD, "/feedbacks"),
 };
 
 
