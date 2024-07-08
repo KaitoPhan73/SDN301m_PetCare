@@ -1,12 +1,8 @@
+import {isHasAdminRight, protectedRoute} from "../middleware/authMiddleware";
+import {Router} from "express";
+import {deleteRoom, getRoom, getRooms, insertRoom, updateRoom,} from "../controllers/roomController";
+
 const express = require("express");
-import { Router } from "express";
-import {
-  deleteRoom,
-  getRoom,
-  getRooms,
-  insertRoom,
-  updateRoom,
-} from "../controllers/roomController";
 
 const router: Router = express.Router();
 
@@ -14,9 +10,9 @@ router.get("/", getRooms);
 
 router.get("/:roomId", getRoom);
 
-router.post("/", insertRoom);
+router.post("/", protectedRoute, isHasAdminRight, insertRoom);
 
-router.patch("/:roomId", updateRoom);
+router.patch("/:roomId", protectedRoute, isHasAdminRight, updateRoom);
 
-router.delete("/:roomId", deleteRoom);
+router.delete("/:roomId", protectedRoute, isHasAdminRight, deleteRoom);
 export default router;
