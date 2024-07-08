@@ -10,6 +10,12 @@ const BookingDetailApi = {
   createBookingDetail: (data: TBookingDetailRequest) => {
     return httpPetCare.post<TBookingDetailResponse>("/booking-detail", data);
   },
+  updateBookingDetail: (id: string, data: any) => {
+    return httpPetCare.patch<TBookingDetailResponse>(
+      `/booking-detail/${id}`,
+      data
+    );
+  },
 };
 
 export default BookingDetailApi;

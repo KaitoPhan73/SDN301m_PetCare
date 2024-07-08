@@ -1,10 +1,6 @@
 "use client";
 
-import CustomTable from "@/components/FeTable/CustomTable";
-import { TBrandBase } from "@/types/Brand";
-import { TableColumnsType } from "antd";
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 
 export default function AboutPage() {
   return (
@@ -12,22 +8,20 @@ export default function AboutPage() {
       <div className="flex flex-col lg:flex-row justify-between gap-8">
         <div className="w-full lg:w-5/12 flex flex-col justify-center">
           <h1 className="text-3xl lg:text-4xl font-bold leading-9 text-gray-800 dark:text-black pb-4">
-            About Us
+            About Our PetCare Center
           </h1>
           <p className="font-normal text-base leading-6 text-gray-600 dark:text-black">
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout. The point
-            of using Lorem Ipsum.In the first place we have granted to God, and
-            by this our present charter confirmed for us and our heirs forever
-            that the English Church shall be free, and shall have her rights
-            entire, and her liberties inviolate; and we will that it be thus
-            observed; which is apparent from
+            Welcome to our PetCare Center, where we are passionate about caring
+            for your pets. We provide a wide range of services including health
+            check-ups, vaccinations, grooming, and daily care routines. Our
+            dedicated team ensures that your pets receive the best possible care
+            and attention they deserve.
           </p>
         </div>
         <div className="w-full lg:w-8/12">
           <img
             className="w-full h-full"
-            src="https://i.ibb.co/FhgPJt8/Rectangle-116.png"
+            src="https://www.sjcfl.us/wp-content/uploads/2023/10/tabby-cat-brown-dog-snuggling-1600.jpg"
             alt="A group of People"
           />
         </div>
@@ -39,13 +33,10 @@ export default function AboutPage() {
             Our Story
           </h1>
           <p className="font-normal text-base leading-6 text-gray-600 dark:text-black">
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout. The point
-            of using Lorem Ipsum.In the first place we have granted to God, and
-            by this our present charter confirmed for us and our heirs forever
-            that the English Church shall be free, and shall have her rights
-            entire, and her liberties inviolate; and we will that it be thus
-            observed; which is apparent from
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
           </p>
         </div>
         <div className="w-full lg:w-8/12 lg:pt-8">

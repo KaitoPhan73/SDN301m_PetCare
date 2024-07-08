@@ -1,24 +1,19 @@
 "use client";
-import React, { useState } from "react";
-import { BsSuitHeartFill } from "react-icons/bs";
-import { GiReturnArrow } from "react-icons/gi";
-import { FaShoppingCart } from "react-icons/fa";
+import React from "react";
+
 import { MdOutlineLabelImportant } from "react-icons/md";
 import Image from "@/components/designLayouts/Image";
 import Badge from "./Badge";
-import { useDispatch } from "react-redux";
+
 import { useRouter } from "next/navigation";
-// import { addToCart } from "@/redux/Cart/cartSlice";
+
 import { TProductResponse } from "@/schemaValidations/product.schema";
 import { formatPriceVND } from "@/lib/utils";
-// import { addToCart } from "../../../redux/orebiSlice";
-// import { toast } from "react-toastify";
 interface Props {
   props: TProductResponse;
 }
 
 const Item = ({ props }: Props) => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const id = props._id;
   const handleProductDetails = () => {
@@ -35,55 +30,24 @@ const Item = ({ props }: Props) => {
         <div className="absolute top-6 left-8 bg-black">
           {true && <Badge text="New" />}
         </div>
-        <div className="w-full h-32 absolute bg-white -bottom-[130px] group-hover:bottom-0 duration-700">
-          <ul className="w-full h-full flex flex-col items-end justify-center gap-2 font-titleFont px-2 border-l border-r">
-            <li className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full">
-              Compare
-              <span>
-                <GiReturnArrow />
-              </span>
-            </li>
-            <li
-              onClick={() =>
-                // dispatch(
-                //   addToCart({
-                //     id: props.id,
-                //     name: props.name,
-                //     price: props.price,
-                //     image: props.image,
-                //   })
-                // )
-                console.log("Add to cart")
-              }
-              className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full"
-            >
-              Add to Cart
-              <span>
-                <FaShoppingCart />
-              </span>
-            </li>
-            <li
-              onClick={handleProductDetails}
-              className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full"
-            >
-              View Details
-              <span className="text-lg">
-                <MdOutlineLabelImportant />
-              </span>
-            </li>
-          </ul>
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button
+            className="rounded-full w-full max-w-[150px] py-3 text-center justify-center items-center bg-black font-semibold text-lg text-white flex transition-all duration-500 hover:bg-gray-200 hover:text-black"
+            onClick={handleProductDetails}
+          >
+            <span className="px-2">View Details</span>
+          </button>
         </div>
       </div>
       <div className="max-w-80 py-6 flex flex-col gap-1 border-[1px] border-t-0 px-4">
         <div className="flex items-center justify-between font-titleFont">
-          <h2 className="text-lg text-primeColor font-bold">{props.name}</h2>
+          <h2 className="text-lg text-primeColor font-bold truncate ">
+            {props.name}
+          </h2>
           <p className="text-[#767676] text-[14px]">
             {formatPriceVND(props.price)}
           </p>
         </div>
-        {/* <div>
-          <p className="text-[#767676] text-[14px]">{props.title}</p>
-        </div> */}
       </div>
     </div>
   );

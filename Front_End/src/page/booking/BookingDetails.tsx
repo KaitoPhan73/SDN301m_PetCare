@@ -1,7 +1,14 @@
 "use client";
 import React from "react";
-import { Grid } from "@mui/material";
+import { Grid, styled } from "@mui/material";
 import BookingDetail from "./Detail";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+
+const StyledGrid = styled(Grid)({
+  maxHeight: 300,
+  overflow: "auto",
+});
 
 interface BookingDetailsProps {
   fields: any[]; // Assuming this matches your fields structure
@@ -12,9 +19,10 @@ const BookingDetails: React.FC<BookingDetailsProps> = ({
   handleRemoveById,
   fields,
 }) => {
+  const carts = useSelector((state: RootState) => state.cart.products);
   return (
-    <Grid container spacing={2}>
-      {fields.map((item, index) => (
+    <StyledGrid container spacing={2}>
+      {carts.map((item: any, index: number) => (
         <BookingDetail
           key={item.id}
           item={item}
@@ -22,7 +30,7 @@ const BookingDetails: React.FC<BookingDetailsProps> = ({
           handleRemoveById={handleRemoveById}
         />
       ))}
-    </Grid>
+    </StyledGrid>
   );
 };
 
