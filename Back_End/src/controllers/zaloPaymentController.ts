@@ -3,7 +3,7 @@ import { createOrder, checkOrderStatus } from "../services/zaloPayService";
 
 export const paymentHandler = async (req: Request, res: Response) => {
   try {
-    const result = await createOrder();
+    const result = await createOrder(+req.body.amount);
     return res.status(200).json(result);
   } catch (error) {
     console.error(error);

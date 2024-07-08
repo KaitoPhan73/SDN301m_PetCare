@@ -13,7 +13,10 @@ function Items({ dataSource }: Props) {
   return (
     <>
       {dataSource.items.map((item: any) => (
-        <div key={item.id} className="w-full">
+        <div
+          key={item.id}
+          className="group relative bg-white rounded-2xl p-4 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-50"
+        >
           <Item props={item} />
         </div>
       ))}

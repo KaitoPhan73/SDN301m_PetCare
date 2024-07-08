@@ -1,7 +1,6 @@
 import jwt, {JwtPayload} from "jsonwebtoken";
 import nodemailer from "nodemailer"
-
-const bcrypt = require("bcryptjs");
+import bcrypt from "bcryptjs"
 
 export const comparePassword = async (
     passwordInput: string,

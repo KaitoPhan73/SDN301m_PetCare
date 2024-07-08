@@ -8,7 +8,7 @@ const ProductsOnSale = ({ dataSource }: Props) => {
   return (
     <div>
       <h3 className="font-titleFont text-xl font-semibold mb-6 underline underline-offset-4 decoration-[1px]">
-        Các dịch vụ
+        Included services
       </h3>
       <div className="flex flex-col gap-2">
         {dataSource.map((item: any) => (
