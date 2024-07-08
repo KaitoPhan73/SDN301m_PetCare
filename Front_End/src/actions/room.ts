@@ -1,15 +1,15 @@
 import { httpPetCare } from "@/lib/http";
-import { TRoomBase } from "@/types/Room";
+import { TRoomResponse } from "@/schemaValidations/room.schema";
 import { TTableResponse } from "@/types/Table";
 
 const RoomApi = {
   getRooms: (params?: any) => {
-    return httpPetCare.get<TTableResponse<TRoomBase>>("/room", {
+    return httpPetCare.get<TTableResponse<TRoomResponse>>("/room", {
       params,
     });
   },
   getRoomById: (id: string) => {
-    return httpPetCare.get<TRoomBase>(`/room/${id}`);
+    return httpPetCare.get<TRoomResponse>(`/room/${id}`);
   },
 };
 

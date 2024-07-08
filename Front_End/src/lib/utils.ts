@@ -1,8 +1,13 @@
 import { EntityError } from "@/lib/http";
 import { type ClassValue, clsx } from "clsx";
+import dayjs from "dayjs";
 import { UseFormSetError } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -48,16 +53,32 @@ export const formatPriceVND = (price: any) => {
   });
 };
 
-export const formatDate = (date: any) => {
-  if (!(date instanceof Date)) return "";
+export const formatDate = (date: any, tz: string = "Asia/Ho_Chi_Minh") => {
+  if (!date) return "";
 
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
+  let parsedDate;
+
+  // Kiểm tra nếu date là một chuỗi ISO hoặc Date object
+  if (typeof date === "string" || date instanceof Date) {
+    parsedDate = dayjs(date).tz(tz);
+  } else {
+    return ""; // Trả về chuỗi rỗng nếu không phải dạng chuỗi hoặc Date
+  }
+
+  // Lấy ngày, tháng, năm, giờ, phút từ đối tượng dayjs đã phân biệt múi giờ
+  const day = String(parsedDate.date()).padStart(2, "0");
+  const month = String(parsedDate.month() + 1).padStart(2, "0"); // month() trả về giá trị từ 0-11
+  const year = parsedDate.year();
+  const hours = String(parsedDate.hour()).padStart(2, "0");
+  const minutes = String(parsedDate.minute()).padStart(2, "0");
 
   return `${day}/${month}/${year} ${hours}:${minutes}`;
+};
+
+export const formatTime = (minutes: any) => {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  return `${hours > 0 ? `${hours} hour ` : ""}${remainingMinutes} minutes`;
 };
 
 // export const decodeJWT = <Payload = any>(token: string) => {

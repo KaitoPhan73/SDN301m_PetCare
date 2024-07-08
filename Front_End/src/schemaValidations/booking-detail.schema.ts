@@ -1,5 +1,7 @@
 import _ from "lodash";
 import { z } from "zod";
+import { TPackageResponse } from "./package.schema";
+import { TRoomResponse } from "./room.schema";
 
 export const BookingDetailSchema = z.object({
   checkInDate: z.date() || z.string(),
@@ -14,6 +16,7 @@ export const BookingDetailForBookingSchema = z.object({
   price: z.number(),
   packageId: z.string(),
   roomId: z.string(),
+  status: z.string().optional(),
 });
 
 export type TBookingDetailRequest = z.TypeOf<typeof BookingDetailSchema>;
@@ -25,6 +28,8 @@ export type TBookingDetailForBookingRequest = z.TypeOf<
 export type TBookingDetailResponse = TBookingDetailRequest & {
   _id: string;
   status: string;
+  packageId: TPackageResponse;
+  roomId: TRoomResponse;
   createdAt: string;
   updatedAt: string;
   checkOutDate: string;

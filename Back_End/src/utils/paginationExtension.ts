@@ -3,7 +3,8 @@ import { TPagination } from "../types/pagination";
 
 interface IPopulateOptions {
   path: string;
-  select?: string;
+  select?: string | string[] | object;
+  match?: object;
   model?: Model<Document>;
 }
 

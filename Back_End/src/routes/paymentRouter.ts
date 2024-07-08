@@ -1,12 +1,10 @@
 import express from "express";
-import {
-  paymentHandler,
-  orderStatusHandler,
-} from "../controllers/zaloPaymentController";
+import {orderStatusHandler, paymentHandler,} from "../controllers/zaloPaymentController";
+import {protectedRoute} from "../middleware/authMiddleware";
 
 const router = express.Router();
 
-router.post("/zalopay", paymentHandler);
-router.post("/order-status/:app_trans_id", orderStatusHandler);
+router.post("/zalopay", protectedRoute, paymentHandler);
+router.post("/order-status/:app_trans_id", protectedRoute, orderStatusHandler);
 
 export default router;
