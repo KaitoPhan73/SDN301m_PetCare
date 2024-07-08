@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { InputField } from "@/components/form";
 import { Grid } from "@mui/material";
+import userApi from "@/actions/users";
+import { useSnackbar } from "notistack";
 
 type PasswordFormBodyType = {
   username: string;
@@ -21,7 +23,7 @@ const PasswordFormBody = z.object({
 
 export default function PasswordForm() {
   const router = useRouter();
-
+  const { enqueueSnackbar } = useSnackbar();
   const form = useForm<PasswordFormBodyType>({
     resolver: zodResolver(PasswordFormBody),
     defaultValues: {
@@ -30,12 +32,17 @@ export default function PasswordForm() {
     },
   });
 
-  async function onSubmit(value: PasswordFormBodyType) {
+  async function onSubmit(values: PasswordFormBodyType) {
     try {
-      form.reset();
-      // router.push(configRoute.password)
-      router.refresh();
+      console.log(values);
+      const response = await userApi.updatePassword(values);
+      if (response.status === 200) {
+        enqueueSnackbar("Update password successfully", { variant: "success" });
+        router.push("/logout");
+      }
     } catch (error: any) {
+      enqueueSnackbar("Update password failed", { variant: "error" });
+      form.reset();
       console.error(error);
     }
   }
