@@ -4,8 +4,11 @@ import BookingDetailForBookingSchema, {
 } from "./booking-detail.schema";
 import { TUser } from "./user.schema";
 
-const BookingSchema = z.object({
+export const BookingSchema = z.object({
+  detail: z.string(),
   userId: z.string(),
+  status: z.boolean({required_error: "Status is required"}),
+  totalPrice: z.number(),
   bookingDetails: z.array(BookingDetailForBookingSchema),
 });
 
@@ -20,5 +23,3 @@ export type TBookingResponse = TBookingRequest & {
   createdAt: string;
   updatedAt: string;
 };
-
-export default BookingSchema;

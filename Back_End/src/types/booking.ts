@@ -12,6 +12,7 @@ export interface IBooking extends Document {
   createDate: Date;
   modifiedDate: Date;
   userId: ObjectId;
+  userName:ObjectId;
   status: BookingStatus;
   bookingStatus: String;
   totalPrice: number;

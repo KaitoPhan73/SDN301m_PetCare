@@ -4,19 +4,15 @@ import {
   getUser,
   insertUser,
   updateUser,
-} from "../controllers/UserController";
-import {
-  deleteFeedBack,
-  getFeedBack,
-  insertFeedBack,
-  updateFeedBack,
-} from "../controllers/feedbackController";
+} from "../controllers/userController";
+
 import {
   deleteRoom,
   getRoom,
   insertRoom,
   updateRoom,
 } from "../controllers/roomController";
+import { deleteFeedback, getFeedback, insertFeedback, updateFeedback } from "../controllers/feedbackController";
 
 const router: Router = express.Router();
 
@@ -30,13 +26,13 @@ router.post("/user", insertUser);
 router.patch("/user/:userId", updateUser);
 
 //feedback api
-router.get("/feedbacks", getFeedBack);
+router.get("/feedbacks", getFeedback);
 
-router.post("/feedback", insertFeedBack);
+router.post("/feedback", insertFeedback);
 
-router.put("/feedback/:feedbackId", updateFeedBack);
+router.put("/feedback/:feedbackId", updateFeedback);
 
-router.delete("/feedback/:feedbackId", deleteFeedBack);
+router.delete("/feedback/:feedbackId", deleteFeedback);
 
 //room api
 router.post("/room", insertRoom);

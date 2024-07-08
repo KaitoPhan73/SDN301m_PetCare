@@ -2,6 +2,7 @@ import { z } from "zod";
 import { ServiceSchema } from "./service.schema";
 
 export const PackageSchema = z.object({
+  detail: z.string(),
   description: z.string(),
   name: z.string(),
   price: z.number(),
@@ -10,7 +11,7 @@ export const PackageSchema = z.object({
   discount: z.number().min(0).max(100).optional(),
 });
 
-export type TPackageRequest = z.TypeOf<typeof PackageSchema> & {
+export type TPackageRequest = z.infer<typeof PackageSchema> & {
   discount: number;
 };
 
