@@ -12,7 +12,7 @@ type Prop = {
 export default function ShopPage({ data, props }: Prop) {
   return (
     <div className="max-w-container mx-auto px-20">
-      <Breadcrumbs title="Products" />
+      <Breadcrumbs title="Combo" />
       <div className="w-full h-full flex pb-20 gap-10">
         <div className="w-[20%] lgl:w-[25%] mdl:inline-flex h-full">
           <ShopSideNav />

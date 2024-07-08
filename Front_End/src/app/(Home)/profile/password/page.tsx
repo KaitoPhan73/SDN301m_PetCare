@@ -1,4 +1,4 @@
-// import { PasswordForm } from "@/app/(browse)/profile/components/password-form";
+import PasswordForm from "../components/password-form";
 import { Separator } from "@/components/ui/separator";
 
 function page() {
@@ -11,7 +11,7 @@ function page() {
         </p>
       </div>
       <Separator />
-      {/* <PasswordForm /> */}
+      <PasswordForm />
     </div>
   );
 }

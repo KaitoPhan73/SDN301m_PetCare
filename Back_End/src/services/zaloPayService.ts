@@ -6,9 +6,9 @@ import { zaloPayPostData } from "../types/zaloPayPostData";
 
 import moment from "moment";
 
-export const createOrder = async (): Promise<any> => {
+export const createOrder = async (amount: number): Promise<any> => {
   const embed_data = {
-    redirecturl: "https://pcrender.com",
+    redirecturl: "http://localhost:3000/paymentcomplete",
   };
 
   const items: Record<string, unknown>[] = [{}];
@@ -20,7 +20,7 @@ export const createOrder = async (): Promise<any> => {
     app_time: Date.now(),
     item: JSON.stringify(items),
     embed_data: JSON.stringify(embed_data),
-    amount: 50000,
+    amount: amount,
     description: `Lazada - Payment for the order #${transID}`,
     bank_code: "",
     callback_url: "https://9620-116-110-41-166.ngrok-free.app/callback",

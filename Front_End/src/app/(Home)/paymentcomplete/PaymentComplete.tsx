@@ -58,8 +58,6 @@ export default function PaymentCompletePage({ data }: Props) {
           bookingDetails: bookingDetailsIds,
         });
 
-        console.log("Booking response", bookingResponse);
-
         // Xóa cart trong localStorage và reset cart trong Redux store
         localStorage.removeItem("cart");
         dispatch(resetCart());
@@ -76,7 +74,7 @@ export default function PaymentCompletePage({ data }: Props) {
       setCountdown((prevCountdown) => {
         if (prevCountdown <= 1) {
           clearInterval(timer);
-          router.push("/");
+          router.push("/homepage");
           router.refresh();
           return 0;
         }

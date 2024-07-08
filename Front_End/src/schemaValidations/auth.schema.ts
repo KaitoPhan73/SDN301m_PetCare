@@ -1,14 +1,12 @@
 import { message } from "antd";
 import z, { boolean } from "zod";
 
-export const AuthBase = z.object({
-  accessToken: z.string(),
-  id: z.string(),
+export const RegisterSchema = z.object({
   username: z.string(),
-  name: z.string(),
+  password: z.string(),
+  email: z.string(),
+  confirmPassword: z.string(),
   role: z.string(),
-  status: z.string(),
-  brandName: z.string(),
 });
 
 export const LoginBody = z
@@ -18,10 +16,6 @@ export const LoginBody = z
   })
   .strict();
 
- 
-
- 
 export type TLoginBody = z.TypeOf<typeof LoginBody>;
-export const LoginResponse = AuthBase;
 
-export type TLoginResponse = z.TypeOf<typeof LoginResponse>;
+export type TRegisterRequest = z.TypeOf<typeof RegisterSchema>;

@@ -1,4 +1,4 @@
-import { Booking, BookingDetail } from "../models";
+import { Booking, BookingDetail, User } from "../models";
 import { BookingStatus, IBooking } from "../types/booking";
 import moment from "moment-timezone";
 import { TPagination } from "../types/pagination";
@@ -9,7 +9,22 @@ export const getBookings = async (
   options: any
 ): Promise<TPagination<IBooking>> => {
   try {
-    const result = await paginate(Booking, options);
+    let updatedOptions = {
+      ...options,
+      populate: {
+        path: "userId",
+        select: "_id username",
+      },
+    };
+    if (options.userId) {
+      const userObj = await User.findById(options.userId).select("_id").exec();
+      updatedOptions = {
+        ...updatedOptions,
+        userId: userObj?._id,
+      };
+    }
+
+    const result = await paginate(Booking, updatedOptions);
 
     // Iterate through each booking to calculate totalPrice
     for (const booking of result.items) {
@@ -33,6 +48,7 @@ export const getBookings = async (
 
     return result;
   } catch (error) {
+    console.error("Error fetching bookings:", error);
     throw new Error("Error fetching bookings");
   }
 };
@@ -42,7 +58,13 @@ export const getBookingById = async (
 ): Promise<IBooking | null> => {
   try {
     const booking = await Booking.findById(bookingId)
-      .populate("bookingDetails")
+      .populate({
+        path: "bookingDetails",
+        populate: [
+          { path: "packageId", model: "Package" },
+          { path: "roomId", model: "Room" },
+        ],
+      })
       .exec();
 
     if (booking) {

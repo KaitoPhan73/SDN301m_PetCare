@@ -11,7 +11,7 @@ import { TPackageResponse } from "@/schemaValidations/package.schema";
 type Props = {
   item: any;
   index: number;
-  handleRemoveById: (id: string) => void;
+  handleRemoveById: (id: any, index: number) => void;
 };
 
 export default function BookingDetail({
@@ -46,6 +46,7 @@ export default function BookingDetail({
     }
     return "Loading...";
   };
+  console.log("sdsdsd", item);
 
   return (
     <Grid item xs={12} md={6} lg={6} key={index}>
@@ -57,7 +58,7 @@ export default function BookingDetail({
             </Grid>
             <Grid item>
               <IconButton
-                onClick={() => handleRemoveById(index)}
+                onClick={() => handleRemoveById(item.id, index)}
                 style={{ marginLeft: "auto" }}
               >
                 <CloseIcon />
@@ -65,20 +66,20 @@ export default function BookingDetail({
             </Grid>
           </Grid>
           <Typography variant="body1">
-            <strong>Phòng:</strong> {roomName || "Loading..."}
+            <strong>Room:</strong> {roomName || "Loading..."}
           </Typography>
           <Typography variant="body1">
             <strong>Combo:</strong>{" "}
             {packageObj ? packageObj.name : <span>Loading...</span>}
           </Typography>
           <Typography variant="body1">
-            <strong>Giá:</strong> {formatPriceVND(item.price)}
+            <strong>Price:</strong> {formatPriceVND(item.price)}
           </Typography>
           <Typography variant="body1">
-            <strong>Ngày nhận phòng:</strong> {formatDate(item.checkInDate)}
+            <strong>CheckIn:</strong> {formatDate(item.checkInDate)}
           </Typography>
           <Typography variant="body1">
-            <strong>Ngày trả phòng:</strong> {calculateCheckOut()}
+            <strong>CheckOut:</strong> {formatDate(item.checkOutDate)}
           </Typography>
         </CardContent>
       </Card>

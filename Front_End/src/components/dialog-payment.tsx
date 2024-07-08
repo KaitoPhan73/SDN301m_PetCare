@@ -36,12 +36,12 @@ export function DialogPayment() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-indigo-600 font-semibold text-lg text-white flex transition-all duration-500 hover:bg-indigo-700">
+        <button className="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-indigo-600 font-semibold text-lg text-white flex transition-all duration-500 hover:bg-black">
           <span className="px-2">Continue to Payment</span>
           <ChevronRight className="w-6 h-6 text-white" />
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-white p-6 rounded-lg shadow-lg">
         <DialogHeader>
           <DialogTitle>Payment Method</DialogTitle>
           <DialogDescription>Choose a payment method to pay.</DialogDescription>

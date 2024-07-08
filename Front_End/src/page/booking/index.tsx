@@ -140,13 +140,13 @@ export default function BookingPage({ data }: Props) {
 
   const handleClosePackageSelection = () => setShowPackageSelection(false);
 
-  const handleRemoveById = (id: string) => {
+  const handleRemoveById = (id: string, index: number) => {
     // Tìm chỉ mục của phần tử cần xoá dựa trên id
     const indexToRemove = fields.findIndex((field) => field.id === id);
-    dispatch(deleteItem(id));
+    dispatch(deleteItem(index));
+    remove(index);
     // if (indexToRemove !== -1) {
-    //   // remove(indexToRemove);
-    //   dispatch(deleteItem(id));
+    //   remove(indexToRemove);
     // }
   };
 
@@ -229,6 +229,7 @@ export default function BookingPage({ data }: Props) {
       packageId: selectedPackage._id,
       roomId: roomId,
       checkInDate: checkInDate.toDate(),
+      checkOutDate: roomCheckOutTime.toDate(),
       price: selectedPackage.price + responseRoomPrice,
     };
 
@@ -258,32 +259,32 @@ export default function BookingPage({ data }: Props) {
                 {carts.length > 0 ? (
                   <>
                     <Grid item xs={6}>
-                      <Button
-                        variant="contained"
+                      <button
                         onClick={handleOpenPackageSelection}
+                        className="rounded-full w-full max-w-[200px] py-4 text-center justify-center items-center bg-indigo-600 font-semibold text-lg text-white flex transition-all duration-500 hover:bg-black"
                       >
-                        Chọn combo
-                      </Button>
+                        <span className="px-2">More combo</span>
+                      </button>
                     </Grid>
                     <Grid item xs={6}>
-                      {/* <Button
-                        variant="contained"
-                        onClick={handleSubmit(onSubmit)}
-                      >
-                        Booking Now
-                      </Button> */}
                       <DialogPayment />
                     </Grid>
                   </>
                 ) : (
-                  <Grid item xs={6}>
-                    <Button
-                      variant="contained"
-                      size="large"
+                  <Grid
+                    container
+                    item
+                    xs={12}
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ height: "200px" }}
+                  >
+                    <button
                       onClick={handleOpenPackageSelection}
+                      className="rounded-full w-full max-w-[280px] py-8 text-center justify-center items-center bg-black font-semibold text-lg text-white flex transition-all duration-500 hover:bg-gray-100 hover:text-black"
                     >
-                      Click here to start Booking
-                    </Button>
+                      <span className="px-2">Click Here To Booking</span>
+                    </button>
                   </Grid>
                 )}
               </Grid>

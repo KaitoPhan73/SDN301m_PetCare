@@ -1,33 +1,32 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
+import { InputField } from "@/components/form";
+import { Grid } from "@mui/material";
 
 type PasswordFormBodyType = {
+  username: string;
   password: string;
-  newPassword: string;
-  confirmedPassword: string;
 };
 
 const PasswordFormBody = z.object({
+  username: z.string().min(1, "Username is required"),
   password: z.string().min(1, "Current password is required"),
-  newPassword: z.string().min(1, "New password is required"),
-  confirmedPassword: z.string().min(1, "Confirmed password is required"),
 });
 
-export function PasswordForm() {
+export default function PasswordForm() {
   const router = useRouter();
 
   const form = useForm<PasswordFormBodyType>({
     resolver: zodResolver(PasswordFormBody),
     defaultValues: {
+      username: "",
       password: "",
-      confirmedPassword: "",
-      newPassword: "",
     },
   });
 
@@ -42,66 +41,30 @@ export function PasswordForm() {
   }
 
   return (
-    <>This is password form</>
-    // <Form {...form}>
-    //   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-    //     <FormField
-    //       control={form.control}
-    //       name="password"
-    //       render={({ field }) => (
-    //         <FormItem>
-    //           <FormLabel>Current password</FormLabel>
-    //           <FormControl>
-    //             <Input
-    //               placeholder="Current password"
-    //               type="password"
-    //               {...field}
-    //             />
-    //           </FormControl>
-    //           <FormDescription>
-    //             For security reasons, we need your current password to make
-    //             changes to your account.
-    //           </FormDescription>
-    //           <FormMessage />
-    //         </FormItem>
-    //       )}
-    //     />
-    //     <FormField
-    //       control={form.control}
-    //       name="newPassword"
-    //       render={({ field }) => (
-    //         <FormItem>
-    //           <FormLabel>New password</FormLabel>
-    //           <FormControl>
-    //             <Input placeholder="New password" type="password" {...field} />
-    //           </FormControl>
-    //           <FormDescription>
-    //             Your new password must be at least 6 characters long.
-    //           </FormDescription>
-    //           <FormMessage />
-    //         </FormItem>
-    //       )}
-    //     />
-    //     <FormField
-    //       control={form.control}
-    //       name="confirmedPassword"
-    //       render={({ field }) => (
-    //         <FormItem>
-    //           <FormLabel>Confirm password</FormLabel>
-    //           <FormControl>
-    //             <Input
-    //               placeholder="Confirm password"
-    //               type="password"
-    //               {...field}
-    //             />
-    //           </FormControl>
-    //           <FormDescription>Confirm your new password.</FormDescription>
-    //           <FormMessage />
-    //         </FormItem>
-    //       )}
-    //     />
-    //     <Button className="!mt-8">Update password</Button>
-    //   </form>
-    // </Form>
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <Grid container spacing={2}>
+          {/* Grid item cho trường username */}
+          <Grid item xs={12} sm={12}>
+            <InputField name="username" label="Input your user name" />
+          </Grid>
+
+          {/* Grid item cho trường password */}
+          <Grid item xs={12} sm={12}>
+            <InputField name="password" label="New password" />
+          </Grid>
+
+          {/* Grid item cho nút submit */}
+          <Grid item xs={3}>
+            <Button
+              type="submit"
+              className="w-full bg-black text-white hover:bg-gray-200 hover:text-black transition duration-300"
+            >
+              Update password
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </FormProvider>
   );
 }
