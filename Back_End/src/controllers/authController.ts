@@ -176,10 +176,16 @@ export const AuthController = {
     signup: async (req: Request, res: Response): Promise<void> => {
         try {
             const {username, password, role, email, confirmPassword} = req.body;
-            verifyEmail(email);
-            const user = await userService.findUserByEmail(email);
-            if (user) {
-                res.status(400).json({message: "Account already exists"});
+            console.log(req.body)
+            await verifyEmail(email);
+            const isExistingEmail = await userService.findUserByEmail(email);
+            if (isExistingEmail) {
+                res.status(400).json({message: "Email already exists"});
+                return;
+            }
+            const isExistingUsername = await userService.findUserByUserName(username);
+            if (isExistingUsername) {
+                res.status(400).json({message: "Username already exists"});
                 return;
             }
             if (password !== confirmPassword) {
@@ -188,7 +194,7 @@ export const AuthController = {
                 });
                 return;
             }
-            if (user === null) {
+            if (!isExistingEmail && !isExistingUsername) {
                 const hashPassword = await hashedPassword(password);
                 const createdUser = await User.create({
                     email: email.toLowerCase(),
@@ -198,10 +204,9 @@ export const AuthController = {
                     password: hashPassword,
                 });
 
-                res.status(201).json({
-                    message: "Sign up successfully",
-                    user: createdUser,
-                });
+                res.status(201).json(
+                    createdUser
+                );
             }
         } catch (error) {
             console.error("Error register:", error);
@@ -213,6 +218,7 @@ export const AuthController = {
         try {
             const username = req.body.username;
             const user = await findUserByUserName(username);
+            console.log(user)
             if (!user) {
                 return res.status(403).json({message: "User not found"});
             }
@@ -238,9 +244,9 @@ export const AuthController = {
             await userService.updatePassword(user, hashPassword);
             return res.status(200).json({message: "Update password successfully"});
         } catch (error) {
-        console.error("Error forgot password:", error);
-        res.status(500).json({message: "Server error"});
-        return;
-    }
+            console.error("Error forgot password:", error);
+            res.status(500).json({message: "Server error"});
+            return;
+        }
     }
 }
