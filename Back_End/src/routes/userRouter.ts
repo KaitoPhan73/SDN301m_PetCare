@@ -8,14 +8,15 @@ import {
     insertUser,
     updateUser,
 } from "../controllers/userController";
+import {isHasManagerRight, protectedRoute} from "../middleware/authMiddleware";
 
 const router: Router = express.Router();
 router.get("/", getUsers);
 router.get("/:userId", getUser);
 router.post("/", insertUser);
 router.put("/:userId", updateUser);
-router.get("/employees", getEmployees);
-router.get("/disable/:userId", disableUser)
-router.get("/enable/:userId", enableUser)
+router.get("/employees", protectedRoute, isHasManagerRight, getEmployees);
+router.get("/disable/:userId", protectedRoute, isHasManagerRight, disableUser)
+router.get("/enable/:userId", protectedRoute, isHasManagerRight, enableUser)
 
 export default router;

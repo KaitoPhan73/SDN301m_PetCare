@@ -39,24 +39,21 @@ export const AuthController = {
         const accessToken = await Token.generateAccessToken({
           username: user?.username,
           role: user?.role,
+          email: user?.email,
+          id: user?._id,
         });
 
-        const refreshToken = await Token.generateRefreshToken({
-          username: user?.username,
-          role: user?.role,
-        });
-
-        res.cookie("refreshToken", refreshToken, {
+        res.cookie("accessToken", accessToken, {
           httpOnly: true,
-          maxAge: 30 * 24 * 60 * 60 * 1000,
+          maxAge: 5 * 60 * 1000,
           sameSite: "none",
           secure: true,
         });
 
         res.status(200).json({
+          message: "Login successfully!",
           accessToken: accessToken,
           user: {
-            _id: user._id,
             username: user.username,
             email: user.email,
             role: user.role,
@@ -89,79 +86,79 @@ export const AuthController = {
       role: user?.role,
     });
 
-    const refreshToken = await Token.generateRefreshToken({
-      username: user?.username,
-      role: user?.role,
-    });
+    // const refreshToken = await Token.generateRefreshToken({
+    //     username: user?.username,
+    //     role: user?.role,
+    // });
 
-    res.cookie("refreshToken", refreshToken, {
+    res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      maxAge: 30 * 24 * 60 * 60 * 1000,
+      maxAge: 5 * 60 * 1000,
       sameSite: "none",
       secure: true,
     });
 
     res.status(200).json({
-      message: "Login successfully!",
       accessToken: accessToken,
       user: {
+        _id: user._id,
         username: user.username,
         email: user.email,
         role: user.role,
       },
     });
   },
-  refreshToken: async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      const rfToken = req.cookies.refreshToken;
-      const secret = process.env.REFRESH_TOKEN_SECRET;
-      if (!secret) {
-        throw new Error(
-          "REFRESH_TOKEN_SECRET is not defined in the environment variables"
-        );
-      }
-      if (!rfToken) {
-        res.status(400).json({
-          message: "Please login now",
-        });
-        return;
-      }
-
-      const decode = verifyToken(
-        rfToken,
-        process.env.REFRESH_TOKEN_SECRET as string
-      ) as IUser | jwt.JwtPayload;
-
-      if (typeof decode === "object" && "username" in decode) {
-        const user = (await userService.findUserByUserName(
-          (decode as IUser).username
-        )) as IUser;
-        if (!user) {
-          res.status(404).json({ message: "User not found" });
-          return;
-        }
-        const accessToken: string = await Token.generateAccessToken({
-          username: user?.username,
-          role: user?.role,
-        });
-
-        res.status(200).json({
-          message: "Refresh token successfully",
-          accessToken,
-          user,
-        });
-        return;
-      }
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Server error" });
-      return;
-    }
-  },
+  // refreshToken: async (
+  //     req: Request,
+  //     res: Response,
+  //     next: NextFunction
+  // ): Promise<void> => {
+  //     try {
+  //         const rfToken = req.cookies.refreshToken;
+  //         const secret = process.env.REFRESH_TOKEN_SECRET;
+  //         if (!secret) {
+  //             throw new Error(
+  //                 "REFRESH_TOKEN_SECRET is not defined in the environment variables"
+  //             );
+  //         }
+  //         // if (!rfToken) {
+  //         //     res.status(400).json({
+  //         //         message: "Please login now",
+  //         //     });
+  //         //     return;
+  //         // }
+  //
+  //         // const decode = verifyToken(
+  //         //     rfToken,
+  //         //     process.env.REFRESH_TOKEN_SECRET as string
+  //         // ) as IUser | jwt.JwtPayload;
+  //
+  //         if (typeof decode === "object" && "username" in decode) {
+  //             const user = (await userService.findUserByUserName(
+  //                 (decode as IUser).username
+  //             )) as IUser;
+  //             if (!user) {
+  //                 res.status(404).json({message: "User not found"});
+  //                 return;
+  //             }
+  //             const accessToken: string = await Token.generateAccessToken({
+  //                 username: user?.username,
+  //                 role: user?.role,
+  //             });
+  //
+  //             res.status(200).json({
+  //                 message: "Refresh token successfully",
+  //                 accessToken,
+  //                 user,
+  //             });
+  //             return;
+  //         }
+  //     } catch (error) {
+  //         console.error("Error fetching user:", error);
+  //         res.status(500).json({message: "Server error"});
+  //         return;
+  //     }
+  // },
   logout: async (req: Request, res: Response): Promise<void> => {
     try {
       res.clearCookie("refreshToken", {

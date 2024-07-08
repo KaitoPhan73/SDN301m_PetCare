@@ -1,6 +1,7 @@
-import jwt, {JwtPayload} from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer"
 import bcrypt from "bcryptjs"
+import {IUser} from "../types/user";
 
 export const comparePassword = async (
     passwordInput: string,
@@ -15,13 +16,19 @@ export const comparePassword = async (
 };
 export const verifyToken = async (
     rfToken: string,
-    variableEnvironment: string
-): Promise<string | JwtPayload> => {
+): Promise<{
+    valid: boolean,
+    expired: boolean,
+    decoded: jwt.JwtPayload & Partial<IUser> | null
+}> => {
     try {
-        const decoded = jwt.verify(rfToken, variableEnvironment);
-        return decoded;
+        const decoded = jwt.verify(rfToken, process.env.ACCESS_TOKEN_SECRET as string) as jwt.JwtPayload &
+            Partial<IUser>
+        ;
+        return {valid: true, expired: false, decoded};
     } catch (error) {
-        throw new Error("Invalid token");
+        // @ts-ignore
+        return {valid: false, expired: error.name === 'TokenExpiredError', decoded: null};
     }
 };
 
