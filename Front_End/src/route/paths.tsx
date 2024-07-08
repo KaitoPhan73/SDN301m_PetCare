@@ -8,23 +8,16 @@ const ROOT_MANAGER = "/manager";
 
 const PATH_DASHBOARD = {
   root: ROOT_DASHBOARD,
-  brand: path(ROOT_DASHBOARD, "/brand"),
   user: path(ROOT_DASHBOARD, "/users"),
-  invoice: path(ROOT_DASHBOARD, "/invoice"),
-  invoicetemplate: path(ROOT_DASHBOARD, "/invoicetemplate"),
+  package: path(ROOT_DASHBOARD, "/packages"),
+  service: path(ROOT_DASHBOARD, "/services"),
+  booking: path(ROOT_DASHBOARD, "/bookings"),
 };
 
 const PATH_USER = {
   root: ROOT_USER,
   contact: path(ROOT_DASHBOARD, "/contact"),
   about: path(ROOT_DASHBOARD, "/about"),
-};
-
-const PATH_COMPANY = {
-  root: ROOT_COMPANY,
-  organizations: path(ROOT_COMPANY, "/organizations"),
-  partners: path(ROOT_COMPANY, "/partners"),
-  stores: path(ROOT_COMPANY, "/stores"),
 };
 
 const PATH_MANAGER = {
@@ -35,7 +28,6 @@ const PATH_MANAGER = {
 const PATHS = {
   PATH_DASHBOARD,
   PATH_USER,
-  PATH_COMPANY,
   PATH_MANAGER
 };
 

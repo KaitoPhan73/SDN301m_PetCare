@@ -26,23 +26,19 @@ export const getBookings = async (
 
     const result = await paginate(Booking, updatedOptions);
 
-    // Iterate through each booking to calculate totalPrice
     for (const booking of result.items) {
       let totalPrice = 0;
 
-      // Populate all booking details
       await BookingDetail.populate(booking, {
         path: "bookingDetails",
       });
 
-      // Sum up totalPrice based on non-cancelled booking details
       booking.bookingDetails.forEach((detail: IBookingDetail) => {
         if (detail.status !== BookingDetailStatus.Cancelled) {
           totalPrice += detail.price as number;
         }
       });
 
-      // Update totalPrice in the result
       booking.totalPrice = totalPrice;
     }
 
@@ -53,31 +49,27 @@ export const getBookings = async (
   }
 };
 
-export const getBookingById = async (
-  bookingId: string
-): Promise<IBooking | null> => {
+export const getBookingById = async (bookingId: string): Promise<IBooking | null> => {
   try {
     const booking = await Booking.findById(bookingId)
       .populate({
         path: "bookingDetails",
-        populate: [
-          { path: "packageId", model: "Package" },
-          { path: "roomId", model: "Room" },
-        ],
+
+        populate: {
+          path: "userId",
+          select: "username",
+        },
+
       })
       .exec();
 
     if (booking) {
       let totalPrice = 0;
-
-      // Tính lại totalPrice dựa trên bookingDetails
       booking.bookingDetails.forEach((detail: IBookingDetail) => {
         if (detail.status !== BookingDetailStatus.Cancelled) {
           totalPrice += detail.price as number;
         }
       });
-
-      // Cập nhật totalPrice của booking
       booking.totalPrice = totalPrice;
     }
 
@@ -87,7 +79,6 @@ export const getBookingById = async (
     return null;
   }
 };
-
 export const createBooking = async (
   bookingData: IBooking
 ): Promise<IBooking> => {

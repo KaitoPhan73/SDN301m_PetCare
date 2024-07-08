@@ -1,4 +1,4 @@
-import { getUsers } from "@/app/actions/users";
+import userApi from "@/actions/users";
 import CustomTable from "@/components/FeTable/CustomTable";
 import TableRender from "@/components/FeTable/TableRender";
 import { TUserBase } from "@/types/User";
@@ -40,7 +40,7 @@ export default function UserPage({ props, data }: Props) {
       props={props}
       rowKey="id"
       // dataSource={arr}
-      getData={getUsers}
+      getData={userApi.getUsers}
     />
   );
 }
