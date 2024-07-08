@@ -18,7 +18,18 @@ export const getFeedbacks = async (
 export const getFeedbackById = async (
   feedbackId: string
 ): Promise<IFeedBack | null> => {
-  return Feedback.findById(feedbackId);
+  try {
+    const feedback = await Feedback.findById(feedbackId).exec();
+
+    if (!feedback) {
+      return null;
+    }
+
+    return feedback;
+  } catch (error) {
+    console.error("Error fetching feedback:", error);
+    return null;
+  }
 };
 
 export const insertFeedback = async (

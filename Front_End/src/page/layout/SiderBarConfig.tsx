@@ -1,4 +1,3 @@
-"use client"
 import PATHS from "@/route/paths";
 import {
   PieChartOutlined,
@@ -10,9 +9,7 @@ import {
 } from "@ant-design/icons";
 import { CoffeeMakerOutlined } from "@mui/icons-material";
 import Link from "next/link";
-import Image from "next/image";
-
-const { PATH_DASHBOARD } = PATHS;
+const { PATH_DASHBOARD,PATH_MANAGER } = PATHS;
 
 const customMenuItem = (path: string, name: string) => {
   return {
@@ -20,43 +17,21 @@ const customMenuItem = (path: string, name: string) => {
     key: path,
   };
 };
-
-const SidebarLogo = () => (
-  <div style={{ padding: "30%", textAlign: "center", borderRadius: "100%" }}>
-    <Image
-      src="/images/favicon.ico"
-      alt="Logo 3D"
-      width={100}
-      height={100}
-      style={{ borderRadius: "100%", margin: "10%" }}
-    />
-  </div>
-);
-
 const AdminSiderBarConfig = [
-  {
-    label: <SidebarLogo />,
-    key: "logo",
-    icon: null,
-  },
   {
     label: "Home",
     key: "1",
     icon: <PieChartOutlined />,
   },
-  // {
-  //   label: <Link href={"/dashboard"}>Dashboard</Link>,
-  //   key: "2",
-  //   icon: <DesktopOutlined />,
-  // },
   {
-    label: "Admin DashBoard",
+    label: "Dashboard",
     key: "sub1",
     icon: <UserOutlined />,
     children: [
-      customMenuItem(PATH_DASHBOARD.users, "User Management"),
-      customMenuItem(PATH_DASHBOARD.feedbacks, "FeedBack Management"),
-
+      customMenuItem(PATH_DASHBOARD.user, "User Manager"),
+      customMenuItem(PATH_DASHBOARD.package, "Package Manager"),
+      customMenuItem(PATH_DASHBOARD.service, "Service Manager"),
+      customMenuItem(PATH_DASHBOARD.booking, "Booking Manager"),
     ],
   },
 ];
@@ -73,5 +48,24 @@ const UserSiderBarConfig = [
     icon: <FileOutlined />,
   },
 ];
-const SiderBarConfig = { AdminSiderBarConfig, UserSiderBarConfig };
+
+const ManagerSideBarConfig = [
+  {
+    label: "Home",
+    key: "1",
+    icon: <PieChartOutlined />,
+  },
+  {
+    label: "Dashboard",
+    key: "sub1",
+    icon: <UserOutlined />,
+    children: [
+      // customMenuItem(PATH_DASHBOARD.brand, "Brand"),
+      customMenuItem(PATH_MANAGER.employees, "Employee Manager"),
+      customMenuItem(PATH_MANAGER.partners, "Partners Manager"),
+      // customMenuItem(PATH_DASHBOARD.invoicetemplate, "Invoice Template"),
+    ],
+  },
+]
+const SiderBarConfig = { AdminSiderBarConfig, UserSiderBarConfig, ManagerSideBarConfig };
 export default SiderBarConfig;

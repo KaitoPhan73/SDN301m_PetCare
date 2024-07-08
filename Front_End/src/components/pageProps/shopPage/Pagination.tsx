@@ -1,17 +1,18 @@
 "use client";
 import Item from "@/components/home/Item/Item";
+import { TTableResponse } from "@/types/Table";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useSelector } from "react-redux";
 type Props = {
-  dataSource: any[];
+  dataSource: TTableResponse<any>;
   props?: any;
 };
 function Items({ dataSource }: Props) {
   return (
     <>
-      {dataSource.map((item: any) => (
+      {dataSource.items.map((item: any) => (
         <div key={item.id} className="w-full">
           <Item props={item} />
         </div>
@@ -28,7 +29,7 @@ const Pagination = ({ dataSource, props }: Props) => {
   const [itemStart, setItemStart] = useState(1);
 
   const endOffset = itemOffset + 10;
-  const pageCount = 5;
+  const pageCount = dataSource.totalPages;
   //Math.ceil(dataSource.length / 10)
 
   const handlePageClick = (event: any) => {
@@ -36,7 +37,7 @@ const Pagination = ({ dataSource, props }: Props) => {
       ? 1
       : Number(event.selected.toString()) + 1;
 
-    const newOffset = (currentPage * 10) % dataSource.length;
+    const newOffset = (currentPage * 10) % pageCount;
 
     setItemOffset(newOffset);
     setItemStart(currentPage);
@@ -47,7 +48,7 @@ const Pagination = ({ dataSource, props }: Props) => {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 mdl:gap-4 lg:gap-10">
-        <Items dataSource={dataSource} />{" "}
+        <Items dataSource={dataSource} />
       </div>
       <div className="flex  mdl:flex-row justify-evenly mdl:space-evenly items-center">
         <ReactPaginate
@@ -65,8 +66,9 @@ const Pagination = ({ dataSource, props }: Props) => {
         />
 
         <p className="text-base font-normal text-lightText">
-          Products from {itemStart} to {Math.min(endOffset, dataSource.length)}{" "}
-          of {dataSource.length}
+          {/* Products from {itemStart} to {Math.min(endOffset, dataSource.total)}{" "}
+          of {dataSource.total} */}
+          Total of packages : {dataSource.total}
         </p>
       </div>
     </div>

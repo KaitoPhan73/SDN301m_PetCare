@@ -1,130 +1,169 @@
 "use client";
-
-import { TTableResponse } from "@/types/Table";
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { Table, Button } from "antd";
+import { CustomColumnType } from "@/types/TablePropsCustom";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ReloadOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { TTableResponse } from "@/types/Table";
 
-interface TRowSelection {
-  type?: "checkbox" | "radio";
-  onChange?: (selectedRowKeys: React.Key[], selectedRows: any[]) => void;
-  selectedRowKeys?: React.Key[];
-}
-
-interface IProps {
-  data: TTableResponse<any>;
-  columns: any[];
-  propsUrl?: any;
-  rowKey?: string;
-  onDelete?: any;
-  onCreate?: any;
+interface TableRenderProps<RecordType> {
+  data: TTableResponse<RecordType>;
+  columns: CustomColumnType<RecordType>[];
+  onDelete?: (id: string | number) => void;
   onEdit?: any;
-  rowSelection?: TRowSelection;
+  onCreate?: any;
+  rowSelection?: any;
+  rowKey?: keyof RecordType;
+  propsUrl: any;
 }
 
-const TableRender = (props: IProps) => {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+const TableRender = <RecordType extends object>({
+  data,
+  columns,
+  onDelete,
+  onEdit,
+  onCreate,
+  rowKey,
+  rowSelection,
+  propsUrl,
+}: TableRenderProps<RecordType>) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isFetching, setIsFetching] = useState<boolean>(false);
-  const {
-    data,
-    columns,
-    rowKey = "id",
-    onEdit,
-    onDelete,
-    propsUrl,
-    rowSelection,
-    onCreate,
-  } = props;
+  const finalRowKey: keyof RecordType = rowKey || ("id" as keyof RecordType);
+
   const meta = {
     current: propsUrl ? propsUrl.page : 1,
-    pageSize: propsUrl ? propsUrl.size : 10,
+    pageSize: propsUrl ? propsUrl.limit : 10,
     total: data.total,
   };
+
   useEffect(() => {
     if (data) setIsFetching(false);
   }, [data]);
 
-  const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
-    if (pagination && pagination.current) {
-      const params = new URLSearchParams(searchParams);
-      params.set("page", pagination.current);
-      replace(`${pathname}?${params.toString()}`);
-      setIsFetching(true);
-    }
+  const handleFilterChange = (key: string, value: any) => {
+    const params = new URLSearchParams(searchParams);
+    params.set(key, value);
+    router.replace(`${pathname}?${params.toString()}`);
+    setIsFetching(true);
   };
-  const initialColumns = Array.isArray(columns) ? columns : [];
-
-  let updatedColumns = [...initialColumns];
-  if (onDelete) {
-    updatedColumns.push({
-      dataIndex: "delete",
-      fixed: "right",
-      width: 100,
-      render: (_: any, record: any) => (
-        <DeleteOutlined
-          style={{ fontSize: "32px", color: "red" }}
-          onClick={() => onDelete(record[rowKey!])}
-        />
-      ),
-    });
-  }
-
-  if (onEdit) {
-    updatedColumns.push({
-      dataIndex: "edit",
-      fixed: "right",
-      width: 100,
-      render: (_: any, record: any) => (
-        <a onClick={() => router.push(pathname!.concat(`/${record[rowKey!]}`))}>
-          <EditOutlined style={{ fontSize: "32px" }} />
-        </a>
-      ),
-    });
-  }
 
   const renderHeader = () => {
+    const filteredColumns = columns.filter((column) => column.filter);
+
+    if (filteredColumns.length === 0) {
+      return null;
+    }
+
     return (
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <span></span>
-        <Button
-          icon={<PlusOutlined />}
-          type="primary"
-          onClick={() => router.push(pathname!.concat(`/create`))}
-        >
-          Thêm mới
-        </Button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "16px",
+        }}
+      >
+        {onCreate && (
+          <Button
+            icon={<PlusOutlined />}
+            type="primary"
+            onClick={() => router.push(`${pathname}/create`)}
+          >
+            Thêm mới
+          </Button>
+        )}
       </div>
     );
   };
 
+  const updatedColumns: any = columns.map((column) => {
+    // Clone column to avoid mutating original object
+    let updatedColumn: CustomColumnType<RecordType> = { ...column };
+
+    // Check if column has render function already defined
+    if (!column.render) {
+      // Define default render function if not provided
+      updatedColumn.render = (value: any) => value;
+    }
+
+    return updatedColumn;
+  });
+
+  // Add delete button column
+  if (onDelete) {
+    updatedColumns.push({
+      dataIndex: "delete",
+      fixed: "right",
+      width: 50,
+      render: (_: any, record: RecordType) => (
+        <Button
+          type="link"
+          icon={<ReloadOutlined style={{ fontSize: "18px", color: "green" }} />}
+          onClick={() => onDelete(String(record[finalRowKey]))}
+        >
+          Xóa
+        </Button>
+      ),
+    });
+  }
+
+  // Add edit button column
+  if (onEdit) {
+    updatedColumns.push({
+      dataIndex: "edit",
+      fixed: "right",
+      width: 50,
+      render: (_: any, record: RecordType) => (
+        <Button
+          type="link"
+          icon={<EditOutlined style={{ fontSize: "18px" }} />}
+          onClick={() => router.push(`${pathname}/${record[finalRowKey]}`)}
+        >
+          Chỉnh sửa
+        </Button>
+      ),
+    });
+  }
+
+  const onChange = (
+    pagination: any,
+    _filters: any,
+    _sorter: any,
+    _extra: any
+  ) => {
+    if (pagination && pagination.current) {
+      const params = new URLSearchParams(searchParams);
+      params.set("page", pagination.current.toString());
+      router.replace(`${pathname}?${params.toString()}`);
+      setIsFetching(true);
+    }
+  };
+
   return (
-    <>
-      <Table
-        title={onCreate ? renderHeader : undefined}
-        rowSelection={rowSelection ? { ...rowSelection } : undefined}
-        loading={isFetching}
-        rowKey={rowKey}
-        dataSource={data.items}
-        columns={updatedColumns}
-        onChange={onChange}
-        scroll={{ x: 1500 }}
-        pagination={{
-          ...meta,
-          showTotal: (total, range) => {
-            return (
-              <div>
-                {" "}
-                {range[0]}-{range[1]} trên {total} rows
-              </div>
-            );
-          },
-        }}
-      />
-    </>
+    <Table
+      rowSelection={rowSelection}
+      dataSource={data.items}
+      pagination={{
+        ...meta,
+        showTotal: (total, range) => {
+          return (
+            <div>
+              {" "}
+              {range[0]}-{range[1]} trên {total} rows
+            </div>
+          );
+        },
+      }}
+      scroll={{ x: 1500 }}
+      rowKey={(record) => String(record[finalRowKey])}
+      columns={updatedColumns}
+      onChange={onChange}
+      title={renderHeader}
+      loading={isFetching}
+    />
   );
 };
 

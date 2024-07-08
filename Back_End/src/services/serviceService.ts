@@ -7,8 +7,14 @@ export const getAll = (options: any): Promise<TPagination<IService>> => {
   return paginate(Service, options);
 };
 
-export const getOne = (id: string): Promise<IService | null> => {
-  return Service.findById(id);
+export const getOne = async (id: string): Promise<IService | null> => {
+  try {
+    const service = await Service.findById(id).exec();
+    return service;
+  } catch (error) {
+    console.error("Error fetching service:", error);
+    return null;
+  }
 };
 
 export const insertOne = (data: IService): Promise<IService> => {

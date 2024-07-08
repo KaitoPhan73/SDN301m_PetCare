@@ -1,18 +1,18 @@
 "use client";
+
 import React from "react";
 import Slider from "react-slick";
 import Heading from "../Item/Heading";
 import Item from "../Item/Item";
 import SampleNextArrow from "./SampleNextArrow";
 import SamplePrevArrow from "./SamplePrevArrow";
-import { User } from "@/types/User";
-import { TProduct } from "@/schemaValidations/product.schema";
+import { TProductResponse } from "@/schemaValidations/product.schema";
+
 type Props = {
-  dataSource: any;
+  dataSource: TProductResponse[];
 };
 
 const ItemArrow = ({ dataSource }: Props) => {
-  console.log("dataSource", dataSource);
   const settings = {
     infinite: true,
     speed: 500,
@@ -47,12 +47,13 @@ const ItemArrow = ({ dataSource }: Props) => {
       },
     ],
   };
+
   return (
     <div className="w-full pb-16">
-      <Heading heading="New Arrivals" />
+      <Heading heading="ROOMS" />
       <Slider {...settings}>
-        {dataSource.map((data: TProduct) => (
-          <div className="px-2">
+        {dataSource.map((data: TProductResponse, index: number) => (
+          <div key={index} className="px-2">
             <Item props={data} />
           </div>
         ))}

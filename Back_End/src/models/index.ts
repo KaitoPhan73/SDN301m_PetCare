@@ -10,6 +10,7 @@ import RoomSchema from "./Room";
 import { IBooking } from "../types/booking";
 import BookingSchema from "./Booking";
 import { IBookingDetail } from "../types/bookingDetail";
+import BookingDetailSchema from "./BookingDetail";
 import PackageSchema from "./Package";
 import { IPackage } from "../types/package";
 
@@ -25,8 +26,8 @@ const Room = mongoose.model<IRoom>("Room", RoomSchema, "Room");
 const Booking = mongoose.model<IBooking>("Booking", BookingSchema, "Booking");
 const BookingDetail = mongoose.model<IBookingDetail>(
   "BookingDetail",
-  BookingSchema,
+  BookingDetailSchema,
   "BookingDetail"
 );
 
-export { User, Feedback, Service, Room, Booking, BookingDetail };
+export { User, Feedback, Service, Room, Booking, BookingDetail, Package };

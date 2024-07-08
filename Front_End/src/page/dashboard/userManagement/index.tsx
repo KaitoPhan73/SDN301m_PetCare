@@ -1,8 +1,10 @@
-"use client"
+"use client";
 import TableRender from "@/components/FeTable/TableRender";
 import React from "react";
-import { TableColumnsType } from "antd";
-import { TUserBase } from "@/types/User";
+import { Tag } from "antd";
+import { IUser } from "@/schemaValidations/user.schema";
+import RoleTag from "@/components/manager/RoleTag";
+import { CustomColumnType } from "@/types/TablePropsCustom";
 
 interface Props {
     props: any;
@@ -10,25 +12,49 @@ interface Props {
 }
 
 export default function UserManagementPage({ props, data }: Props) {
-    console.log("log::", data);
-    const columns: TableColumnsType<TUserBase> = [
+    const columns: CustomColumnType<IUser>[] = [
         {
             title: "Username",
             dataIndex: "username",
+            key: "username",
         },
         {
             title: "Email",
             dataIndex: "email",
+            key: "email",
         },
         {
             title: "Status",
             dataIndex: "status",
+            key: "status",
+            render: (_value: boolean, record) => {
+                return (
+                    <Tag color={record.status ? "green" : "orange"}>
+                        <span className="uppercase">
+                            {record.status ? "Active" : "Inactive"}
+                        </span>
+                    </Tag>
+                );
+            },
         },
         {
             title: "Role",
             dataIndex: "role",
+            key: "role",
+            render: (_value: string) => {
+                return <RoleTag content={_value} />;
+            },
         },
     ];
 
-    return <TableRender columns={columns} data={data} propsUrl={props} onDelete onEdit onCreate />;
+    return (
+        <TableRender
+            columns={columns}
+            data={data}
+            propsUrl={props}
+            onDelete={() => {}}
+            onEdit={() => {}}
+            onCreate={() => {}}
+        />
+    );
 }

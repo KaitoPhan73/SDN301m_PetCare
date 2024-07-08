@@ -1,9 +1,10 @@
 import { Document, ObjectId } from "mongoose";
 
 export enum BookingDetailStatus {
-  Pending = "pending",
-  Confirmed = "confirmed",
-  Cancelled = "cancelled",
+  Pending = "Pending",
+  Confirmed = "Confirmed",
+  Cancelled = "Cancelled",
+  Completed = "Completed",
 }
 
 export interface IBookingDetail extends Document {
@@ -11,8 +12,11 @@ export interface IBookingDetail extends Document {
   checkOutData: Date;
   price: Number;
   packageId: ObjectId;
-  bookingId: ObjectId;
+  // bookingId: ObjectId;
+  staffId?: ObjectId;
   RoomId: ObjectId;
-  isCompleted: BookingDetailStatus;
+  status: BookingDetailStatus;
   bookingDetailStatus: String;
+  createdAt: Date;
+  updatedAt: Date;
 }

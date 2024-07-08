@@ -1,3 +1,4 @@
+import HomePage from "@/page/home";
 import SilderBar from "@/page/layout/App";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -12,8 +13,18 @@ export const metadata: Metadata = {
 
 export default function DashBoardLayout({
   children,
+  room,
+  topPackages,
 }: Readonly<{
+  room: React.ReactNode;
   children: React.ReactNode;
+  topPackages: React.ReactNode;
 }>) {
-  return <SilderBar>{children}</SilderBar>;
+  return (
+    <HomePage>
+      {children}
+      {topPackages}
+      {room}
+    </HomePage>
+  );
 }

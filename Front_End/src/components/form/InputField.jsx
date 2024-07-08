@@ -41,7 +41,7 @@ const FormInput = ({
             }
             label={label}
             placeholder={placeholder}
-            defaultValue={defaultValue}
+            // defaultValue={defaultValue}
           />
           <FormHelperText variant="filled">
             {fieldState.error && fieldState.error.message}

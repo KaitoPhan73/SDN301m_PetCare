@@ -1,7 +1,6 @@
-"use server";
-import { httpInvoice, httpMock } from "@/lib/http";
-import { TTableResponse } from "@/types/Table";
-import { TUserBase } from "@/types/User";
+// "use server";
+// import { TTableResponse } from "@/types/Table";
+// import { TUserBase } from "@/types/User";
 
-export const getUsers = async (params: any) =>
-  httpInvoice.get<TTableResponse<TUserBase>>("/accounts", { params });
+// export const getUsers = async (params: any) =>
+//   httpInvoice.get<TTableResponse<TUserBase>>("/accounts", { params });

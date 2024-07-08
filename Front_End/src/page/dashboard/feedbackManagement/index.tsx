@@ -16,7 +16,7 @@ export default function FeedBackManagementPage({ props, data }: Props) {
     useEffect(() => {
         const fetchUserNames = async () => {
             const userIds = data.map((item: TFeedbackBase) => item.userId);
-            const users = await Promise.all(userIds.map((userId: string) => userApi.getUserById(userId)));
+            const users = await Promise.all(userIds.map((userId: string) => userApi.getUser(userId)));
             const newUserData = Object.fromEntries(users.map((user, index) => [userIds[index], user.payload.username]));
             setUserNames(newUserData);
         };

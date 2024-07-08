@@ -15,8 +15,21 @@ export type TResponseLogin = {
 export type TUserBase = {
   id: string;
   username: string;
-  password: string;
-  email:string;
-  status: string;
+  name: string;
+  role: boolean;
+  status: boolean;
+  storeId: string;
+  storeCode: string;
+  brandId: string;
+  brandCode: string;
+};
+
+export type TUser = {
+  _id: string;
+  name: string;
+  username: string;
   role: string;
+  status: boolean;
+  brandName: string;
+  email: string;
 };

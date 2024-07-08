@@ -8,4 +8,8 @@ const RoomSchema = z.object({
   status: z.boolean(),
 });
 
-export type TRoom = z.TypeOf<typeof RoomSchema>;
+export type TRoomRequest = z.TypeOf<typeof RoomSchema>;
+
+export type TRoomResponse = z.TypeOf<typeof RoomSchema> & {
+  _id: string;
+};

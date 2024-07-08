@@ -1,25 +1,22 @@
 import { BookingDetailStatus, IBookingDetail } from "./../types/bookingDetail";
 import mongoose, { Schema, Document, ObjectId } from "mongoose";
 
-const BookingSchema: Schema = new Schema(
+const BookingDetailSchema = new Schema(
   {
-    checkInData: { type: Date, required: true, default: Date.now },
-    checkOutData: { type: Date, required: true, default: Date.now },
+    checkInDate: { type: Date, required: true, default: Date.now },
+    checkOutDate: { type: Date, required: true, default: Date.now },
+    staffId: { type: mongoose.Types.ObjectId, ref: "User", required: false },
     price: { type: Number, required: true },
-    packageId: { type: mongoose.Types.ObjectId, ref: "Package", require: true },
-    bookingId: {
+    packageId: {
       type: mongoose.Types.ObjectId,
-      ref: "Booking",
+      ref: "Package",
       required: true,
     },
-    roomId: {
-      type: mongoose.Types.ObjectId,
-      ref: "Room",
-      required: true,
-    },
-    isCompleted: { type: String, default: BookingDetailStatus.Pending },
+    roomId: { type: mongoose.Types.ObjectId, ref: "Room", required: true },
+    status: { type: String, default: "Pending" },
+    // booking: { type: mongoose.Types.ObjectId, ref: "Booking", required: true },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
-export default BookingSchema;
+export default BookingDetailSchema;

@@ -1,4 +1,4 @@
-import { Router } from "express";
+import express, { Router } from "express";
 import {
   deleteFeedback,
   getFeedback,
@@ -6,8 +6,6 @@ import {
   insertFeedback,
   updateFeedback,
 } from "../controllers/feedbackController";
-
-const express = require("express");
 
 const router: Router = express.Router();
 
