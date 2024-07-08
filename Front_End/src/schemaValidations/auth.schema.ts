@@ -18,4 +18,14 @@ export const LoginBody = z
 
 export type TLoginBody = z.TypeOf<typeof LoginBody>;
 
+export type TLoginResponse = {
+  accessToken: string;
+  user: {
+    _id: string;
+    username: string;
+    email: string;
+    role: string;
+  };
+};
+
 export type TRegisterRequest = z.TypeOf<typeof RegisterSchema>;

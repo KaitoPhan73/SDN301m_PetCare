@@ -53,11 +53,12 @@ type Props = {
 };
 
 export default function BookingPage({ data }: Props) {
+  const user = useSelector((state: RootState) => state.user.user);
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const methods = useForm<TBookingRequest>({
     defaultValues: {
-      userId: "6688eca1e04b57a20ec4266f",
+      userId: user?._id,
       bookingDetails: [],
     },
   });
@@ -245,16 +246,16 @@ export default function BookingPage({ data }: Props) {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <FormProvider {...methods}>
         <Grid container spacing={2}>
-          <Grid item xs={0} md={6} lg={6}>
+          <Grid item xs={0} md={4} lg={4}>
             <Image
-              src="https://static.wixstatic.com/media/b86d60_b59544c05a0343d0974df142775854cd~mv2.png/v1/fill/w_640,h_440,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01,enc_auto/b86d60_b59544c05a0343d0974df142775854cd~mv2.png"
+              src="https://as2.ftcdn.net/v2/jpg/01/48/74/83/1000_F_148748366_BKmJs1zHClJl12VA2GV6bBolhPUPleon.jpg"
               alt="perfume bottle image"
-              width={640}
-              height={440}
+              width={450}
+              height={450}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={6}>
-            <Page title="Booking" spacing={2}>
+          <Grid item xs={12} md={8} lg={8}>
+            <Page title="" spacing={4}>
               <Grid container item xs={12}>
                 {carts.length > 0 ? (
                   <>
@@ -289,7 +290,7 @@ export default function BookingPage({ data }: Props) {
                 )}
               </Grid>
 
-              <Grid container item xs={12} spacing={2}>
+              <Grid container item xs={12}>
                 <Grid item xs={12}>
                   <BookingDetails
                     fields={fields}

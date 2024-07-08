@@ -32,7 +32,7 @@ const HeaderBottom = () => {
               transition={{ duration: 0.5 }}
               className="absolute top-10 right-0 z-50 bg-black w-44 text-[#767676] h-auto p-4 pb-6"
             >
-              {true ? (
+              {user ? (
                 <>
                   {/* Profile link */}
                   <Link onClick={() => setShowUser(false)} href="/profile">
@@ -40,14 +40,16 @@ const HeaderBottom = () => {
                       Profile
                     </li>
                   </Link>
-                  <Link onClick={() => setShowUser(false)} href="/booking">
-                    <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                      Booking
-                    </li>
-                  </Link>
+                  {user.role === "Customer" && (
+                    <Link onClick={() => setShowUser(false)} href="/booking">
+                      <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                        Booking
+                      </li>
+                    </Link>
+                  )}
 
                   {/* Dashboard link (only visible to admins) */}
-                  {true && (
+                  {user.role === "Admin" && (
                     <Link
                       onClick={() => setShowUser(false)}
                       href="/dashboard/watches"

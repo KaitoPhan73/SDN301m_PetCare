@@ -2,7 +2,7 @@ import { isClient } from "@/lib/http";
 import { TLoginResponse } from "@/schemaValidations/auth.schema";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type TUser = Omit<TLoginResponse, "accessToken">;
+type TUser = Omit<TLoginResponse, "accessToken">["user"];
 
 interface UserState {
   user: TUser | null;
