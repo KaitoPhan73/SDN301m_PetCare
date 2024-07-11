@@ -10,14 +10,13 @@ import { LoginBody, TLoginBody } from "@/schemaValidations/auth.schema";
 import authApi from "@/actions/auth";
 import { setUser } from "@/redux/User/userSlice";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import { InputField } from "@/components/form";
 import { Grid } from "@mui/material";
-
+import { useSnackbar } from "notistack";
 export function UserAuthForm() {
   const router = useRouter();
   const dispatch = useDispatch();
-
+  const { enqueueSnackbar } = useSnackbar();
   const form = useForm<TLoginBody>({
     resolver: zodResolver(LoginBody),
     defaultValues: {
@@ -30,15 +29,16 @@ export function UserAuthForm() {
     try {
       const response = await authApi.checkLogin(values);
       if (response.status === 200) {
-        dispatch(setUser(response.payload));
+        dispatch(setUser(response.payload.user));
         await authApi.auth({
-          user: JSON.stringify(response.payload),
+          accessToken: response.payload.accessToken,
+          user: JSON.stringify(response.payload.user),
         });
-        toast.success("Login success");
+        enqueueSnackbar("Login success", { variant: "success" });
         router.push("/homepage");
         router.refresh();
       } else {
-        toast.success("Login failed");
+        enqueueSnackbar("Login failed", { variant: "error" });
         form.reset();
       }
     } catch (error: any) {

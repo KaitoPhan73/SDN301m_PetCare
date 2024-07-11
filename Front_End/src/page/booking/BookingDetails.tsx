@@ -21,7 +21,7 @@ const BookingDetails: React.FC<BookingDetailsProps> = ({
 }) => {
   const carts = useSelector((state: RootState) => state.cart.products);
   return (
-    <StyledGrid container spacing={2}>
+    <StyledGrid container spacing={4}>
       {carts.map((item: any, index: number) => (
         <BookingDetail
           key={item.id}

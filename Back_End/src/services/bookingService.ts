@@ -54,19 +54,12 @@ export const getBookingById = async (bookingId: string): Promise<IBooking | null
     const booking = await Booking.findById(bookingId)
       .populate({
         path: "bookingDetails",
-<<<<<<< HEAD
-        // populate: {
-        //   path: "user",
-        //   select: "username",
-        // },
-=======
 
         populate: {
           path: "userId",
           select: "username",
         },
 
->>>>>>> 247c402e6a70c99c6ff4d5f7508b876b1ea383c2
       })
       .exec();
 

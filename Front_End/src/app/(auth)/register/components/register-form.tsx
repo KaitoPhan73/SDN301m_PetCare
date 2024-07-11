@@ -23,7 +23,7 @@ export function RegisterForm() {
       password: "",
       confirmPassword: "",
       email: "",
-      role: "Customer",
+      role: "customer",
     },
   });
 
@@ -31,7 +31,7 @@ export function RegisterForm() {
     try {
       console.log(values);
       const response = await authApi.createUser(values);
-      if (response.status === 200) {
+      if (response.status === 201) {
         enqueueSnackbar("Register success", { variant: "success" });
         router.push("/login");
         router.refresh();
