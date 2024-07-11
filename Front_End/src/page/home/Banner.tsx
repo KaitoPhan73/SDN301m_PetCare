@@ -178,16 +178,7 @@ const Banner = () => {
       text: "Your PetCare Center",
       Subtext:
         "This is a website concept for a Pet care institute. Hope you guys will like it. Let me know your thought on that. Your feedback and appreciation is always welcome 🙂",
-      buttonLink: "/offer",
-      buttonText: "Shop Now",
-    },
-
-    {
-      imgSrc: baseImgUrl,
-      text: "Tailored Pet Services",
-      Subtext:
-        "Discover a range of personalized services designed to meet the unique needs of your beloved pets. From grooming to training, we provide top-quality care for every aspect of your pet's well-being.",
-      buttonLink: "/contact",
+      buttonLink: "/product",
       buttonText: "Shop Now",
     },
   ];

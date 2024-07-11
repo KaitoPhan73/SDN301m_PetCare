@@ -57,7 +57,7 @@ let clientLogoutRequest: null | Promise<any> = null;
 export const isClient = () => typeof window !== "undefined";
 const createHttpClient = (defaultBaseUrl: string) => {
   const request = async <Response>(
-    method: "GET" | "POST" | "PUT" | "DELETE",
+    method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
     url: string,
     options?: CustomOptions | undefined
   ) => {
@@ -188,6 +188,13 @@ const createHttpClient = (defaultBaseUrl: string) => {
     ) {
       return request<Response>("PUT", url, { ...options, body });
     },
+    patch<Response>(
+      url: string,
+      body: any,
+      options?: Omit<CustomOptions, "body"> | undefined
+    ) {
+      return request<Response>("PATCH", url, { ...options, body });
+    },
     delete<Response>(
       url: string,
       options?: Omit<CustomOptions, "body"> | undefined
@@ -197,7 +204,7 @@ const createHttpClient = (defaultBaseUrl: string) => {
   };
 };
 
-const httpServer = createHttpClient("http://localhost:8080/petcare/api");
+const httpServer = createHttpClient("");
 const httpMock = createHttpClient(
   "https://660bbdb3ccda4cbc75dd950a.mockapi.io/api"
 );

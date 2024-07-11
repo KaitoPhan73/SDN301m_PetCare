@@ -1,5 +1,8 @@
 import { z } from "zod";
-import BookingDetailForBookingSchema from "./booking-detail.schema";
+import BookingDetailForBookingSchema, {
+  TBookingDetailResponse,
+} from "./booking-detail.schema";
+import { TUser } from "./user.schema";
 
 export const BookingSchema = z.object({
   detail: z.string(),
@@ -14,6 +17,10 @@ export type TBookingRequest = z.TypeOf<typeof BookingSchema>;
 
 export type TBookingResponse = TBookingRequest & {
   _id: string;
+  bookingDetails: TBookingDetailResponse[];
+  userId: TUser;
+  status: string;
+  totalPrice: number;
   createdAt: string;
   updatedAt: string;
 };

@@ -1,14 +1,17 @@
+"use client";
 import PackageApi from "@/actions/package";
 import RoomApi from "@/actions/room";
 import { formatDate, formatPriceVND } from "@/lib/utils";
 import { Card, CardContent, Grid, IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import dayjs from "dayjs"; // Import dayjs for date manipulation
+import { TPackageResponse } from "@/schemaValidations/package.schema";
 
 type Props = {
   item: any;
   index: number;
-  handleRemoveById: (id: string) => void; // Chỉnh sửa props để nhận index
+  handleRemoveById: (id: any, index: number) => void;
 };
 
 export default function BookingDetail({
@@ -17,7 +20,7 @@ export default function BookingDetail({
   handleRemoveById,
 }: Props) {
   const [roomName, setRoomName] = useState<string>();
-  const [packageName, setPackageName] = useState<string>();
+  const [packageObj, setPackageObj] = useState<TPackageResponse>();
 
   const fetchRoom = async () => {
     const response = await RoomApi.getRoomById(item.roomId);
@@ -26,7 +29,7 @@ export default function BookingDetail({
 
   const fetchPackage = async () => {
     const response = await PackageApi.getPackage(item.packageId);
-    setPackageName(response.payload.name);
+    setPackageObj(response.payload);
   };
 
   useEffect(() => {
@@ -34,8 +37,19 @@ export default function BookingDetail({
     fetchPackage();
   }, []);
 
+  // Calculate checkOut date based on checkInDate and packageObj.totalTime
+  const calculateCheckOut = () => {
+    if (item.checkInDate && packageObj && packageObj.totalTime) {
+      const checkInDate = dayjs(item.checkInDate);
+      const checkOutDate = checkInDate.add(packageObj.totalTime, "minutes");
+      return formatDate(checkOutDate.toDate());
+    }
+    return "Loading...";
+  };
+  console.log("sdsdsd", item);
+
   return (
-    <Grid item xs={12} md={6} lg={4} key={index}>
+    <Grid item xs={12} md={6} lg={6} key={index}>
       <Card>
         <CardContent>
           <Grid container justifyContent="space-between">
@@ -44,7 +58,7 @@ export default function BookingDetail({
             </Grid>
             <Grid item>
               <IconButton
-                onClick={() => handleRemoveById(item.id)}
+                onClick={() => handleRemoveById(item.id, index)}
                 style={{ marginLeft: "auto" }}
               >
                 <CloseIcon />
@@ -52,16 +66,20 @@ export default function BookingDetail({
             </Grid>
           </Grid>
           <Typography variant="body1">
-            Phòng: {roomName || "Loading..."}
+            <strong>Room:</strong> {roomName || "Loading..."}
           </Typography>
           <Typography variant="body1">
-            Combo: {packageName || "Loading..."}
+            <strong>Combo:</strong>{" "}
+            {packageObj ? packageObj.name : <span>Loading...</span>}
           </Typography>
           <Typography variant="body1">
-            Price: {formatPriceVND(item.price)}
+            <strong>Price:</strong> {formatPriceVND(item.price)}
           </Typography>
           <Typography variant="body1">
-            CheckIn: {formatDate(item.checkInDate)}
+            <strong>CheckIn:</strong> {formatDate(item.checkInDate)}
+          </Typography>
+          <Typography variant="body1">
+            <strong>CheckOut:</strong> {formatDate(item.checkOutDate)}
           </Typography>
         </CardContent>
       </Card>

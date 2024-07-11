@@ -1,3 +1,5 @@
+import {protectedRoute} from "../middleware/authMiddleware";
+
 const express = require("express");
 import { Router } from "express";
 import {
@@ -14,9 +16,9 @@ router.get("/", getBookings);
 
 router.get("/:bookingId", getBooking);
 
-router.post("/", insertBooking);
+router.post("/",protectedRoute, insertBooking);
 
-router.delete("/:bookingId", deleteBooking);
+router.delete("/:bookingId",protectedRoute, deleteBooking);
 
-router.patch("/:bookingId", updateBooking);
+router.patch("/:bookingId",protectedRoute, updateBooking);
 export default router;
