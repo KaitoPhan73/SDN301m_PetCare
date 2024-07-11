@@ -58,3 +58,45 @@ export const updateOne = async function (
     throw new Error(`Error updating Booking Detail: ${error}`);
   }
 };
+
+export const checkExisting = async (
+  packageId: string,
+  checkInDate: Date,
+  roomId: string
+): Promise<boolean> => {
+  try {
+    const packageData = await Package.findById(packageId);
+    if (!packageData) {
+      throw new Error(`Package with id ${packageId} not found.`);
+    }
+
+    const checkInTime = moment(checkInDate).utc(); // convert to UTC for consistency
+    const checkOutTime = checkInTime
+      .clone()
+      .add(packageData.totalTime, "minutes")
+      .utc()
+      .toDate(); // Ensure time is added correctly
+
+    console.log("checkInTime:", checkInTime.format());
+    console.log("checkOutTime:", checkOutTime);
+
+    // Find existing bookings that overlap with the new booking time
+    const existingBooking = await BookingDetail.findOne({
+      roomId: roomId,
+      $or: [
+        {
+          checkInDate: { $lt: checkOutTime },
+          checkOutDate: { $gt: checkInTime.toDate() },
+        },
+        {
+          checkInDate: { $lt: checkOutTime },
+          checkOutDate: { $gt: checkInTime.toDate() },
+        },
+      ],
+    });
+
+    return !!existingBooking;
+  } catch (error) {
+    throw new Error(`Error checking existing Booking Detail: ${error}`);
+  }
+};

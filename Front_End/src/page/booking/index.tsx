@@ -161,6 +161,19 @@ export default function BookingPage({ data }: Props) {
     return response.payload.totalTime;
   };
 
+  const fetchExistingBookingDetails = async () => {
+    const body = {
+      roomId: roomId,
+      checkInDate: checkInDate,
+      packageId: selectedPackage?._id,
+    };
+
+    const response = await BookingDetailApi.checkExistBookingDetailFromServer(
+      body
+    );
+    return response.payload;
+  };
+
   const handleConfirmDateRoomSelection = async () => {
     if (!selectedPackage || !checkInDate || !roomId) return;
 
@@ -169,7 +182,20 @@ export default function BookingPage({ data }: Props) {
     const roomCheckOutTime = roomCheckInTime.add(packageTotalTime, "minute");
 
     let isConflictingRoom = false;
+    const exist = await fetchExistingBookingDetails();
+    console.log("ok", exist);
 
+    if (exist) {
+      console.log("hahahahh");
+      alert(
+        `Thời gian check-in, checkout của bạn (${formatDate(
+          roomCheckInTime.toDate()
+        )} - ${formatDate(
+          roomCheckOutTime.toDate()
+        )}) đã tồn tại với thời gian đã tồn tại. Vui lòng chọn giờ khác hoặc phòng khác.`
+      );
+      return;
+    }
     for (const item of fields) {
       const existingPackageTotalTime = await fetchPackage(item.packageId);
       const existingCheckInTime = dayjs(item.checkInDate);

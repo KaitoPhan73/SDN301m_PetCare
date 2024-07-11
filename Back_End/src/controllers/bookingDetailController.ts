@@ -17,6 +17,24 @@ export const insertBookingDetail = async (
   }
 };
 
+export const checkExistingBookingDetail = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { packageId, checkInDate, roomId } = req.body;
+    const exists: boolean = await bookingDetailService.checkExisting(
+      packageId,
+      checkInDate,
+      roomId
+    );
+    res.status(200).json(exists);
+  } catch (error) {
+    console.error("Error checking existing booking Detail:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 export const updateBookingDetail = async (
   req: Request,
   res: Response

@@ -16,6 +16,9 @@ const BookingDetailApi = {
       data
     );
   },
+  checkExistBookingDetailFromServer: (data: any) => {
+    return httpPetCare.post<boolean>(`/booking-detail/check-existing`, data);
+  },
 };
 
 export default BookingDetailApi;
