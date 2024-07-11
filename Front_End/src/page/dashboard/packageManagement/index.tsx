@@ -61,14 +61,14 @@ export default function PackageManagementPage({ props, data }: Props) {
             dataIndex: "totalTime",
             key: "totalTime",
         },
-        {
-            title: "Detail",
-            dataIndex: "detail",
-            key: "detail",
-            render: (_text: any, record: TPackageResponse) => (
-                <Button onClick={() => showModal(record)}>Detail</Button>
-            ),
-        },
+        // {
+        //     title: "Detail",
+        //     dataIndex: "detail",
+        //     key: "detail",
+        //     render: (_text: any, record: TPackageResponse) => (
+        //         <Button onClick={() => showModal(record)}>Detail</Button>
+        //     ),
+        // },
     ];
 
     return (

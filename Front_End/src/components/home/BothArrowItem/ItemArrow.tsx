@@ -53,13 +53,14 @@ const ItemArrow = ({ dataSource }: Props) => {
       <h2 className="text-2xl font-bold mb-6 text-center bg-slate-50 text-black py-4 rounded-lg border border-primary-dark">
         ROOMS
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10"></div>
       <Slider {...settings}>
         {dataSource.map((data: TProductResponse, index: number) => (
           <div key={index} className="px-2">
             <Item props={data} />
-        {dataSource.map((data: any) => (
-          <div className="group relative bg-white rounded-2xl p-4 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-50">
+          </div>
+        ))}
+        {dataSource.map((data: any, index: number) => (
+          <div key={index} className="group relative bg-white rounded-2xl p-4 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-50">
             <ItemRoom props={data} />
           </div>
         ))}
