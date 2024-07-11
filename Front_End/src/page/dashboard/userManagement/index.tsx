@@ -2,13 +2,14 @@
 import TableRender from "@/components/FeTable/TableRender";
 import React from "react";
 import { Tag } from "antd";
+import { CustomColumnType } from "@/types/TablePropsCustom";
+import { format } from "date-fns"; 
 import { IUser } from "@/schemaValidations/user.schema";
 import RoleTag from "@/components/manager/RoleTag";
-import { CustomColumnType } from "@/types/TablePropsCustom";
 
 interface Props {
     props: any;
-    data: any;
+    data: any; 
 }
 
 export default function UserManagementPage({ props, data }: Props) {
@@ -52,9 +53,6 @@ export default function UserManagementPage({ props, data }: Props) {
             columns={columns}
             data={data}
             propsUrl={props}
-            onDelete={() => {}}
-            onEdit={() => {}}
-            onCreate={() => {}}
         />
     );
 }

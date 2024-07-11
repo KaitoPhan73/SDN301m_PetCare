@@ -3,7 +3,11 @@ import { z } from "zod";
 
 export const BookingDetailSchema = z.object({
   checkInDate: z.date() || z.string(),
+  checkOutDate: z.date() || z.string(),
   price: z.number(),
+  status: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
   packageId: z.string(),
   roomId: z.string(),
 });
@@ -24,9 +28,11 @@ export type TBookingDetailForBookingRequest = z.TypeOf<
 
 export type TBookingDetailResponse = TBookingDetailRequest & {
   _id: string;
+  detail: string;
   status: string;
   createdAt: string;
   updatedAt: string;
+  checkInDate: string;
   checkOutDate: string;
 };
 

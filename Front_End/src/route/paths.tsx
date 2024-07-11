@@ -12,6 +12,7 @@ const PATH_DASHBOARD = {
   package: path(ROOT_DASHBOARD, "/packages"),
   service: path(ROOT_DASHBOARD, "/services"),
   booking: path(ROOT_DASHBOARD, "/bookings"),
+  chart: path(ROOT_DASHBOARD, "/charts"),
 };
 
 const PATH_USER = {

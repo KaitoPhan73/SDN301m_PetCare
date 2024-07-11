@@ -1,13 +1,12 @@
-"use client";
+"use client"
+
 import React, { useState } from "react";
 import { Modal, Descriptions, Button } from "antd";
 import TableRender from "@/components/FeTable/TableRender";
+import { format } from "date-fns"; // Import format function from date-fns
 import { CustomColumnType } from "@/types/TablePropsCustom";
 import { TBookingResponse } from "@/schemaValidations/booking.schema";
-import { IUser } from "@/schemaValidations/user.schema";
-import {httpServer} from "@/lib/http";
-import { TUser } from "@/types/User";
-
+import { TBookingDetailResponse } from "@/schemaValidations/booking-detail.schema";
 
 interface Props {
     props: any;
@@ -17,34 +16,27 @@ interface Props {
 export default function BookingManagementPage({ props, data }: Props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedBooking, setSelectedBooking] = useState<TBookingResponse | null>(null);
-    const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
 
-    const showModal = (record: TBookingResponse, records: IUser) => {
+    const showModal = (record: TBookingResponse) => {
         setSelectedBooking(record);
-        setSelectedUser(fetchUserDetails(records));
         setIsModalVisible(true);
     };
 
     const handleOk = () => {
         setIsModalVisible(false);
         setSelectedBooking(null);
-        setSelectedUser(null);
-
     };
 
     const handleCancel = () => {
         setIsModalVisible(false);
         setSelectedBooking(null);
-        setSelectedUser(null);
+    };
 
+    const formatDate = (date: string) => {
+        return format(new Date(date), "dd/MM/yyyy - HH:mm:ss");
     };
 
     const columns: CustomColumnType<TBookingResponse>[] = [
-        {
-            title: "User ID",
-            dataIndex: "userId",
-            key: "userId",
-        },
         {
             title: "Status",
             dataIndex: "status",
@@ -57,11 +49,23 @@ export default function BookingManagementPage({ props, data }: Props) {
         },
         {
             title: "Detail",
-            dataIndex: "detail",
             key: "detail",
-            render: (_text: any, record: TBookingResponse, records: TUser) => (
-                <Button onClick={() => showModal(record, records)}>Detail</Button>
+            dataIndex: "detail",
+            render: (_text: any, record: TBookingResponse) => (
+                <Button onClick={() => showModal(record)}>Detail</Button>
             ),
+        },
+        {
+            title: "Created At",
+            dataIndex: "createdAt",
+            key: "createdAt",
+            render: (createdAt: string) => formatDate(createdAt), // Format createdAt column
+        },
+        {
+            title: "Updated At",
+            dataIndex: "updatedAt",
+            key: "updatedAt",
+            render: (updatedAt: string) => formatDate(updatedAt), // Format updatedAt column
         },
     ];
 
@@ -71,9 +75,9 @@ export default function BookingManagementPage({ props, data }: Props) {
                 columns={columns}
                 data={data}
                 propsUrl={props}
-                onDelete={() => {}}
-                onEdit={() => {}}
-                onCreate={() => {}}
+                onDelete={() => { }}
+                onEdit={() => { }}
+                onCreate={() => { }}
             />
             {selectedBooking && (
                 <Modal
@@ -81,26 +85,25 @@ export default function BookingManagementPage({ props, data }: Props) {
                     visible={isModalVisible}
                     onOk={handleOk}
                     onCancel={handleCancel}
+                    style={{ maxHeight: "80vh" }}
+                    className="custom-modal"
+                    bodyStyle={{ maxHeight: "60vh", overflowY: "auto" }}
                 >
-                    <Descriptions bordered column={1}>
-                        <Descriptions.Item label="User Name">{selectedUser?.username}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{selectedBooking.status}</Descriptions.Item>
-                        <Descriptions.Item label="Total Price">{selectedBooking.totalPrice}</Descriptions.Item>
-                        <Descriptions.Item label="Create Date">{selectedBooking.createdAt}</Descriptions.Item>
-                        <Descriptions.Item label="Modified Date">{selectedBooking.updatedAt}</Descriptions.Item>
-                    </Descriptions>
+                    {selectedBooking.bookingDetails.map((detail, index: number) => (
+                        <div key={index} style={{ marginBottom: '20px' }}>
+                            <h2 style={{ fontWeight: 'bold' }}>Booking Detail {index + 1}</h2><br/>
+                            <Descriptions bordered column={1}>
+                                <Descriptions.Item label="Check In Date">{formatDate(detail.checkInDate.toString())}</Descriptions.Item>
+                                <Descriptions.Item label="Check Out Date">{formatDate(detail.checkOutDate.toString())}</Descriptions.Item>
+                                <Descriptions.Item label="Price">{detail.price}</Descriptions.Item>
+                                <Descriptions.Item label="Status">{detail.status}</Descriptions.Item>
+                                <Descriptions.Item label="Created At">{formatDate(detail.createdAt)}</Descriptions.Item>
+                                <Descriptions.Item label="Updated At">{formatDate(detail.updatedAt)}</Descriptions.Item>
+                            </Descriptions>
+                        </div>
+                    ))}
                 </Modal>
             )}
         </>
     );
-}
-
-async function fetchUserDetails(userId: string): Promise<IUser | undefined> {
-    try {
-        const response = await httpServer.get<IUser>(`user/${userId}`);
-        return response.payload; 
-    } catch (error) {
-        console.error(`Error fetching user details for userId ${userId}:`, error);
-        return undefined; 
-    }
 }

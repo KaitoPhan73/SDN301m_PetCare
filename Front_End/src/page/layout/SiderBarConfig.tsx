@@ -32,6 +32,8 @@ const AdminSiderBarConfig = [
       customMenuItem(PATH_DASHBOARD.package, "Package Manager"),
       customMenuItem(PATH_DASHBOARD.service, "Service Manager"),
       customMenuItem(PATH_DASHBOARD.booking, "Booking Manager"),
+      customMenuItem(PATH_DASHBOARD.chart, "Chart"),
+
     ],
   },
 ];

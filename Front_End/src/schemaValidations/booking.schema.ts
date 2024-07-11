@@ -4,6 +4,7 @@ import BookingDetailForBookingSchema from "./booking-detail.schema";
 export const BookingSchema = z.object({
   detail: z.string(),
   userId: z.string(),
+  userName: z.string(),
   status: z.boolean({required_error: "Status is required"}),
   totalPrice: z.number(),
   bookingDetails: z.array(BookingDetailForBookingSchema),

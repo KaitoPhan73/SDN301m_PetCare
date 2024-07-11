@@ -1,10 +1,11 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import { Table, Button } from "antd";
 import { CustomColumnType } from "@/types/TablePropsCustom";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ReloadOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { TTableResponse } from "@/types/Table";
+import { DeleteOutlined } from "@mui/icons-material";
+import Filter from "./Filter";
 
 interface TableRenderProps<RecordType> {
   data: TTableResponse<RecordType>;
@@ -53,10 +54,6 @@ const TableRender = <RecordType extends object>({
   const renderHeader = () => {
     const filteredColumns = columns.filter((column) => column.filter);
 
-    if (filteredColumns.length === 0) {
-      return null;
-    }
-
     return (
       <div
         style={{
@@ -66,15 +63,22 @@ const TableRender = <RecordType extends object>({
           marginBottom: "16px",
         }}
       >
-        {onCreate && (
-          <Button
-            icon={<PlusOutlined />}
-            type="primary"
-            onClick={() => router.push(`${pathname}/create`)}
-          >
-            Thêm mới
-          </Button>
-        )}
+        {/* Filters area */}
+        <div style={{ display: "flex", gap: "16px" }}>
+          {filteredColumns.map((column, index) => (
+            <div key={index}>
+              <Filter column={column} onFilterChange={handleFilterChange} />
+            </div>
+          ))}
+        </div>
+        <Button
+          icon={<PlusOutlined />}
+          type="primary"
+          onClick={() => router.push(`${pathname}/create`)}
+        >
+          Thêm mới
+        </Button>
+
       </div>
     );
   };
@@ -101,7 +105,7 @@ const TableRender = <RecordType extends object>({
       render: (_: any, record: RecordType) => (
         <Button
           type="link"
-          icon={<ReloadOutlined style={{ fontSize: "18px", color: "green" }} />}
+          icon={<DeleteOutlined style={{ fontSize: "20px", color: "green" }} />}
           onClick={() => onDelete(String(record[finalRowKey]))}
         >
           Xóa

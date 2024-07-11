@@ -4,6 +4,7 @@ import { Modal, Button, Descriptions } from "antd";
 import TableRender from "@/components/FeTable/TableRender";
 import { CustomColumnType } from "@/types/TablePropsCustom";
 import { TPackageResponse } from "@/schemaValidations/package.schema";
+import { format } from "date-fns"; // Import format function from date-fns
 
 interface Props {
     props: any;
@@ -27,6 +28,10 @@ export default function PackageManagementPage({ props, data }: Props) {
     const handleCancel = () => {
         setIsModalVisible(false);
         setSelectedPackage(null);
+    };
+
+    const formatDate = (date: string) => {
+        return format(new Date(date), "dd/MM/yyyy - HH:mm:ss");
     };
 
     const columns: CustomColumnType<TPackageResponse>[] = [
@@ -73,8 +78,8 @@ export default function PackageManagementPage({ props, data }: Props) {
                 data={data}
                 propsUrl={props}
                 onDelete={() => {}}
-                onEdit
-                onCreate
+                onEdit={() => {}}
+                onCreate={() => {}}
             />
             {selectedPackage && (
                 <Modal
@@ -89,8 +94,8 @@ export default function PackageManagementPage({ props, data }: Props) {
                         <Descriptions.Item label="Price">{selectedPackage.price}</Descriptions.Item>
                         <Descriptions.Item label="Discount">{selectedPackage.discount}</Descriptions.Item>
                         <Descriptions.Item label="Total Time">{selectedPackage.totalTime}</Descriptions.Item>
-                        <Descriptions.Item label="Created At">{selectedPackage.createdAt}</Descriptions.Item>
-                        <Descriptions.Item label="Updated At">{selectedPackage.updatedAt}</Descriptions.Item>
+                        <Descriptions.Item label="Created At">{formatDate(selectedPackage.createdAt)}</Descriptions.Item>
+                        <Descriptions.Item label="Updated At">{formatDate(selectedPackage.updatedAt)}</Descriptions.Item>
                     </Descriptions>
                 </Modal>
             )}
