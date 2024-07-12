@@ -20,9 +20,6 @@ export type TBookingResponse = TBookingRequest & {
   _id: string;
   bookingDetails: TBookingDetailResponse[];
   userId: TUser;
-  status: string;
-  totalPrice: number;
   createdAt: string;
   updatedAt: string;
-   
 };
