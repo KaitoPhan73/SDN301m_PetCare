@@ -2,6 +2,7 @@ import express, {Router} from "express";
 import {
     disableUser,
     enableUser,
+    getCustomer,
     getEmployees,
     getUser,
     getUsers,
@@ -11,7 +12,8 @@ import {
 import {isHasManagerRight, protectedRoute} from "../middleware/authMiddleware";
 
 const router: Router = express.Router();
-router.get("/employees",  getEmployees);
+router.get("/employees", getEmployees);
+router.get("/customers", getCustomer);
 router.get("/", getUsers);
 router.get("/:userId", getUser);
 router.post("/", insertUser);

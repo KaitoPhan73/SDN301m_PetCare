@@ -34,6 +34,11 @@ const userApi = {
       data,
     });
   },
+  getCustomer: (params?: any) => {
+    return httpPetCare.get<TTableResponse<TUserResponse>>("user/customers", {
+      params,
+    });
+  },
 };
 
 export default userApi;
