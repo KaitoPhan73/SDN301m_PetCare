@@ -77,3 +77,21 @@ export const updateStaff = async (
         res.status(500).json({message: "Server error"});
     }
 }
+export const updateStatus = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const bookingDetailId: string = req.params.id;
+        const {status} = req.body;
+        const bookingDetail = await bookingDetailService.getBookingDetail(bookingDetailId);
+        if (bookingDetail !== null) {
+            bookingDetail.status = status;
+            await bookingDetail.save()
+        }
+        res.status(200).json({})
+    } catch (error) {
+        console.error("Error updating booking Detail:", error);
+        res.status(500).json({message: "Server error"});
+    }
+}

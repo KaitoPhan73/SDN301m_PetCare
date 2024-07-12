@@ -147,7 +147,6 @@ export const updateBookingById = async (
 };
 export const getByTime = async (roomId: string): Promise<IBooking[] | null> => {
     console.log(roomId)
-    // const roomIdToFind = new mongoose.Types.ObjectId(roomId);
     const bookings = await Booking.find()
         .populate([
             {
@@ -160,10 +159,34 @@ export const getByTime = async (roomId: string): Promise<IBooking[] | null> => {
                 ]
             },
             {path: "userId", model: "User"}
-        ]);
+        ])
+        .lean();
     console.log(bookings)
     const filteredBookings = bookings.filter(booking =>
         booking.bookingDetails.some(detail => detail.roomId.toString() === roomId)
+    );
+
+    return filteredBookings;
+}
+export const getByStaffId= async (staffId: string): Promise<IBooking[] | null> => {
+    const bookings = await Booking.find()
+        .populate([
+            {
+                path: 'bookingDetails',
+                match: {staffId: new mongoose.Types.ObjectId(staffId)},
+                populate: [
+                    {path: 'packageId', model: 'Package'},
+                    {path: 'roomId', model: 'Room'},
+
+                ]
+            },
+            {path: "userId", model: "User"}
+        ]).lean();
+    // console.log(bookings)
+    const filteredBookings = bookings.filter(booking =>
+        booking.bookingDetails.some(detail => {
+            return detail?.staffId?.toString() === staffId
+        })
     );
 
     return filteredBookings;

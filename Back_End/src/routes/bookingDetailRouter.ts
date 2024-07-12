@@ -4,7 +4,7 @@ import {
   checkExistingBookingDetail,
   insertBookingDetail,
   updateBookingDetail,
-  updateStaff,
+  updateStaff, updateStatus,
 } from "../controllers/bookingDetailController";
 
 const express = require("express");
@@ -15,5 +15,6 @@ router.post("/", protectedRoute, insertBookingDetail);
 router.patch("/:id", protectedRoute, updateBookingDetail);
 router.post("/check-existing", checkExistingBookingDetail);
 router.put("/:id", updateStaff);
+router.put("/status/:id", updateStatus)
 
 export default router;

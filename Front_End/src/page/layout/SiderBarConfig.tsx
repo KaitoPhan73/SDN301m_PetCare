@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { CoffeeMakerOutlined } from "@mui/icons-material";
 import Link from "next/link";
-const { PATH_DASHBOARD,PATH_MANAGER } = PATHS;
+const { PATH_DASHBOARD,PATH_MANAGER,PATH_STAFF } = PATHS;
 
 const customMenuItem = (path: string, name: string) => {
   return {
@@ -73,5 +73,23 @@ const ManagerSideBarConfig = [
     ],
   },
 ]
-const SiderBarConfig = { AdminSiderBarConfig, UserSiderBarConfig, ManagerSideBarConfig };
+const StaffSiderBarConfig = [
+  {
+    label: "Home",
+    key: "1",
+    icon: <PieChartOutlined />,
+  },
+  {
+    label: "Dashboard",
+    key: "sub1",
+    icon: <UserOutlined />,
+    children: [
+    
+      
+      customMenuItem(PATH_STAFF.schedule, "Schedule"),
+     
+    ],
+  },
+]
+const SiderBarConfig = { AdminSiderBarConfig, UserSiderBarConfig, ManagerSideBarConfig,StaffSiderBarConfig };
 export default SiderBarConfig;
