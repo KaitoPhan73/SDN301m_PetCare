@@ -6,10 +6,11 @@ import {
   TeamOutlined,
   FileOutlined,
   CoffeeOutlined,
+  LineChartOutlined,
 } from "@ant-design/icons";
-import { CoffeeMakerOutlined } from "@mui/icons-material";
+import { CoffeeMakerOutlined, StorefrontOutlined, StoreOutlined } from "@mui/icons-material";
 import Link from "next/link";
-const { PATH_DASHBOARD,PATH_MANAGER } = PATHS;
+const { PATH_DASHBOARD, PATH_MANAGER } = PATHS;
 
 const customMenuItem = (path: string, name: string) => {
   return {
@@ -24,22 +25,34 @@ const AdminSiderBarConfig = [
     icon: <PieChartOutlined />,
   },
   {
-    label: "Dashboard",
+    label: "Management",
     key: "sub1",
-    icon: <UserOutlined />,
+    icon: <StorefrontOutlined />,
     children: [
-      customMenuItem(PATH_DASHBOARD.user, "User Manager"),
-      customMenuItem(PATH_DASHBOARD.package, "Package Manager"),
-      customMenuItem(PATH_DASHBOARD.service, "Service Manager"),
-      customMenuItem(PATH_DASHBOARD.booking, "Booking Manager"),
-      customMenuItem(PATH_DASHBOARD.chart, "Chart"),
-
- 
-      customMenuItem(PATH_DASHBOARD.customer, "Customer "),
-      customMenuItem(PATH_DASHBOARD.schedule, "Schedule"),
+      customMenuItem(PATH_DASHBOARD.user, "User Management"),
+      customMenuItem(PATH_DASHBOARD.package, "Package Management"),
+      customMenuItem(PATH_DASHBOARD.service, "Service Management"),
+      customMenuItem(PATH_DASHBOARD.booking, "Booking Management"),
     ],
   },
-  
+  {
+    label: (
+      <span style={{ fontSize: "16px", fontWeight: "bold" }}>User</span>
+    ),
+    key: "sub2",
+    icon: <UserOutlined />,
+    children: [customMenuItem(PATH_DASHBOARD.customer, "Customer "),
+    customMenuItem(PATH_DASHBOARD.schedule, "Schedule"),],
+  },
+
+  {
+    label: <span style={{ fontSize: "16px", fontWeight: "bold" }}>Chart</span>,
+    key: "sub3",
+    icon: <LineChartOutlined />,
+    children: [customMenuItem(PATH_DASHBOARD.chart, "Chart"),
+    ],
+  },
+
 ];
 
 const UserSiderBarConfig = [
