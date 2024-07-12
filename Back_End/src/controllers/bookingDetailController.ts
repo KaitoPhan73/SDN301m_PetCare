@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import * as bookingDetailService from "../services/bookingDetailService";
+import {StaffIsAvailable} from "../services/bookingDetailService";
 import {IBookingDetail} from "../types/bookingDetail";
 
 export const insertBookingDetail = async (
@@ -18,21 +19,21 @@ export const insertBookingDetail = async (
 };
 
 export const checkExistingBookingDetail = async (
-  req: Request,
-  res: Response
+    req: Request,
+    res: Response
 ): Promise<void> => {
-  try {
-    const { packageId, checkInDate, roomId } = req.body;
-    const exists: boolean = await bookingDetailService.checkExisting(
-      packageId,
-      checkInDate,
-      roomId
-    );
-    res.status(200).json(exists);
-  } catch (error) {
-    console.error("Error checking existing booking Detail:", error);
-    res.status(500).json({ message: "Server error" });
-  }
+    try {
+        const {packageId, checkInDate, roomId} = req.body;
+        const exists: boolean = await bookingDetailService.checkExisting(
+            packageId,
+            checkInDate,
+            roomId
+        );
+        res.status(200).json(exists);
+    } catch (error) {
+        console.error("Error checking existing booking Detail:", error);
+        res.status(500).json({message: "Server error"});
+    }
 };
 
 export const updateBookingDetail = async (
@@ -64,14 +65,21 @@ export const updateStaff = async (
     res: Response
 ): Promise<void> => {
     try {
-        const bookingDetailId: string = req.params.id;
+        const bookingDetailId: string = req.params.id
         const {staffId} = req.body;
         const bookingDetail = await bookingDetailService.getBookingDetail(bookingDetailId);
         if (bookingDetail !== null) {
-            bookingDetail.staffId = staffId;
-            await bookingDetail.save()
+            const isAvailable = await StaffIsAvailable(staffId, bookingDetail.checkInDate, bookingDetail.checkOutDate);
+            if (!isAvailable) {
+               res.status(409).json({message: "Staff have another task at this time"})
+            } else {
+                bookingDetail.staffId = staffId;
+                await bookingDetail.save()
+                res.status(200).json({message: "success"})
+            }
+
         }
-         res.status(200).json({})
+
     } catch (error) {
         console.error("Error updating booking Detail:", error);
         res.status(500).json({message: "Server error"});

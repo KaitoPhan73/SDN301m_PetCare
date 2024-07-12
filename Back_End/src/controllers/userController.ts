@@ -164,3 +164,12 @@ export const getCustomer = async (req: Request, res: Response): Promise<void> =>
         res.status(500).json({ message: "Service error" });
     }
 }
+
+export const getStaffs = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const result= await userService.getStaff()
+        res.status(200).json(result);
+    }catch (error) {
+        res.status(500).json({ message: "Service error" });
+    }
+}

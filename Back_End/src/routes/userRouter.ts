@@ -3,7 +3,7 @@ import {
     disableUser,
     enableUser,
     getCustomer,
-    getEmployees,
+    getEmployees, getStaffs,
     getUser,
     getUsers,
     insertUser,
@@ -12,9 +12,10 @@ import {
 import {isHasManagerRight, protectedRoute} from "../middleware/authMiddleware";
 
 const router: Router = express.Router();
-router.get("/employees", getEmployees);
-router.get("/customers", getCustomer);
-router.get("/", getUsers);
+router.get("/employees", protectedRoute,getEmployees);
+router.get("/customers",protectedRoute, getCustomer);
+router.get("/staffs",protectedRoute, getStaffs);
+router.get("/", protectedRoute,getUsers);
 router.get("/:userId", getUser);
 router.post("/", insertUser);
 router.put("/:userId", updateUser);

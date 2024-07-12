@@ -39,6 +39,11 @@ const userApi = {
       params,
     });
   },
+  getStaff: (params?: any) => {
+    return httpPetCare.get<TUserResponse[]>("user/staffs", {
+      params,
+    });
+  }
 };
 
 export default userApi;

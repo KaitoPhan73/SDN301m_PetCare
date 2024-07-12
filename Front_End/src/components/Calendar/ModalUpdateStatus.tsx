@@ -18,6 +18,7 @@ interface ModalProps {
 
 const ModalUpdate = ({event, isOpen, onClose, change}: ModalProps) => {
         const [status, setStatus] = useState<string>("");
+        const {enqueueSnackbar} = useSnackbar();
         useEffect(() => {
 
             if (event?.status) {
@@ -28,7 +29,7 @@ const ModalUpdate = ({event, isOpen, onClose, change}: ModalProps) => {
         if (!isOpen || !event) {
             return null;
         }
-        const {enqueueSnackbar} = useSnackbar();
+
 
         const updateStatus = async () => {
             const response = await BookingDetailApi.updateStatus(event.bookingDetailId, status)

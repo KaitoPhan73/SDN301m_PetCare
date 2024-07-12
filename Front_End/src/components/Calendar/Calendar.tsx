@@ -147,8 +147,8 @@ export const Calendar = ({role}:{role:string}) => {
     };
 
     const getEmployee = async () => {
-        const data = await userApi.getEmployees();
-        setStaff(data?.payload.items);
+        const data = await userApi.getStaff();
+        setStaff(data?.payload);
     }
 const [isChange, setIsChange]=useState(false);
     const change = ()=>{

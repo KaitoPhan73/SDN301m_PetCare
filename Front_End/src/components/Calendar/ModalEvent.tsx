@@ -8,6 +8,7 @@ import Link from "next/link";
 // import {MenuItem, Select} from '@mui/material';
 import BookingDetailApi from "@/actions/booking-detail";
 import {Select, Tag} from "antd";
+import {useSnackbar} from "notistack";
 
 interface ModalProps {
     event: Event | null;
@@ -20,6 +21,7 @@ interface ModalProps {
 
 const ModalEvent = ({event, isOpen, onClose, staff, change, role}: ModalProps) => {
     const [staffOfPackage, setStaffOfPackage] = useState<string>("")
+    const {enqueueSnackbar} = useSnackbar();
     useEffect(() => {
 
         if (event?.staffId) {
@@ -32,7 +34,39 @@ const ModalEvent = ({event, isOpen, onClose, staff, change, role}: ModalProps) =
 
 
     const updateStaff = async () => {
-        await BookingDetailApi.updateStaff(event.bookingDetailId, staffOfPackage)
+
+        const response = await BookingDetailApi.updateStaff(event.bookingDetailId, staffOfPackage)
+        try {
+
+            if (response.status === 200) {
+                enqueueSnackbar("Update staff success", {
+                    variant: "success",
+                });
+
+            }
+            if (response.status === 409) {
+                enqueueSnackbar("Staff have another task at this time", {
+                    variant: "error",
+                });
+
+            }
+        
+        } catch
+            (error) {
+            console.log(error)
+            if (response.status === 400) {
+                enqueueSnackbar("Staff have another task at this time", {
+                    variant: "error",
+                });
+
+            } else {
+                enqueueSnackbar("Update staff failed", {
+                    variant: "error",
+                });
+                console.log("Error:", error);
+            }
+
+        }
         change()
     }
 
