@@ -12,4 +12,5 @@ export type TUserRequest = z.TypeOf<typeof UserSchema>;
 
 export type TUserResponse = TUserRequest & {
   _id: string;
+  brandName: string;
 };

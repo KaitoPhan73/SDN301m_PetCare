@@ -16,6 +16,12 @@ const BookingDetailApi = {
       data
     );
   },
+  updateStaff: (id: string, staffId: string) => {
+    return httpPetCare.put<TBookingDetailResponse>(
+        `/booking-detail/${id}`,
+        {staffId}
+    );
+  }
 };
 
 export default BookingDetailApi;
