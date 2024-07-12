@@ -34,6 +34,7 @@ export async function paginate<T>(
   const limit = options.limit ?? 10;
   const { populate, minPrice, maxPrice, ...restFilters } = options;
 
+  console.log("options", options);
   // Define filters using CustomFilters<T>
   const filters: CustomFilters<T> = { ...restFilters };
 

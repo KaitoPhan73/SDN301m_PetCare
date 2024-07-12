@@ -1,13 +1,19 @@
-import {protectedRoute} from "../middleware/authMiddleware";
-import {Router} from "express";
-import {insertBookingDetail, updateBookingDetail, updateStaff,} from "../controllers/bookingDetailController";
+import { protectedRoute } from "../middleware/authMiddleware";
+import { Router } from "express";
+import {
+  checkExistingBookingDetail,
+  insertBookingDetail,
+  updateBookingDetail,
+  updateStaff,
+} from "../controllers/bookingDetailController";
 
 const express = require("express");
 
 const router: Router = express.Router();
 
 router.post("/", protectedRoute, insertBookingDetail);
-router.patch("/:id", updateBookingDetail);
+router.patch("/:id", protectedRoute, updateBookingDetail);
+router.post("/check-existing", checkExistingBookingDetail);
 router.put("/:id", updateStaff);
 
 export default router;
