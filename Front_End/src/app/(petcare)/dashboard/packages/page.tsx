@@ -1,5 +1,6 @@
 
 import PackageApi from "@/actions/package";
+import ServiceApi from "@/actions/service";
 import userApi from "@/actions/users";
 import FeedBackManagementPage from "@/page/dashboard/feedbackManagement";
 import PackageManagementPage from "@/page/dashboard/packageManagement";
@@ -15,11 +16,13 @@ export default async function PackageAdmin(props: any) {
   const cookieStore = cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
   const response = await PackageApi.getPackages(params);
-  console.log("dataaaaa:",response.payload.items);
+  const response1 = await ServiceApi.getServices(params);
+
+  // console.log("dataaaaa:",response.payload.items);
 
   return (
     <>
-      <PackageManagementPage props={props} data={response.payload} /> 
+      <PackageManagementPage props={props} data={response.payload} data1={response1.payload}/> 
     </>
   );
 }

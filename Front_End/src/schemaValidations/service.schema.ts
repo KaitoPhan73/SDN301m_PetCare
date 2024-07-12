@@ -2,6 +2,7 @@
 
 export const ServiceSchema = z.object({
   // detail: z.string(),
+  id: z.string(),
   description: z.string(),
   name: z.string(),
   price: z.number(),
@@ -12,6 +13,7 @@ export const ServiceSchema = z.object({
 export type TServiceRequest = z.TypeOf<typeof ServiceSchema>;
 
 export const CreateServiceBody = z.object({
+  id: z.string(),
   description: z.string(),
   name: z.string(),
   price: z.number(),

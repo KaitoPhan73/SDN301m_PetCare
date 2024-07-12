@@ -9,6 +9,7 @@ import { format } from "date-fns"; // Import format function from date-fns
 interface Props {
     props: any;
     data: any;
+    data1: any;
 }
 
 export default function PackageManagementPage({ props, data }: Props) {

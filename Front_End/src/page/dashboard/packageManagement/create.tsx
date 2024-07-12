@@ -2,38 +2,57 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FormProvider, useForm, useFieldArray } from "react-hook-form";
 import { InputField, SelectField } from "@/components/form";
-import { Button, Grid, Box } from "@mui/material";
+import { Button, Grid, Box, MenuItem } from "@mui/material";
 import PATHS from "@/route/paths"; 
 import { useSnackbar } from "notistack";
 import { CreatePakageBody, TCreatePackageResponse } from "@/schemaValidations/package.schema";
 import PackageApi from "@/actions/package";
+import ServiceApi from "@/actions/service";
+import { PackageSchema } from "@/schemaValidations/package.schema"; // Import your PackageSchema
 
-export default function CreatePackagePage() {
+interface Props {
+    props: any;
+    data1: any;
+}
+
+export default function CreatePackagePage({ props, data1 }: Props) {
     const { PATH_DASHBOARD } = PATHS;
     const { enqueueSnackbar } = useSnackbar();
     const router = useRouter();
     const methods = useForm<TCreatePackageResponse>({
-        resolver: zodResolver(CreatePakageBody),
+        resolver: zodResolver(PackageSchema), // Use PackageSchema as resolver
         defaultValues: {
             name: "",
             description: "",
-            price: 0,
+            price: "",
             image: "",
             services: [],
-            discount: 0,
-            totalTime: 0,
+            discount: "",
+            totalTime: "",
         },
     });
 
-    const { handleSubmit, control } = methods;
-
+    const { handleSubmit } = methods;
     const { fields: serviceFields, append: appendService } = useFieldArray({
-        control,
         name: "services",
     });
+
+    const [services, setServices] = useState([]);
+
+    useEffect(() => {
+        async function fetchServices() {
+            try {
+                const response = await ServiceApi.getServices();
+                setServices(response.payload.items);
+            } catch (error) {
+                console.error("Failed to fetch services", error);
+            }
+        }
+        fetchServices();
+    }, []);
 
     const onSubmit = async (values: TCreatePackageResponse) => {
         try {
@@ -65,18 +84,24 @@ export default function CreatePackagePage() {
                     <InputField name="image" label="Đường dẫn ảnh" fullWidth />
                 </Grid>
                 <Grid item xs={4}>
-                    <InputField name="totaltime" label="Thời gian tối đa" fullWidth />
+                    <InputField name="totalTime" label="Thời gian tối đa" fullWidth />
                 </Grid>
                 <Grid item xs={4}>
                     {serviceFields.map((field, index) => (
                         <Box key={field.id} mb={2}>
-                            <SelectField name={`services.${index}`} label={`Dịch vụ ${index + 1}`} fullWidth />
+                            <SelectField name={`services.${index}`} label={`Dịch vụ ${index + 1}`} fullWidth>
+                                {services.map(service => (
+                                    <MenuItem key={service._id} value={service._id}>
+                                        {service.name}
+                                    </MenuItem>
+                                ))}
+                            </SelectField>
                         </Box>
                     ))}
                     <Button
                         type="button"
                         variant="contained"
-                        onClick={() => appendService()}
+                        onClick={() => appendService({ serviceId: "" })}
                     >
                         Thêm dịch vụ
                     </Button>
