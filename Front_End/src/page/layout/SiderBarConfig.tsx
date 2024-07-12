@@ -9,8 +9,7 @@ import {
 } from "@ant-design/icons";
 import { CoffeeMakerOutlined } from "@mui/icons-material";
 import Link from "next/link";
-const { PATH_DASHBOARD } = PATHS;
-const { PATH_COMPANY,PATH_MANAGER } = PATHS;
+const { PATH_DASHBOARD,PATH_MANAGER } = PATHS;
 
 const customMenuItem = (path: string, name: string) => {
   return {
@@ -24,16 +23,12 @@ const AdminSiderBarConfig = [
     key: "1",
     icon: <PieChartOutlined />,
   },
-  // {
-  //   label: <Link href={"/dashboard"}>Dashboard</Link>,
-  //   key: "2",
-  //   icon: <DesktopOutlined />,
-  // },
   {
     label: "Dashboard",
     key: "sub1",
     icon: <UserOutlined />,
     children: [
+ 
       customMenuItem(PATH_DASHBOARD.customer, "Customer "),
       customMenuItem(PATH_DASHBOARD.schedule, "Schedule"),
     ],
@@ -69,11 +64,6 @@ const ManagerSideBarConfig = [
     key: "1",
     icon: <PieChartOutlined />,
   },
-  // {
-  //   label: <Link href={"/dashboard"}>Dashboard</Link>,
-  //   key: "2",
-  //   icon: <DesktopOutlined />,
-  // },
   {
     label: "Dashboard",
     key: "sub1",
@@ -83,16 +73,6 @@ const ManagerSideBarConfig = [
       customMenuItem(PATH_MANAGER.employees, "Employee Manager"),
       customMenuItem(PATH_MANAGER.schedule, "Schedule"),
       // customMenuItem(PATH_DASHBOARD.invoicetemplate, "Invoice Template"),
-    ],
-  },
-  {
-    label: "Company",
-    key: "sub2",
-    icon: <CoffeeOutlined />,
-    children: [
-      customMenuItem(PATH_COMPANY.organizations, "Organizations"),
-      customMenuItem(PATH_COMPANY.partners, "Partners"),
-      customMenuItem(PATH_COMPANY.stores, "Stores"),
     ],
   },
 ]

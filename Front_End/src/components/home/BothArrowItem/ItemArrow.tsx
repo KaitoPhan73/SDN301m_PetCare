@@ -1,13 +1,15 @@
 "use client";
+
 import React from "react";
 import Slider from "react-slick";
 import Heading from "../Item/Heading";
 import Item from "../Item/Item";
 import SampleNextArrow from "./SampleNextArrow";
 import SamplePrevArrow from "./SamplePrevArrow";
+import { TProductResponse } from "@/schemaValidations/product.schema";
 import ItemRoom from "../Item/Item-room";
 type Props = {
-  dataSource: any;
+  dataSource: TProductResponse[];
 };
 
 const ItemArrow = ({ dataSource }: Props) => {
@@ -45,6 +47,7 @@ const ItemArrow = ({ dataSource }: Props) => {
       },
     ],
   };
+
   return (
     <div className="w-full pb-20">
       <h2 className="text-2xl font-bold mb-6 text-center bg-slate-50 text-black py-4 rounded-lg border border-primary-dark">
@@ -52,6 +55,9 @@ const ItemArrow = ({ dataSource }: Props) => {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10"></div>
       <Slider {...settings}>
+        {dataSource.map((data: TProductResponse, index: number) => (
+          <div key={index} className="px-2">
+            <Item props={data} />
         {dataSource.map((data: any) => (
           <div className="group relative bg-white rounded-2xl p-4 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-50">
             <ItemRoom props={data} />

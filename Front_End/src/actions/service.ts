@@ -1,16 +1,16 @@
 import { httpPetCare } from "@/lib/http";
-import { TService } from "@/schemaValidations/service.schema";
+import { TServiceResponse } from "@/schemaValidations/service.schema";
 import { TTableResponse } from "@/types/Table";
 
 const ServiceApi = {
   getServices: (params?: any) => {
-    return httpPetCare.get<TTableResponse<TService>>("/service", { params });
+    return httpPetCare.get<TTableResponse<TServiceResponse>>("/service", { params });
   },
   getService: (id: string) => {
-    return httpPetCare.get<TService>(`/service/${id}`);
+    return httpPetCare.get<TServiceResponse>(`/service/${id}`);
   },
-  createService: (data: TService) => {
-    return httpPetCare.post<TService>("/service", data);
+  createService: (data: TServiceResponse) => {
+    return httpPetCare.post<TServiceResponse>("/service", data);
   },
 };
 

@@ -5,8 +5,11 @@ import BookingDetailForBookingSchema, {
 import {TUser} from "@/types/User";
 import {TPackageResponse} from "@/schemaValidations/package.schema";
 
-const BookingSchema = z.object({
+export const BookingSchema = z.object({
+  detail: z.string(),
   userId: z.string(),
+  status: z.boolean({required_error: "Status is required"}),
+  totalPrice: z.number(),
   bookingDetails: z.array(BookingDetailForBookingSchema),
 });
 
@@ -22,5 +25,3 @@ export type TBookingResponse = TBookingRequest & {
   updatedAt: string;
    
 };
-
-export default BookingSchema;

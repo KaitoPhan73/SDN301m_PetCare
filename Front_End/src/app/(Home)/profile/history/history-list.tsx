@@ -68,7 +68,7 @@ const HistoryList = ({ data, params }: Props) => {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.4 }}
-          className="flex flex-col md:flex-col justify-center items-center gap-4 pb-20 pt-20"
+          className="flex flex-col md:flex-col justify-center items-center gap-4"
         >
           <Image
             src="https://cdni.iconscout.com/illustration/premium/thumb/sorry-item-not-found-3328225-2809510.png?f=webp"

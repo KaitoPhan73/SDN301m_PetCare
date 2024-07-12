@@ -25,11 +25,8 @@ export const getBookings = async (
     const booking: TPagination<IBooking> = await bookingService.getBookings(
       options
     );
-    if (booking.total > 0) {
-      res.status(200).json(booking);
-    } else {
-      res.status(404).json({ message: "Booking not found" });
-    }
+
+    res.status(200).json(booking);
   } catch (error) {
     console.error("Error fetching bookings:", error);
     res.status(500).json({ message: "Server error" });
@@ -43,11 +40,8 @@ export const getBooking = async (
   try {
     const bookingId = req.params.bookingId;
     const booking = await bookingService.getBookingById(bookingId);
-    if (booking !== null) {
-      res.status(200).json(booking);
-    } else {
-      res.status(404).json({ message: "booking not found" });
-    }
+
+    res.status(200).json(booking);
   } catch (error) {
     console.error("Error fetching booking:", error);
     res.status(500).json({ message: "Server error" });
