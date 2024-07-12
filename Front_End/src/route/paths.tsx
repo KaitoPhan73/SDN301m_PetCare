@@ -8,6 +8,11 @@ const ROOT_MANAGER = "/manager";
 
 const PATH_DASHBOARD = {
   root: ROOT_DASHBOARD,
+  user: path(ROOT_DASHBOARD, "/users"),
+  package: path(ROOT_DASHBOARD, "/packages"),
+  service: path(ROOT_DASHBOARD, "/services"),
+  booking: path(ROOT_DASHBOARD, "/bookings"),
+  chart: path(ROOT_DASHBOARD, "/charts"),
 
   customer: path(ROOT_DASHBOARD, "/customer"),
   schedule: path(ROOT_DASHBOARD, "/schedule"),
