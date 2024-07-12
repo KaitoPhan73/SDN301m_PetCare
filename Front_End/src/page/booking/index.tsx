@@ -238,7 +238,7 @@ export default function BookingPage({ data }: Props) {
       roomId: roomId,
       checkInDate: checkInDate.toDate(),
       checkOutDate: roomCheckOutTime.toDate(),
-      price: selectedPackage.price + responseRoomPrice,
+      price: Number(selectedPackage.price + responseRoomPrice),
     };
 
     append(newBookingDetail);

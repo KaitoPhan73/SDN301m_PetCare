@@ -2,6 +2,7 @@ import { z } from "zod";
 import { TPackageResponse } from "./package.schema";
 import { TRoomResponse } from "./room.schema";
 import { TUserResponse } from "@/schemaValidations/user.schema";
+import { TFeedback } from "./feedback.schema";
 
 export const BookingDetailSchema = z.object({
   checkInDate: z.date() || z.string(),
@@ -38,6 +39,7 @@ export type TBookingDetailResponse = {
   checkOutDate: string;
   checkInDate: string;
   price: number;
+  feedbackId: TFeedback[];
 };
 
 export default BookingDetailSchema;

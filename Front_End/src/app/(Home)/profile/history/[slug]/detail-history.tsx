@@ -2,9 +2,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { formatPriceVND, formatTime } from "@/lib/utils";
+import { formatDate, formatPriceVND, formatTime } from "@/lib/utils";
 import { TBookingDetailResponse } from "@/schemaValidations/booking-detail.schema";
 import { DialogBookingDetailCancel } from "@/components/dialog-cancel-booking-detail";
+import { DialogFeedBack } from "@/components/dialog-feedback";
+import { DialogShowFeedBack } from "@/components/dialog-show-feedback";
 
 type Props = {
   dataSource: TBookingDetailResponse[];
@@ -22,11 +24,6 @@ const HistoryDetail = ({ dataSource }: Props) => {
       ...prev,
       [itemId]: !prev[itemId],
     }));
-  };
-
-  const handleClick = (e) => {
-    e.stopPropagation();
-    // Add your logic here
   };
 
   return (
@@ -88,20 +85,34 @@ const HistoryDetail = ({ dataSource }: Props) => {
                   </p>
                 </div>
 
-                {/* Action: Cancel */}
                 <div
                   className={`px-4 py-6 flex items-center justify-center ${
                     item.status !== "Pending"
                       ? "cursor-not-allowed opacity-50"
                       : ""
                   }`}
-                  onClick={item.status !== "Pending" ? null : handleClick}
+                  onClick={
+                    item.status === "Pending" || item.status === "Completed"
+                      ? (e) => e.stopPropagation()
+                      : undefined
+                  }
                 >
-                  {/* Cancel Dialog */}
-                  {item.status === "Pending" ? (
+                  {item.status === "Pending" && (
                     <DialogBookingDetailCancel _id={item._id} />
-                  ) : (
-                    <button className="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-green-300 font-semibold text-lg text-black flex ">
+                  )}
+
+                  {item.status === "Completed" &&
+                    (!item.feedbackId ? (
+                      <DialogFeedBack _id={item._id} />
+                    ) : (
+                      <DialogShowFeedBack feedback={item.feedbackId} />
+                    ))}
+
+                  {item.status !== "Pending" && item.status !== "Completed" && (
+                    <button
+                      className="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-green-300 font-semibold text-lg text-white flex "
+                      disabled
+                    >
                       <span className="px-2">{item.status}</span>
                     </button>
                   )}
@@ -115,7 +126,11 @@ const HistoryDetail = ({ dataSource }: Props) => {
                     About this booking detail
                   </p>
                   <p className="text-sm text-gray-700">
-                    check-in: {item.checkInDate.toString()}
+                    check-in: {formatDate(item.checkInDate)}
+                  </p>
+
+                  <p className="text-sm text-gray-700">
+                    check-out : {formatDate(item.checkOutDate)}
                   </p>
                   {/* Bạn có thể thêm nhiều chi tiết hơn tùy ý */}
                 </div>
