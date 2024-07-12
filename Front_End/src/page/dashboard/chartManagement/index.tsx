@@ -1,64 +1,40 @@
 "use client"
+import React from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
+import { format } from "date-fns";
 
-import React, { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import { format } from 'date-fns';
-import { TBookingResponse } from '@/schemaValidations/booking.schema';
-
-interface ChartPageProps {
-  bookings: TBookingResponse[]; // Define props interface
+interface ChartData {
+  createdAt: string;
+  totalPrice: number;
 }
 
-const ChartPage: React.FC<ChartPageProps> = ({ bookings }) => {
-  const [chartData, setChartData] = useState<any>({});
+interface Props {
+  data: ChartData[]; // Adjust type according to your data structure
+}
 
-  useEffect(() => {
-    const generateChartData = () => {
-      if (!bookings) return;
-
-      const chartLabels: string[] = [];
-      const chartDataPoints: number[] = [];
-
-      bookings.forEach((booking) => {
-        const createDate = format(new Date(booking.createdAt), 'yyyy-MM-dd');
-        const existingIndex = chartLabels.findIndex((label) => label === createDate);
-
-        if (existingIndex !== -1) {
-          chartDataPoints[existingIndex] += booking.totalPrice;
-        } else {
-          chartLabels.push(createDate);
-          chartDataPoints.push(booking.totalPrice);
-        }
-      });
-
-      setChartData({
-        labels: chartLabels,
-        datasets: [
-          {
-            label: 'Total Price',
-            data: chartDataPoints,
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-          }
-        ]
-      });
-    };
-
-    generateChartData();
-  }, [bookings]);
-
-  if (!bookings) {
-    return <div>Loading...</div>;
-  }
-
+const ChartPage: React.FC<Props> = ({ data }) => {
   return (
-    <div>
-      <h2>Booking Total Price Line Chart</h2>
-      <div style={{ height: '400px', width: '600px', margin: 'auto' }}>
-        <Line data={chartData} options={{}} />
-      </div>
-    </div>
+    <LineChart
+      width={730}
+      height={250}
+      data={data}
+      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="createdAt" /> {/* Use createdAt as dataKey */}
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Line type="monotone" dataKey="totalPrice" stroke="#8884d8" /> {/* Display totalPrice */}
+    </LineChart>
   );
 };
 

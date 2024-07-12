@@ -9,7 +9,6 @@ export default async function createPackage(props: any) {
     limit: props.searchParams.limit ? +props.searchParams.limit : 10,
   };
   const response1 = await ServiceApi.getServices(params);
-  const services: TServiceResponse[] = response1.payload.items; 
 
-  return <CreatePackagePage props={props} data1={services} />;
+  return <CreatePackagePage props={props} data1={response1.payload.items} />;
 }
