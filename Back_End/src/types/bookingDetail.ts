@@ -14,7 +14,7 @@ export interface IBookingDetail extends Document {
   packageId: ObjectId;
   // bookingId: ObjectId;
   staffId?: ObjectId;
-  RoomId: ObjectId;
+  roomId: ObjectId;
   status: BookingDetailStatus;
   bookingDetailStatus: String;
   createdAt: Date;

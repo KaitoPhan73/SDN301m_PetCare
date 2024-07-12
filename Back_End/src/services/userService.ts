@@ -7,12 +7,24 @@ import {paginate} from "../utils/paginationExtension";
 const getUsers = async (options: any): Promise<TPagination<IUser>> => {
     return paginate(User, options);
 };
+const getEmployees = async (options: any): Promise<TPagination<IUser>> => {
+    // // Xây dựng điều kiện để loại bỏ vai trò 'manager' và 'customer'
+    const conditions = {
+        role: {$in: ["admin", "employee"]},
+    };
 
-const getEmployees = async (): Promise<IUser[] | null> => {
-    return await User.find({
-        role: {$in: ['admin', 'employee']}
-    });
-}
+    // Kết hợp điều kiện với các options khác nếu cần thiết
+    const finalOptions = {
+        ...options,
+        ...conditions
+    };
+
+    // Sử dụng paginate để lấy danh sách người dùng
+    const result = await paginate(User, finalOptions);
+
+    return result;
+};
+
 const getUserById = async (userId: string): Promise<IUser | null> => {
     return await User.findById(userId);
 };

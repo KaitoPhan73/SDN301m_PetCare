@@ -24,7 +24,6 @@ export const protectedRoute =
             if (result.valid) {
                 const {id, username, email, role} = result.decoded!;
                 req.body.auth = {id, username, email, role}
-                console.log(req.body.auth)
                 next();
             } else if (result.expired) {
                 return res.status(401).json({message: 'Token expired'});
@@ -39,7 +38,7 @@ export const protectedRoute =
 export const isHasAdminRight = async (req: Request, res: Response, next: NextFunction) => {
     const owner = req.body.auth;
     if (!owner) {
-        res.status(401).json({message: "Not authorized"});
+        res.status(401).json({message: "Not authorized"})
     }
     if (owner.role !== enumsRole.Admin) {
         res.status(403).json({message: "Access denied. Admin rights required"})

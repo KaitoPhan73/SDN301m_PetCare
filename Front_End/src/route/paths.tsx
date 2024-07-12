@@ -1,17 +1,16 @@
 const path = (root: string, sublink: string) => {
   return `${root}${sublink}`;
 };
-const ROOT_DASHBOARD = "/dashboard";
+const ROOT_DASHBOARD = "/admin";
 const ROOT_COMPANY = "/company";
 const ROOT_USER = "/users";
 const ROOT_MANAGER = "/manager";
 
 const PATH_DASHBOARD = {
   root: ROOT_DASHBOARD,
-  brand: path(ROOT_DASHBOARD, "/brand"),
-  user: path(ROOT_DASHBOARD, "/users"),
-  invoice: path(ROOT_DASHBOARD, "/invoice"),
-  invoicetemplate: path(ROOT_DASHBOARD, "/invoicetemplate"),
+  customer: path(ROOT_DASHBOARD, "/customer"),
+  schedule: path(ROOT_DASHBOARD, "/schedule"),
+  revenue: path(ROOT_DASHBOARD, "revenue")
 };
 
 const PATH_USER = {
@@ -30,7 +29,7 @@ const PATH_COMPANY = {
 const PATH_MANAGER = {
   root: ROOT_MANAGER,
   employees: path(ROOT_MANAGER, "/employee"),
-  partners: path(ROOT_MANAGER, "/partners"),
+  schedule: path(ROOT_MANAGER, "/schedule"),
 }
 const PATHS = {
   PATH_DASHBOARD,

@@ -17,6 +17,9 @@ const BookingApi = {
   createBooking: (data: TBookingRequest) => {
     return httpPetCare.post<TBookingResponse>("/booking", data);
   },
+  getBookingByRoom: (roomId: string) => {
+    return httpPetCare.post<TBookingResponse[]>("booking/getByRoom", {roomId});
+  }
 };
 
 export default BookingApi;
