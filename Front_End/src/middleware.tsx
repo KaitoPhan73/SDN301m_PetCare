@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
     if (!user) {
       return NextResponse.redirect(new URL("/logout", request.url));
     } else {
-      return NextResponse.redirect(new URL("/dashboard/revenue", request.url));
+      return NextResponse.redirect(new URL("/admin/users", request.url));
     }
   }
 

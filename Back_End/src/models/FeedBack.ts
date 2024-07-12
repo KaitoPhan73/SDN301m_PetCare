@@ -6,7 +6,11 @@ const FeedBackSchema: Schema = new Schema(
     content: { type: String, required: true },
     createDate: { type: Date, required: true, default: Date.now },
     modifiedDate: { type: Date, required: true, default: Date.now },
-    bookingId: { type: mongoose.Types.ObjectId, required: true },
+    bookingDetailId: {
+      type: mongoose.Types.ObjectId,
+      ref: "BookingDetail",
+      required: true,
+    },
     userId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
     status: { type: Boolean, required: true },
   },

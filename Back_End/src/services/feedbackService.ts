@@ -34,18 +34,14 @@ export const getFeedbackById = async (
 
 export const insertFeedback = async (
   content: string,
-  bookingId: string,
+  bookingDetailId: string,
   userId: string,
   status: string
 ): Promise<IFeedBack> => {
   try {
-    const nowInVietnam = moment.tz(Date(), "Asia/Ho_Chi_Minh");
-
     const newFeedback: IFeedBack = new Feedback({
       content,
-      createDate: nowInVietnam,
-      modifiedDate: nowInVietnam,
-      bookingId,
+      bookingDetailId,
       userId,
       status: status === "approved" ? true : false,
     });
@@ -54,6 +50,7 @@ export const insertFeedback = async (
 
     return newFeedback;
   } catch (error) {
+    console.error("Error creating feedback:", error);
     throw new Error("Error creating feedback");
   }
 };
