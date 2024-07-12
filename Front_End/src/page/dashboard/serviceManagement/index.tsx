@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { Modal, Button, Descriptions } from "antd";
 import TableRender from "@/components/FeTable/TableRender";
 import { CustomColumnType } from "@/types/TablePropsCustom";
-import { TPackageResponse } from "@/schemaValidations/package.schema";
 import { TServiceResponse } from "@/schemaValidations/service.schema";
+import { format } from "date-fns"; // Import format function from date-fns
 
 interface Props {
     props: any;
@@ -13,21 +13,25 @@ interface Props {
 
 export default function ServiceManagementPage({ props, data }: Props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [selectedPackage, setSelectedPackage] = useState<TServiceResponse | null>(null);
+    const [selectedService, setSelectedService] = useState<TServiceResponse | null>(null);
 
     const showModal = (record: TServiceResponse) => {
-        setSelectedPackage(record);
+        setSelectedService(record);
         setIsModalVisible(true);
     };
 
     const handleOk = () => {
         setIsModalVisible(false);
-        setSelectedPackage(null);
+        setSelectedService(null);
     };
 
     const handleCancel = () => {
         setIsModalVisible(false);
-        setSelectedPackage(null);
+        setSelectedService(null);
+    };
+
+    const formatDate = (date: string) => {
+        return format(new Date(date), "dd/MM/yyyy - HH:mm:ss");
     };
 
     const columns: CustomColumnType<TServiceResponse>[] = [
@@ -54,7 +58,7 @@ export default function ServiceManagementPage({ props, data }: Props) {
         },
         {
             title: "Detail",
-            dataIndex: "detail",
+            dataIndex: "name",
             key: "detail",
             render: (_text: any, record: TServiceResponse) => (
                 <Button onClick={() => showModal(record)}>Detail</Button>
@@ -72,7 +76,7 @@ export default function ServiceManagementPage({ props, data }: Props) {
                 onEdit={() => {}}
                 onCreate={() => {}}
             />
-            {selectedPackage && (
+            {selectedService && (
                 <Modal
                     title="Service Details"
                     visible={isModalVisible}
@@ -80,12 +84,12 @@ export default function ServiceManagementPage({ props, data }: Props) {
                     onCancel={handleCancel}
                 >
                     <Descriptions bordered column={1}>
-                        <Descriptions.Item label="Name">{selectedPackage.name}</Descriptions.Item>
-                        <Descriptions.Item label="Description">{selectedPackage.description}</Descriptions.Item>
-                        <Descriptions.Item label="Price">{selectedPackage.price}</Descriptions.Item>
-                        <Descriptions.Item label="Time">{selectedPackage.time}</Descriptions.Item>
-                        <Descriptions.Item label="Created At">{selectedPackage.createdAt}</Descriptions.Item>
-                        <Descriptions.Item label="Updated At">{selectedPackage.updatedAt}</Descriptions.Item>
+                        <Descriptions.Item label="Name">{selectedService.name}</Descriptions.Item>
+                        <Descriptions.Item label="Description">{selectedService.description}</Descriptions.Item>
+                        <Descriptions.Item label="Price">{selectedService.price}</Descriptions.Item>
+                        <Descriptions.Item label="Time">{selectedService.time}</Descriptions.Item>
+                        <Descriptions.Item label="Created At">{formatDate(selectedService.createdAt)}</Descriptions.Item>
+                        <Descriptions.Item label="Updated At">{formatDate(selectedService.updatedAt)}</Descriptions.Item>
                     </Descriptions>
                 </Modal>
             )}
