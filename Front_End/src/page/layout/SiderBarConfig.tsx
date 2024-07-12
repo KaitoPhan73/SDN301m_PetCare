@@ -28,6 +28,12 @@ const AdminSiderBarConfig = [
     key: "sub1",
     icon: <UserOutlined />,
     children: [
+      customMenuItem(PATH_DASHBOARD.user, "User Manager"),
+      customMenuItem(PATH_DASHBOARD.package, "Package Manager"),
+      customMenuItem(PATH_DASHBOARD.service, "Service Manager"),
+      customMenuItem(PATH_DASHBOARD.booking, "Booking Manager"),
+      customMenuItem(PATH_DASHBOARD.chart, "Chart"),
+
  
       customMenuItem(PATH_DASHBOARD.customer, "Customer "),
       customMenuItem(PATH_DASHBOARD.schedule, "Schedule"),
