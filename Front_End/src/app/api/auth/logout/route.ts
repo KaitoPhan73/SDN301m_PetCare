@@ -14,7 +14,7 @@ export async function POST(request: Request) {
         status: 200,
         headers: {
           // Xóa cookie accessToken
-          "Set-Cookie": `accessToken=; Path=/; HttpOnly; Max-Age=0`,
+          "Set-Cookie": `accessToken=; Path=/; HttpOnly; Max-Age=0, user=; Path=/; HttpOnly; Max-Age=0`,
         },
       }
     );

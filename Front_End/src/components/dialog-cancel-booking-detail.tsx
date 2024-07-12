@@ -24,7 +24,7 @@ export function DialogBookingDetailCancel({ _id }: Props) {
     });
     if (response.status === 200) {
       enqueueSnackbar("Cancel successfully", { variant: "success" });
-      router.push(`/profile/history/${_id}`);
+      // router.push(`/profile/history/${_id}`);
       router.refresh();
     } else {
       enqueueSnackbar("Cancel failed", { variant: "error" });

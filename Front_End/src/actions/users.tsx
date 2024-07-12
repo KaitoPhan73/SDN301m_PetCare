@@ -30,9 +30,7 @@ const userApi = {
     });
   },
   updatePassword: (data: any) => {
-    return httpPetCare.put<TUserResponse>(`/auth/updatePassword`, {
-      data,
-    });
+    return httpPetCare.put<TUserResponse>(`/auth/updatePassword`, data);
   },
 };
 

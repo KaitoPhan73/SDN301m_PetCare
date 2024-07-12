@@ -54,6 +54,7 @@ export const AuthController = {
           message: "Login successfully!",
           accessToken: accessToken,
           user: {
+            _id: user._id,
             username: user.username,
             email: user.email,
             role: user.role,
@@ -238,6 +239,7 @@ export const AuthController = {
   updatePassword: async (req: Request, res: Response) => {
     try {
       const { username, password } = req.body;
+      console.log("username", username);
       const user = await findUserByUserName(username);
       if (!user) {
         return res.status(403).json({ message: "User not found" });

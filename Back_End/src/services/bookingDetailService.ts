@@ -15,16 +15,9 @@ export const createBookingDetail = async (
       throw new Error(`Package with id ${bookingData.packageId} not found.`);
     }
 
-    // Calculate checkOutDate from checkInData and totalTime
-    const checkInDate = moment(bookingData.checkInData);
-    const checkOutDate = checkInDate
-      .add(packageData.totalTime, "days")
-      .toDate();
-
     // Create new BookingDetail object
     const newBookingDetail: IBookingDetail = new BookingDetail({
       ...bookingData,
-      checkOutData: checkOutDate,
       status: BookingDetailStatus.Pending,
     });
 
@@ -77,7 +70,7 @@ export const checkExisting = async (
       .utc()
       .toDate(); // Ensure time is added correctly
 
-    console.log("checkInTime:", checkInTime.format());
+    console.log("checkInTime:", checkInTime.toDate());
     console.log("checkOutTime:", checkOutTime);
 
     // Find existing bookings that overlap with the new booking time
@@ -94,6 +87,8 @@ export const checkExisting = async (
         },
       ],
     });
+
+    console.log("existingBooking:", existingBooking);
 
     return !!existingBooking;
   } catch (error) {

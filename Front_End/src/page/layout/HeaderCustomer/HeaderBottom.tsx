@@ -40,19 +40,19 @@ const HeaderBottom = () => {
                       Profile
                     </li>
                   </Link>
-                  {user.role === "Customer" && (
+                  {/* {user.role === "Customer" && (
                     <Link onClick={() => setShowUser(false)} href="/booking">
                       <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                         Booking
                       </li>
                     </Link>
-                  )}
+                  )} */}
 
                   {/* Dashboard link (only visible to admins) */}
                   {user.role === "Admin" && (
                     <Link
                       onClick={() => setShowUser(false)}
-                      href="/dashboard/watches"
+                      href="/admin/users"
                     >
                       <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                         Dashboard

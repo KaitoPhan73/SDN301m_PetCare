@@ -31,6 +31,11 @@ const navBarList = [
     link: "/product",
   },
   {
+    _id: "booking",
+    title: "Booking",
+    link: "/booking",
+  },
+  {
     _id: "about",
     title: "About",
     link: "/about",

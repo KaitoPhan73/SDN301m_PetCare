@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { InputField } from "@/components/form";
 import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
+import { useEffect } from "react";
 export function UserAuthForm() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -37,11 +38,10 @@ export function UserAuthForm() {
         enqueueSnackbar("Login success", { variant: "success" });
         router.push("/homepage");
         router.refresh();
-      } else {
-        enqueueSnackbar("Login failed", { variant: "error" });
-        form.reset();
       }
     } catch (error: any) {
+      enqueueSnackbar(`Login failed `, { variant: "error" });
+      form.reset();
       console.error(error);
     }
   };
