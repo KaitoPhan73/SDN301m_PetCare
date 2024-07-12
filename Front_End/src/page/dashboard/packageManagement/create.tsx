@@ -2,20 +2,25 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FormProvider, useForm, useFieldArray } from "react-hook-form";
 import { InputField, SelectField } from "@/components/form";
 import { Button, Grid, Box, MenuItem } from "@mui/material";
-import PATHS from "@/route/paths"; 
+import PATHS from "@/route/paths";
 import { useSnackbar } from "notistack";
-import { CreatePakageBody, TCreatePackageResponse } from "@/schemaValidations/package.schema";
+import { TCreatePackageResponse } from "@/schemaValidations/package.schema";
 import PackageApi from "@/actions/package";
-import ServiceApi from "@/actions/service";
 import { PackageSchema } from "@/schemaValidations/package.schema"; // Import your PackageSchema
+import { TServiceResponse } from "@/schemaValidations/service.schema";
+
+interface Service {
+    id: string;
+    name: string;
+}
 
 interface Props {
     props: any;
-    data1: any;
+    data1: TServiceResponse[];
 }
 
 export default function CreatePackagePage({ props, data1 }: Props) {
@@ -40,19 +45,7 @@ export default function CreatePackagePage({ props, data1 }: Props) {
         name: "services",
     });
 
-    const [services, setServices] = useState([]);
-
-    useEffect(() => {
-        async function fetchServices() {
-            try {
-                const response = await ServiceApi.getServices();
-                setServices(response.payload.items);
-            } catch (error) {
-                console.error("Failed to fetch services", error);
-            }
-        }
-        fetchServices();
-    }, []);
+    const services = data1; // Use data1 from props directly
 
     const onSubmit = async (values: TCreatePackageResponse) => {
         try {
@@ -90,8 +83,8 @@ export default function CreatePackagePage({ props, data1 }: Props) {
                     {serviceFields.map((field, index) => (
                         <Box key={field.id} mb={2}>
                             <SelectField name={`services.${index}`} label={`Dịch vụ ${index + 1}`} fullWidth>
-                                {services.map(service => (
-                                    <MenuItem key={service._id} value={service._id}>
+                                {services.map((service: Service) => (
+                                    <MenuItem key={service.id} value={service.id}>
                                         {service.name}
                                     </MenuItem>
                                 ))}

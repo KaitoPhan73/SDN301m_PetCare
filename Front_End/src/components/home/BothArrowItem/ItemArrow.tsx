@@ -54,13 +54,8 @@ const ItemArrow = ({ dataSource }: Props) => {
         ROOMS
       </h2>
       <Slider {...settings}>
-        {dataSource.map((data: TProductResponse, index: number) => (
-          <div key={index} className="px-2">
-            <Item props={data} />
-          </div>
-        ))}
-        {dataSource.map((data: any, index: number) => (
-          <div key={index} className="group relative bg-white rounded-2xl p-4 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-50">
+        {dataSource.map((data: any) => (
+          <div className="group relative bg-white rounded-2xl p-4 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-50">
             <ItemRoom props={data} />
           </div>
         ))}

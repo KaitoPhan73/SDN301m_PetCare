@@ -25,10 +25,22 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
         res.status(500).json({ message: "Service error" });
     }
 };
-export const getEmployees = async (req: Request, res: Response) => {
+export const getEmployees = async (req: Request, res: Response):Promise<void> => {
     try {
-        const users = await userService.getEmployees();
-        res.status(200).json(users);
+        const page = parseInt(req.query.page as string, 10) || 1;
+        const limit = parseInt(req.query.limit as string, 10) || 10;
+
+        const { page: _, limit: __, ...otherQueries } = req.query;
+
+        const options = {
+            page,
+            limit,
+            ...otherQueries,
+        };
+
+        const result: TPagination<IUser> = await userService.getEmployees(options);
+
+        res.status(200).json(result);
     }catch (error) {
         res.status(500).json({ message: "Service error" });
     }

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import * as roomService from "../services/roomService";
 import { TPagination } from "../types/pagination";
 import { IRoom } from "../types/room";
+import {getRoomsList} from "../services/roomService";
 
 export const getRooms = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -89,3 +90,13 @@ export const updateRoom = async (
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const getRoomList = async (req: Request, res: Response) => {
+  try {
+    const rooms = await getRoomsList();
+    return res.status(200).json(rooms);
+  }catch (error){
+    console.error("Error fetching room:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+}

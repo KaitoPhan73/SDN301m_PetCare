@@ -2,7 +2,8 @@ import { z } from "zod";
 import BookingDetailForBookingSchema, {
   TBookingDetailResponse,
 } from "./booking-detail.schema";
-import { TUser } from "./user.schema";
+import {TUser} from "@/types/User";
+import {TPackageResponse} from "@/schemaValidations/package.schema";
 
 export const BookingSchema = z.object({
   detail: z.string(),
@@ -23,4 +24,5 @@ export type TBookingResponse = TBookingRequest & {
   totalPrice: number;
   createdAt: string;
   updatedAt: string;
+   
 };

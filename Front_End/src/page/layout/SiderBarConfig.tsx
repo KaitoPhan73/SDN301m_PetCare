@@ -34,8 +34,12 @@ const AdminSiderBarConfig = [
       customMenuItem(PATH_DASHBOARD.booking, "Booking Manager"),
       customMenuItem(PATH_DASHBOARD.chart, "Chart"),
 
+ 
+      customMenuItem(PATH_DASHBOARD.customer, "Customer "),
+      customMenuItem(PATH_DASHBOARD.schedule, "Schedule"),
     ],
   },
+  
 ];
 
 const UserSiderBarConfig = [
@@ -64,7 +68,7 @@ const ManagerSideBarConfig = [
     children: [
       // customMenuItem(PATH_DASHBOARD.brand, "Brand"),
       customMenuItem(PATH_MANAGER.employees, "Employee Manager"),
-      customMenuItem(PATH_MANAGER.partners, "Partners Manager"),
+      customMenuItem(PATH_MANAGER.schedule, "Schedule"),
       // customMenuItem(PATH_DASHBOARD.invoicetemplate, "Invoice Template"),
     ],
   },

@@ -1,6 +1,7 @@
 import ServiceApi from "@/actions/service";
 import CreatePackagePage from "@/page/dashboard/packageManagement/create";
 import React from "react";
+import { TServiceResponse } from "@/schemaValidations/service.schema";
 
 export default async function createPackage(props: any) {
   const params = {
@@ -8,6 +9,7 @@ export default async function createPackage(props: any) {
     limit: props.searchParams.limit ? +props.searchParams.limit : 10,
   };
   const response1 = await ServiceApi.getServices(params);
+  const services: TServiceResponse[] = response1.payload.items; 
 
-  return <CreatePackagePage  props={props} data1={response1.payload} />;
+  return <CreatePackagePage props={props} data1={services} />;
 }

@@ -14,10 +14,7 @@ export default async function page() {
   const dataPakage = await PackageApi.getPackages(params);
   const dataRoom = await RoomApi.getRooms(params);
 
-  const dataRooms: TRoomResponse[] = dataRoom.payload.items.map((room: TRoomBase) => ({
-    ...room,
-    _id: room._id || generateId(),
-  }));
+  const dataRooms: TRoomResponse[] = dataRoom.payload.items;
 
   const data = {
     dataPakages: dataPakage.payload.items,

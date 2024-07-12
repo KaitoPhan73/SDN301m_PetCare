@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import dayjs from "dayjs"; // Import dayjs for date manipulation
 import { TPackageResponse } from "@/schemaValidations/package.schema";
+import { TRoomResponse } from "@/schemaValidations/room.schema";
 
 type Props = {
   item: any;
@@ -19,12 +20,12 @@ export default function BookingDetail({
   index,
   handleRemoveById,
 }: Props) {
-  const [roomName, setRoomName] = useState<string>();
+  const [roomObj, setRoomObj] = useState<TRoomResponse>();
   const [packageObj, setPackageObj] = useState<TPackageResponse>();
 
   const fetchRoom = async () => {
     const response = await RoomApi.getRoomById(item.roomId);
-    setRoomName(response.payload.name);
+    setRoomObj(response.payload);
   };
 
   const fetchPackage = async () => {
@@ -46,7 +47,6 @@ export default function BookingDetail({
     }
     return "Loading...";
   };
-  console.log("sdsdsd", item);
 
   return (
     <Grid item xs={12} md={6} lg={6} key={index}>
@@ -66,14 +66,20 @@ export default function BookingDetail({
             </Grid>
           </Grid>
           <Typography variant="body1">
-            <strong>Room:</strong> {roomName || "Loading..."}
+            <strong>Room:</strong> {roomObj?.name || "Loading..."}
+            {roomObj?.price && (
+              <span> ( {formatPriceVND(roomObj.price)} )</span>
+            )}
           </Typography>
           <Typography variant="body1">
             <strong>Combo:</strong>{" "}
             {packageObj ? packageObj.name : <span>Loading...</span>}
+            {packageObj?.price && (
+              <span> ( {formatPriceVND(packageObj.price)} )</span>
+            )}
           </Typography>
           <Typography variant="body1">
-            <strong>Price:</strong> {formatPriceVND(item.price)}
+            <strong>Total Price:</strong> {formatPriceVND(item.price)}
           </Typography>
           <Typography variant="body1">
             <strong>CheckIn:</strong> {formatDate(item.checkInDate)}
