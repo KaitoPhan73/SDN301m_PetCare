@@ -33,16 +33,7 @@ const AdminSiderBarConfig = [
       customMenuItem(PATH_DASHBOARD.schedule, "Schedule"),
     ],
   },
-  {
-    label: "Company",
-    key: "sub2",
-    icon: <CoffeeOutlined />,
-    children: [
-      customMenuItem(PATH_COMPANY.organizations, "Organizations"),
-      customMenuItem(PATH_COMPANY.partners, "Partners"),
-      customMenuItem(PATH_COMPANY.stores, "Stores"),
-    ],
-  },
+  
 ];
 
 const UserSiderBarConfig = [

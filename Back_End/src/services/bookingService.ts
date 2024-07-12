@@ -26,7 +26,7 @@ export const getBookings = async (
 
         const result = await paginate(Booking, updatedOptions);
 
- 
+
         // Iterate through each booking to calculate totalPrice
         for (const booking of result.items) {
             let totalPrice = 0;
@@ -45,11 +45,16 @@ export const getBookings = async (
 
             // Update totalPrice in the result
             booking.totalPrice = totalPrice;
-
+        }
+        return result;
+    } catch
+        (error) {
+        console.error("Error fetching booking:", error);
+        throw new Error("Error fetching bookings");
     }
-};
+}
 
- 
+
 export const getBookingById = async (
     bookingId: string
 ): Promise<IBooking | null> => {
@@ -82,6 +87,8 @@ export const getBookingById = async (
     } catch (error) {
         console.error("Error fetching booking:", error);
         return null;
+    }
+}
 export const createBooking = async (
     bookingData: IBooking
 ): Promise<IBooking> => {
