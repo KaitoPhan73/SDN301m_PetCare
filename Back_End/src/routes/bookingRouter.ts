@@ -4,7 +4,7 @@ const express = require("express");
 import { Router } from "express";
 import {
   deleteBooking,
-  getBooking,
+  getBooking, getBookingByTime,
   getBookings,
   insertBooking,
   updateBooking,
@@ -15,6 +15,8 @@ const router: Router = express.Router();
 router.get("/", getBookings);
 
 router.get("/:bookingId", getBooking);
+
+router.post("/getByRoom", getBookingByTime)
 
 router.post("/",protectedRoute, insertBooking);
 

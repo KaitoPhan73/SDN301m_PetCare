@@ -11,6 +11,11 @@ const RoomApi = {
   getRoomById: (id: string) => {
     return httpPetCare.get<TRoomResponse>(`/room/${id}`);
   },
+  getRoomList: (params?: any) => {
+    return httpPetCare.get<TRoomResponse[]>("room/getAll", {
+      params,
+    });
+  },
 };
 
 export default RoomApi;

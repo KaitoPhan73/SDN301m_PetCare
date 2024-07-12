@@ -24,7 +24,9 @@ const TablePermission = () => {
     useEffect(() => {
         const fetchUsers = async (page: number, limit: number) => {
 
-            const response = await userApi.getUsers({ page, limit });
+
+            const response = await userApi.getEmployees({page, limit});
+
             const usersWithKey = response.payload?.items?.map((user, index) => ({
                 ...user,
                 key: index + (page - 1) * limit,

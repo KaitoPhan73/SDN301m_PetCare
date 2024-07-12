@@ -19,6 +19,11 @@ const BookingDetailApi = {
   checkExistBookingDetailFromServer: (data: any) => {
     return httpPetCare.post<boolean>(`/booking-detail/check-existing`, data);
   },
+  updateStaff: (id: string, staffId: string) => {
+    return httpPetCare.put<TBookingDetailResponse>(`/booking-detail/${id}`, {
+      staffId,
+    });
+  },
 };
 
 export default BookingDetailApi;

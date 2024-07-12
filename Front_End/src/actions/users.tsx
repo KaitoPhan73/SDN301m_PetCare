@@ -12,8 +12,10 @@ const userApi = {
   getUser: (userId: string) => {
     return httpPetCare.get<TUserResponse>(`/user/${userId}`);
   },
-  getEmployees: () => {
-    return httpPetCare.get<TUserResponse[]>("/employees", {});
+  getEmployees: (params?: any) => {
+    return httpPetCare.get<TTableResponse<TUserResponse>>("user/employees", {
+      params,
+    });
   },
   disableUser: (userId: string) => {
     return httpPetCare.get<TUserResponse>(`/user/disable/${userId}`);

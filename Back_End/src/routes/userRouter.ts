@@ -11,11 +11,11 @@ import {
 import {isHasManagerRight, protectedRoute} from "../middleware/authMiddleware";
 
 const router: Router = express.Router();
+router.get("/employees",  getEmployees);
 router.get("/", getUsers);
 router.get("/:userId", getUser);
 router.post("/", insertUser);
 router.put("/:userId", updateUser);
-router.get("/employees", protectedRoute, isHasManagerRight, getEmployees);
 router.get("/disable/:userId", protectedRoute, isHasManagerRight, disableUser)
 router.get("/enable/:userId", protectedRoute, isHasManagerRight, enableUser)
 

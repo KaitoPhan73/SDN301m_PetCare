@@ -100,3 +100,12 @@ export const checkExisting = async (
     throw new Error(`Error checking existing Booking Detail: ${error}`);
   }
 };
+export const getBookingDetail = async (
+  bookingId: string
+): Promise<IBookingDetail | null> => {
+  try {
+    return await BookingDetail.findById(bookingId);
+  } catch (error) {
+    throw new Error(`Error fetching Booking Detail: ${error}`);
+  }
+};

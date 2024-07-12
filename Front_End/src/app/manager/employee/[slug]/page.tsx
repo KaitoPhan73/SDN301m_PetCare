@@ -1,3 +1,4 @@
+"use client"
 import userApi from "@/actions/users";
 import EditUser from "@/page/users/edit";
 import React from "react";
