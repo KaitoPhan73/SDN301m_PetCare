@@ -3,9 +3,9 @@ import z, { boolean } from "zod";
 
 export const RegisterSchema = z.object({
   username: z.string(),
-  password: z.string(),
-  email: z.string(),
-  confirmPassword: z.string(),
+  password: z.string().min(6),
+  email: z.string().email(),
+  confirmPassword: z.string().min(6),
   role: z.string(),
 });
 

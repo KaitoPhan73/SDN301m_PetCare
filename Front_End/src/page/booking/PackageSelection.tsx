@@ -6,8 +6,8 @@ import FullScreenToggle from "@/components/ToggleFull";
 // Styled components với TypeScript
 const StyledCard = styled("div")<{ image: string }>(({ image }) => ({
   position: "relative",
-  width: 200,
-  height: 200,
+  width: 150,
+  height: 150,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundImage: `url(${image})`,
@@ -58,7 +58,7 @@ const PackageSelection: React.FC<PackageSelectionProps> = ({
 }) => {
   return (
     <FullScreenToggle title="Chọn gói dịch vụ" open={open} onClose={onClose}>
-      <Grid container spacing={4}>
+      <Grid container spacing={2}>
         {dataPackages.map((item) => {
           // Xử lý trường hợp item.image là mảng
           const imageUrl = Array.isArray(item.image)

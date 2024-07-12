@@ -20,7 +20,7 @@ export default function PaymentCompletePage({ data }: Props) {
   const [message, setMessage] = useState("Processing payment...");
   const [countdown, setCountdown] = useState(5);
   const dispatch = useDispatch();
-
+  console.log("user", user);
   const handlePayment = async () => {
     if (data.status === "1") {
       setMessage("Payment successful! Redirecting to homepage...");
@@ -32,6 +32,7 @@ export default function PaymentCompletePage({ data }: Props) {
               packageId: product.packageId,
               roomId: product.roomId,
               checkInDate: product.checkInDate,
+              checkOutDate: product.checkOutDate,
               price: product.price,
             };
 
@@ -48,13 +49,14 @@ export default function PaymentCompletePage({ data }: Props) {
           _id: detail._id,
           packageId: detail.packageId,
           roomId: detail.roomId,
+          checkOutDate: detail.checkOutDate,
           checkInDate: detail.checkInDate,
           price: detail.price,
         }));
 
         // Tạo booking với các bookingDetails đã tạo
         const bookingResponse = await BookingApi.createBooking({
-          userId: "6688eca1e04b57a20ec4266f",
+          userId: user?._id,
           bookingDetails: bookingDetailsIds,
         });
 

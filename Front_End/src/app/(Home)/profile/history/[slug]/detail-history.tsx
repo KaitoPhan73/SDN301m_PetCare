@@ -24,6 +24,11 @@ const HistoryDetail = ({ dataSource }: Props) => {
     }));
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+    // Add your logic here
+  };
+
   return (
     <div>
       {dataSource.length > 0 ? (
@@ -85,11 +90,21 @@ const HistoryDetail = ({ dataSource }: Props) => {
 
                 {/* Action: Cancel */}
                 <div
-                  className="px-4 py-6 flex items-center justify-center"
-                  onClick={(e) => e.stopPropagation()}
+                  className={`px-4 py-6 flex items-center justify-center ${
+                    item.status !== "Pending"
+                      ? "cursor-not-allowed opacity-50"
+                      : ""
+                  }`}
+                  onClick={item.status !== "Pending" ? null : handleClick}
                 >
                   {/* Cancel Dialog */}
-                  <DialogBookingDetailCancel _id={item._id} />
+                  {item.status === "Pending" ? (
+                    <DialogBookingDetailCancel _id={item._id} />
+                  ) : (
+                    <button className="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-green-300 font-semibold text-lg text-black flex ">
+                      <span className="px-2">{item.status}</span>
+                    </button>
+                  )}
                 </div>
               </div>
               {/* Toggle Details Content */}
@@ -97,10 +112,10 @@ const HistoryDetail = ({ dataSource }: Props) => {
                 <div className="bg-gray-50 p-4 mt-2 rounded-lg shadow-inner">
                   {/* Thêm nội dung chi tiết mà bạn muốn hiển thị khi mở */}
                   <p className="text-sm text-gray-700">
-                    Thêm thông tin chi tiết về booking này.
+                    About this booking detail
                   </p>
                   <p className="text-sm text-gray-700">
-                    Thời gian check-in: {item.checkInDate.toString()}
+                    check-in: {item.checkInDate.toString()}
                   </p>
                   {/* Bạn có thể thêm nhiều chi tiết hơn tùy ý */}
                 </div>

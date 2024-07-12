@@ -37,11 +37,10 @@ export function UserAuthForm() {
         enqueueSnackbar("Login success", { variant: "success" });
         router.push("/homepage");
         router.refresh();
-      } else {
-        enqueueSnackbar("Login failed", { variant: "error" });
-        form.reset();
       }
     } catch (error: any) {
+      enqueueSnackbar(`Login failed `, { variant: "error" });
+      form.reset();
       console.error(error);
     }
   };

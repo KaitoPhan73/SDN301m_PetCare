@@ -4,14 +4,14 @@ import { cookies } from "next/headers";
 import BookingApi from "@/actions/booking";
 
 async function page(props: any) {
+  const cookieStore = cookies();
+  const storeUser = cookieStore.get("user")?.value;
+  const userId = JSON.parse(storeUser!)._id;
   const params = {
     page: props.searchParams.page || 1,
     limit: props.searchParams.pageSize || 6,
-    userId: "6688eca1e04b57a20ec4266f",
+    userId: userId,
   };
-  const cookieStore = cookies();
-  const storeUser = cookieStore.get("user")?.value;
-  // const userId = JSON.parse(storeUser!)._id;
   const response = await BookingApi.getBookings(params);
   return (
     <div className="space-y-6">

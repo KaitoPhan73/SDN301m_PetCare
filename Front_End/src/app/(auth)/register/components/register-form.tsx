@@ -23,7 +23,7 @@ export function RegisterForm() {
       password: "",
       confirmPassword: "",
       email: "",
-      role: "customer",
+      role: "Customer",
     },
   });
 

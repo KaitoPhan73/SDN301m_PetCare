@@ -62,56 +62,9 @@ export default function BookingPage({ data }: Props) {
       bookingDetails: [],
     },
   });
+  console.log("user", user);
   const { handleSubmit, control } = methods;
 
-  const onSubmit = async (data: TBookingRequest) => {
-    console.log(data);
-    try {
-      const createdBookingDetails: TBookingDetailForBookingRequest[] = [];
-
-      const bookingDetails = data.bookingDetails;
-
-      for (const item of bookingDetails) {
-        const bookingDetail: TBookingDetailRequest = {
-          packageId: item.packageId,
-          roomId: item.roomId,
-          checkInDate: item.checkInDate,
-          price: item.price,
-        };
-
-        const createdDetail = await BookingDetailApi.createBookingDetail(
-          bookingDetail
-        );
-        createdBookingDetails.push(createdDetail.payload);
-      }
-      // Thêm các bookingDetails vào data.bookingDetails
-      data.bookingDetails = createdBookingDetails.map((detail) => ({
-        _id: detail._id,
-        packageId: detail.packageId,
-        roomId: detail.roomId,
-        checkInDate: detail.checkInDate,
-        price: detail.price,
-      }));
-
-      // Tạo booking chính với bookingDetails đã được thêm vào
-      const response = await BookingApi.createBooking(data);
-      console.log("response", response);
-      if (response.status === 201) {
-        enqueueSnackbar("Quý khách đã booking thành công. Cảm ơn quý khách", {
-          variant: "success",
-        });
-        router.refresh();
-        while (fields.length > 0) {
-          remove(0); // Xóa từng phần tử đầu tiên của mảng fields
-        }
-      }
-    } catch (error) {
-      enqueueSnackbar("Đã xảy ra lỗi khi booking. Vui lòng thử lại", {
-        variant: "error",
-      });
-      console.log("Error:", error);
-    }
-  };
   const { fields, append, remove } = useFieldArray<TBookingRequest>({
     control,
     name: "bookingDetails",
@@ -155,7 +108,7 @@ export default function BookingPage({ data }: Props) {
     const response = await RoomApi.getRoomById(id);
     return response.payload.price;
   };
-
+  console.log("okk", checkInDate);
   const fetchPackage = async (id: string) => {
     const response = await PackageApi.getPackage(id);
     return response.payload.totalTime;
@@ -181,18 +134,45 @@ export default function BookingPage({ data }: Props) {
     const roomCheckInTime = dayjs(checkInDate);
     const roomCheckOutTime = roomCheckInTime.add(packageTotalTime, "minute");
 
+    const now = dayjs();
+    const startOfDay = roomCheckInTime.startOf("day").add(8, "hour");
+    const endOfDay = roomCheckInTime.startOf("day").add(21, "hour");
+    const minCheckInTime = now.add(3, "hour");
+
+    if (
+      roomCheckInTime.isBefore(startOfDay) ||
+      roomCheckInTime.isAfter(endOfDay)
+    ) {
+      enqueueSnackbar(
+        "Giờ check-in phải nằm trong khoảng từ 8 giờ sáng tới 9 giờ đêm.",
+        { variant: "warning" }
+      );
+      return;
+    }
+
+    // Kiểm tra giờ check-in có lớn hơn thời gian hiện tại + 3 tiếng
+    if (roomCheckInTime.isBefore(minCheckInTime)) {
+      enqueueSnackbar(
+        `Giờ check-in phải lớn hơn thời gian hiện tại + 3 tiếng (tức là sau ${minCheckInTime.format(
+          "HH:mm"
+        )}).`,
+        { variant: "warning" }
+      );
+      return;
+    }
+
     let isConflictingRoom = false;
     const exist = await fetchExistingBookingDetails();
     console.log("ok", exist);
 
     if (exist) {
-      console.log("hahahahh");
-      alert(
+      enqueueSnackbar(
         `Thời gian check-in, checkout của bạn (${formatDate(
           roomCheckInTime.toDate()
         )} - ${formatDate(
           roomCheckOutTime.toDate()
-        )}) đã tồn tại với thời gian đã tồn tại. Vui lòng chọn giờ khác hoặc phòng khác.`
+        )}) đã tồn tại với thời gian đã tồn tại. Vui lòng chọn giờ khác hoặc phòng khác.`,
+        { variant: "warning" }
       );
       return;
     }
@@ -209,7 +189,7 @@ export default function BookingPage({ data }: Props) {
         roomCheckInTime.isBefore(existingCheckOutTime) &&
         item.roomId === roomId
       ) {
-        alert(
+        enqueueSnackbar(
           `Thời gian check-in, checkout của bạn (${formatDate(
             roomCheckInTime.toDate()
           )} - ${formatDate(
@@ -218,7 +198,8 @@ export default function BookingPage({ data }: Props) {
             existingCheckInTime.toDate()
           )} - ${formatDate(
             existingCheckOutTime.toDate()
-          )}) của phòng này. Vui lòng chọn giờ khác hoặc phòng khác.`
+          )}) của phòng này. Vui lòng chọn giờ khác hoặc phòng khác.`,
+          { variant: "warning" }
         );
 
         isConflictingRoom = true;
@@ -294,7 +275,27 @@ export default function BookingPage({ data }: Props) {
                       </button>
                     </Grid>
                     <Grid item xs={6}>
-                      <DialogPayment />
+                      {user ? (
+                        user.role === "Customer" ? (
+                          <DialogPayment />
+                        ) : (
+                          <button
+                            className="rounded-full w-full max-w-[300px] py-4 text-center justify-center items-center bg-gray-300 font-semibold text-lg text-gray-500 flex cursor-not-allowed"
+                            disabled
+                          >
+                            <span className="px-2">
+                              You don't have permission to book
+                            </span>
+                          </button>
+                        )
+                      ) : (
+                        <button
+                          onClick={() => router.push("/login")}
+                          className="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-black font-semibold text-lg text-white flex transition-all duration-500 hover:bg-gray-100 hover:text-black"
+                        >
+                          <span className="px-2">Login to pay</span>
+                        </button>
+                      )}
                     </Grid>
                   </>
                 ) : (
@@ -306,12 +307,23 @@ export default function BookingPage({ data }: Props) {
                     alignItems="center"
                     style={{ height: "200px" }}
                   >
-                    <button
-                      onClick={handleOpenPackageSelection}
-                      className="rounded-full w-full max-w-[280px] py-8 text-center justify-center items-center bg-black font-semibold text-lg text-white flex transition-all duration-500 hover:bg-gray-100 hover:text-black"
-                    >
-                      <span className="px-2">Click Here To Booking</span>
-                    </button>
+                    {user && user.role !== "Customer" ? (
+                      <button
+                        className="rounded-full w-full max-w-[300px] py-8 text-center justify-center items-center bg-gray-300 font-semibold text-lg text-gray-500 flex cursor-not-allowed"
+                        disabled
+                      >
+                        <span className="px-2">
+                          You don't have permission to book
+                        </span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleOpenPackageSelection}
+                        className="rounded-full w-full max-w-[280px] py-8 text-center justify-center items-center bg-black font-semibold text-lg text-white flex transition-all duration-500 hover:bg-gray-100 hover:text-black"
+                      >
+                        <span className="px-2">Click Here To Booking</span>
+                      </button>
+                    )}
                   </Grid>
                 )}
               </Grid>
