@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { InputField } from "@/components/form";
 import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
+import { useEffect } from "react";
 export function UserAuthForm() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -35,13 +36,22 @@ export function UserAuthForm() {
           user: JSON.stringify(response.payload.user),
         });
         enqueueSnackbar("Login success", { variant: "success" });
-        router.push("/homepage");
+        const user = response.payload.user;
+        if (user?.role === "Admin"){
+          router.push("/admin/schedule");
+        }else if (user?.role === "Staff"){
+          router.push("/staff/schedule");
+        }else if (user?.role === "Manager"){
+          router.push("/manager/employee");
+        }else {
+          router.push("/homepage");
+        }
+        
         router.refresh();
-      } else {
-        enqueueSnackbar("Login failed", { variant: "error" });
-        form.reset();
       }
     } catch (error: any) {
+      enqueueSnackbar(`Login failed `, { variant: "error" });
+      form.reset();
       console.error(error);
     }
   };

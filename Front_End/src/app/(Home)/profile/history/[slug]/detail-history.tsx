@@ -2,9 +2,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { formatPriceVND, formatTime } from "@/lib/utils";
+import { formatDate, formatPriceVND, formatTime } from "@/lib/utils";
 import { TBookingDetailResponse } from "@/schemaValidations/booking-detail.schema";
 import { DialogBookingDetailCancel } from "@/components/dialog-cancel-booking-detail";
+import { DialogFeedBack } from "@/components/dialog-feedback";
+import { DialogShowFeedBack } from "@/components/dialog-show-feedback";
 
 type Props = {
   dataSource: TBookingDetailResponse[];
@@ -83,13 +85,37 @@ const HistoryDetail = ({ dataSource }: Props) => {
                   </p>
                 </div>
 
-                {/* Action: Cancel */}
                 <div
-                  className="px-4 py-6 flex items-center justify-center"
-                  onClick={(e) => e.stopPropagation()}
+                  className={`px-4 py-6 flex items-center justify-center ${
+                    item.status !== "Pending"
+                      ? "cursor-not-allowed opacity-50"
+                      : ""
+                  }`}
+                  onClick={
+                    item.status === "Pending" || item.status === "Completed"
+                      ? (e) => e.stopPropagation()
+                      : undefined
+                  }
                 >
-                  {/* Cancel Dialog */}
-                  <DialogBookingDetailCancel _id={item._id} />
+                  {item.status === "Pending" && (
+                    <DialogBookingDetailCancel _id={item._id} />
+                  )}
+
+                  {item.status === "Completed" &&
+                    (!item.feedbackId ? (
+                      <DialogFeedBack _id={item._id} />
+                    ) : (
+                      <DialogShowFeedBack feedback={item.feedbackId} />
+                    ))}
+
+                  {item.status !== "Pending" && item.status !== "Completed" && (
+                    <button
+                      className="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-green-300 font-semibold text-lg text-white flex "
+                      disabled
+                    >
+                      <span className="px-2">{item.status}</span>
+                    </button>
+                  )}
                 </div>
               </div>
               {/* Toggle Details Content */}
@@ -97,10 +123,14 @@ const HistoryDetail = ({ dataSource }: Props) => {
                 <div className="bg-gray-50 p-4 mt-2 rounded-lg shadow-inner">
                   {/* Thêm nội dung chi tiết mà bạn muốn hiển thị khi mở */}
                   <p className="text-sm text-gray-700">
-                    Thêm thông tin chi tiết về booking này.
+                    About this booking detail
                   </p>
                   <p className="text-sm text-gray-700">
-                    Thời gian check-in: {item.checkInDate.toString()}
+                    check-in: {formatDate(item.checkInDate)}
+                  </p>
+
+                  <p className="text-sm text-gray-700">
+                    check-out : {formatDate(item.checkOutDate)}
                   </p>
                   {/* Bạn có thể thêm nhiều chi tiết hơn tùy ý */}
                 </div>

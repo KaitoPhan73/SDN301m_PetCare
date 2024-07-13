@@ -22,9 +22,7 @@ export const getFeedbacks = async (
     const feedbacks: TPagination<IFeedBack> =
       await feedbackService.getFeedbacks(options);
 
-    
-      res.status(200).json( feedbacks);
-
+    res.status(200).json(feedbacks);
   } catch (error) {
     console.error("Error fetching feedbacks:", error);
     res.status(500).json({ message: "Server error" });
@@ -54,10 +52,11 @@ export const insertFeedback = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { content, bookingId, userId, status } = req.body;
+    const { content, bookingDetailId, userId, status } = req.body;
+    console.log(req.body);
     const newFeedback: IFeedBack = await feedbackService.insertFeedback(
       content,
-      bookingId,
+      bookingDetailId,
       userId,
       status
     );

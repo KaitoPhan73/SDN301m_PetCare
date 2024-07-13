@@ -14,7 +14,11 @@ const BookingDetailSchema = new Schema(
     },
     roomId: { type: mongoose.Types.ObjectId, ref: "Room", required: true },
     status: { type: String, default: "Pending" },
-    // booking: { type: mongoose.Types.ObjectId, ref: "Booking", required: true },
+    feedbackId: {
+      type: mongoose.Types.ObjectId,
+      ref: "FeedBack",
+      required: false,
+    },
   },
   { versionKey: false, timestamps: true }
 );

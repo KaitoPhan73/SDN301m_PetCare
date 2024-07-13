@@ -13,6 +13,9 @@ const FeedBacksApi = {
   getFeedbackById: (id: string) => {
     return httpPetCare.get<TFeedback>(`/feedback`);
   },
+  createFeedback: (data: any) => {
+    return httpPetCare.post<TFeedback>("/feedback", data);
+  },
 };
 
 export default FeedBacksApi;

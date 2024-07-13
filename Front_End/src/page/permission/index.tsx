@@ -37,7 +37,7 @@ const TablePermission = () => {
         };
 
         fetchUsers(currentPage, pageSize);
-    }, [currentPage, pageSize, isChange]);
+    }, [currentPage, isChange]);
 
     const columns: TableColumnsType<TUser> = [
         {
