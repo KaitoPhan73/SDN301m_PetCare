@@ -1,4 +1,3 @@
-
 import ServiceApi from "@/actions/service";
 import userApi from "@/actions/users";
 import FeedBackManagementPage from "@/page/dashboard/feedbackManagement";
@@ -14,11 +13,11 @@ export default async function Admin(props: any) {
   };
   const cookieStore = cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
-  const response = await ServiceApi.getServices(params);
+  const response = await ServiceApi.getServices(accessToken!, params);
 
   return (
     <>
-      <ServiceManagementPage props={props} data={response.payload} /> 
+      <ServiceManagementPage props={props} data={response.payload} />
     </>
   );
 }

@@ -6,13 +6,14 @@ import BookingApi from "@/actions/booking";
 async function page(props: any) {
   const cookieStore = cookies();
   const storeUser = cookieStore.get("user")?.value;
+  const accessToken = cookieStore.get("accessToken")?.value;
   const userId = JSON.parse(storeUser!)._id;
   const params = {
     page: props.searchParams.page || 1,
     limit: props.searchParams.pageSize || 6,
     userId: userId,
   };
-  const response = await BookingApi.getBookings(params);
+  const response = await BookingApi.getBookings(params, accessToken);
   return (
     <div className="space-y-6">
       <div>

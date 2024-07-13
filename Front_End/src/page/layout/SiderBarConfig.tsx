@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { CoffeeMakerOutlined } from "@mui/icons-material";
 import Link from "next/link";
-const { PATH_DASHBOARD,PATH_MANAGER,PATH_STAFF } = PATHS;
+const { PATH_DASHBOARD, PATH_MANAGER, PATH_STAFF } = PATHS;
 
 const customMenuItem = (path: string, name: string) => {
   return {
@@ -33,13 +33,9 @@ const AdminSiderBarConfig = [
       customMenuItem(PATH_DASHBOARD.service, "Service Manager"),
       customMenuItem(PATH_DASHBOARD.booking, "Booking Manager"),
       customMenuItem(PATH_DASHBOARD.chart, "Chart"),
-
- 
-      customMenuItem(PATH_DASHBOARD.customer, "Customer "),
       customMenuItem(PATH_DASHBOARD.schedule, "Schedule"),
     ],
   },
-  
 ];
 
 const UserSiderBarConfig = [
@@ -72,7 +68,7 @@ const ManagerSideBarConfig = [
       // customMenuItem(PATH_DASHBOARD.invoicetemplate, "Invoice Template"),
     ],
   },
-]
+];
 const StaffSiderBarConfig = [
   {
     label: "Home",
@@ -83,13 +79,13 @@ const StaffSiderBarConfig = [
     label: "Dashboard",
     key: "sub1",
     icon: <UserOutlined />,
-    children: [
-    
-      
-      customMenuItem(PATH_STAFF.schedule, "Schedule"),
-     
-    ],
+    children: [customMenuItem(PATH_STAFF.schedule, "Schedule")],
   },
-]
-const SiderBarConfig = { AdminSiderBarConfig, UserSiderBarConfig, ManagerSideBarConfig,StaffSiderBarConfig };
+];
+const SiderBarConfig = {
+  AdminSiderBarConfig,
+  UserSiderBarConfig,
+  ManagerSideBarConfig,
+  StaffSiderBarConfig,
+};
 export default SiderBarConfig;

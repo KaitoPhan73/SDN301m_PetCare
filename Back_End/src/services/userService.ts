@@ -10,7 +10,7 @@ const getUsers = async (options: any): Promise<TPagination<IUser>> => {
 const getEmployees = async (options: any): Promise<TPagination<IUser>> => {
   // // Xây dựng điều kiện để loại bỏ vai trò 'manager' và 'customer'
   const conditions = {
-    role: { $in: ["admin", "employee"] },
+    role: { $in: ["Admin", "Employee"] },
   };
 
   // Kết hợp điều kiện với các options khác nếu cần thiết
@@ -104,16 +104,17 @@ const getCustomer = async (options: any): Promise<TPagination<IUser>> => {
 
   return result;
 };
-const getStaff =async () => {
+const getStaff = async () => {
   try {
     return await User.find({
-      role: "Employee",
-      status: true
-    })
-  }catch (error){
-    throw new Error("Error fetching user")
+      role: "Manager",
+      status: true,
+    });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw new Error("Error fetching user");
   }
-}
+};
 export const userService = {
   getUsers,
   getUserById,
@@ -126,5 +127,5 @@ export const userService = {
   enableUserById,
   updatePassword,
   getCustomer,
-  getStaff
+  getStaff,
 };

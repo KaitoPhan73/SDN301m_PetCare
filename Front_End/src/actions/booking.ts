@@ -6,9 +6,12 @@ import {
 import { TTableResponse } from "@/types/Table";
 
 const BookingApi = {
-  getBookings: (params?: any) => {
+  getBookings: (params?: any, accessToken?: string) => {
     return httpPetCare.get<TTableResponse<TBookingResponse>>("/booking", {
       params,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
   },
   getBooking: (id: string) => {

@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const privatePaths = ["/dashboard/"];
+const privateAdminPaths = ["/admin/"];
 const authPaths = ["/login", "/register"];
+const privateCustomerPaths = ["/profile/"];
 const publicPaths = ["/"];
 
 export function middleware(request: NextRequest) {
@@ -11,7 +12,18 @@ export function middleware(request: NextRequest) {
   const user = userRaw ? JSON.parse(userRaw) : null;
 
   if (
-    privatePaths.some((path) => pathname.startsWith(path)) &&
+    privateCustomerPaths.some((path) => pathname.startsWith(path)) &&
+    !(user && user.role === "Customer")
+  ) {
+    if (!user) {
+      return NextResponse.redirect(new URL("/logout", request.url));
+    } else {
+      return NextResponse.redirect(new URL(pathname, request.url));
+    }
+  }
+
+  if (
+    privateAdminPaths.some((path) => pathname.startsWith(path)) &&
     !(user && user.role === "Admin")
   ) {
     if (!user) {
@@ -29,5 +41,5 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/login", "/register", "/dashboard/:path*"],
+  matcher: ["/login", "/register", "/admin/:path*", "/profile/:path*"],
 };

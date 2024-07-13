@@ -1,18 +1,18 @@
-import express, {Router} from "express";
+import express, { Router } from "express";
 import {
-    deleteFeedback,
-    getFeedback,
-    getFeedbacks,
-    insertFeedback,
-    updateFeedback,
+  deleteFeedback,
+  getFeedback,
+  getFeedbacks,
+  insertFeedback,
+  updateFeedback,
 } from "../controllers/feedbackController";
-import {protectedRoute} from "../middleware/authMiddleware";
+import { isHasAdminRight, protectedRoute } from "../middleware/authMiddleware";
 
 const router: Router = express.Router();
 
-router.get("/", getFeedbacks);
+router.get("/", protectedRoute, isHasAdminRight, getFeedbacks);
 
-router.get("/:feedbackId", getFeedback);
+router.get("/:feedbackId", protectedRoute, getFeedback);
 
 router.post("/", protectedRoute, insertFeedback);
 

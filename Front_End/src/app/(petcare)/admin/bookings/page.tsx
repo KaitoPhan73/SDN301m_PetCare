@@ -1,4 +1,3 @@
-
 import BookingApi from "@/actions/booking";
 import ServiceApi from "@/actions/service";
 import userApi from "@/actions/users";
@@ -16,11 +15,11 @@ export default async function Admin(props: any) {
   };
   const cookieStore = cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
-  const response = await BookingApi.getBookings(params);
+  const response = await BookingApi.getBookings(params, accessToken!);
 
   return (
     <>
-      <BookingManagementPage props={props} data={response.payload} /> 
+      <BookingManagementPage props={props} data={response.payload} />
     </>
   );
 }
