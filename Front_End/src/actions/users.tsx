@@ -9,12 +9,19 @@ const userApi = {
       params,
     });
   },
-  getUser: (userId: string) => {
-    return httpPetCare.get<TUserResponse>(`/user/${userId}`);
+  getUser: (userId: string, accessToken: string) => {
+    return httpPetCare.get<TUserResponse>(`/user/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   },
-  getEmployees: (params?: any) => {
+  getEmployees: (params?: any, accessToken?: string) => {
     return httpPetCare.get<TTableResponse<TUserResponse>>("user/employees", {
       params,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
   },
   disableUser: (userId: string) => {

@@ -26,6 +26,9 @@ export function UserAuthForm() {
     },
   });
 
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
   const onSubmit = async (values: TLoginBody) => {
     try {
       const response = await authApi.checkLogin(values);

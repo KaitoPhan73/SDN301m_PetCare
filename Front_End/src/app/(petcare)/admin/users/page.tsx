@@ -1,4 +1,3 @@
-
 import userApi from "@/actions/users";
 import FeedBackManagementPage from "@/page/dashboard/feedbackManagement";
 import UserManagementPage from "@/page/dashboard/userManagement";
@@ -13,11 +12,10 @@ export default async function Admin(props: any) {
   const cookieStore = cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
   const response = await userApi.getUsers(params);
-  console.log("dataaaaa:",response.payload.items);
 
   return (
     <>
-      <UserManagementPage props={props} data={response.payload} /> 
+      <UserManagementPage props={props} data={response.payload} />
     </>
   );
 }
