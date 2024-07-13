@@ -1,5 +1,6 @@
 import { z } from "zod";
 import BookingDetailForBookingSchema, {
+  TBookingDetailByStaffResponse,
   TBookingDetailResponse,
 } from "./booking-detail.schema";
 import { TUser } from "@/types/User";
@@ -22,3 +23,15 @@ export type TBookingResponse = TBookingRequest & {
   createdAt: string;
   updatedAt: string;
 };
+
+export type TBookingByStaffResponse = TBookingRequest & {
+  _id: string;
+  bookingDetails: TBookingDetailByStaffResponse[];
+  userId: TUser;
+  status: string;
+  totalPrice: number;
+  createdAt: string;
+  updatedAt: string;
+
+};
+

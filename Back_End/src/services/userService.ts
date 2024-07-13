@@ -90,6 +90,30 @@ export const updatePassword = async (
     throw new Error("Error update pass user");
   }
 };
+const getCustomer = async (options: any): Promise<TPagination<IUser>> => {
+  const conditions = {
+    role: { $in: ["customer"] },
+  };
+
+  const finalOptions = {
+    ...options,
+    ...conditions,
+  };
+
+  const result = await paginate(User, finalOptions);
+
+  return result;
+};
+const getStaff =async () => {
+  try {
+    return await User.find({
+      role: "Employee",
+      status: true
+    })
+  }catch (error){
+    throw new Error("Error fetching user")
+  }
+}
 export const userService = {
   getUsers,
   getUserById,
@@ -101,4 +125,6 @@ export const userService = {
   disableUserById,
   enableUserById,
   updatePassword,
+  getCustomer,
+  getStaff
 };

@@ -11,7 +11,7 @@ interface IUserWithKey extends TUser {
     key: number;
 }
 
-const TablePermission = () => {
+const TableCustomer = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(10);
     const [totalPage, setTotalPage] = useState<number>(1);
@@ -25,7 +25,7 @@ const TablePermission = () => {
         const fetchUsers = async (page: number, limit: number) => {
 
 
-            const response = await userApi.getEmployees({page, limit});
+            const response = await userApi.getCustomer({page, limit});
 
             const usersWithKey = response.payload?.items?.map((user, index) => ({
                 ...user,
@@ -37,7 +37,7 @@ const TablePermission = () => {
         };
 
         fetchUsers(currentPage, pageSize);
-    }, [currentPage, isChange]);
+    }, [currentPage, pageSize, isChange]);
 
     const columns: TableColumnsType<TUser> = [
         {
@@ -86,7 +86,7 @@ const TablePermission = () => {
     return (
         <div className="flex flex-col gap-4 justify-center items-center p-10">
             <div className="font-medium text-4xl tracking-wide">
-                Employee table
+                Customer table
             </div>
             <div className="w-full">
                 <Table
@@ -105,4 +105,4 @@ const TablePermission = () => {
     );
 };
 
-export default TablePermission;
+export default TableCustomer;

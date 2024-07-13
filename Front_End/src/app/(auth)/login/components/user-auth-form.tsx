@@ -36,7 +36,17 @@ export function UserAuthForm() {
           user: JSON.stringify(response.payload.user),
         });
         enqueueSnackbar("Login success", { variant: "success" });
-        router.push("/homepage");
+        const user = response.payload.user;
+        if (user?.role === "Admin"){
+          router.push("/admin/schedule");
+        }else if (user?.role === "Staff"){
+          router.push("/staff/schedule");
+        }else if (user?.role === "Manager"){
+          router.push("/manager/employee");
+        }else {
+          router.push("/homepage");
+        }
+        
         router.refresh();
       }
     } catch (error: any) {

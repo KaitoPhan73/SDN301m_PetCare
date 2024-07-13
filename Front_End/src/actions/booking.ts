@@ -1,7 +1,7 @@
 import { httpPetCare } from "@/lib/http";
 import {
   TBookingResponse,
-  TBookingRequest,
+  TBookingRequest, TBookingByStaffResponse,
 } from "@/schemaValidations/booking.schema";
 import { TTableResponse } from "@/types/Table";
 
@@ -18,10 +18,12 @@ const BookingApi = {
     return httpPetCare.post<TBookingResponse>("/booking", data);
   },
   getBookingByRoom: (roomId: string) => {
-    return httpPetCare.post<TBookingResponse[]>("booking/getByRoom", {
-      roomId,
-    });
+    return httpPetCare.post<TBookingResponse[]>("booking/getByRoom", {roomId});
   },
+  getBookingByStaffId: (staffId: string) => {
+    return httpPetCare.get<TBookingByStaffResponse[]>(`booking/getBooking/${staffId}`);
+  },
+  
 };
 
 export default BookingApi;

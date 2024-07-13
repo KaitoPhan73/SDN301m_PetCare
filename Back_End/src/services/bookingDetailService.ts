@@ -96,11 +96,27 @@ export const checkExisting = async (
   }
 };
 export const getBookingDetail = async (
-  bookingId: string
+    bookingId: string
 ): Promise<IBookingDetail | null> => {
-  try {
-    return await BookingDetail.findById(bookingId);
-  } catch (error) {
-    throw new Error(`Error fetching Booking Detail: ${error}`);
-  }
+    try {
+        return await BookingDetail.findById(bookingId);
+    } catch (error) {
+        throw new Error(`Error fetching Booking Detail: ${error}`);
+    }
 };
+
+export const StaffIsAvailable = async (staffId: string, start: Date, end: Date): Promise<boolean> => {
+    try {
+        console.log(start, end, typeof end)
+        const rs = await BookingDetail.find({
+            status: {$in: ["Pending", "Process"]},
+            staffId: staffId,
+            checkInDate: {$lt: end},
+            checkOutDate: {$gt: start},
+        })
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>", rs)
+        return rs.length === 0
+    } catch (error) {
+        throw new Error(`Error fetching Booking Detail: ${error}`);
+    }
+}
