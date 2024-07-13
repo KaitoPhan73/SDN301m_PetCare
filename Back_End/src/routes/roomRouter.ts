@@ -1,6 +1,13 @@
-import {isHasAdminRight, protectedRoute} from "../middleware/authMiddleware";
-import {Router} from "express";
-import {deleteRoom, getRoom, getRoomList, getRooms, insertRoom, updateRoom,} from "../controllers/roomController";
+import { isHasAdminRight, protectedRoute } from "../middleware/authMiddleware";
+import { Router } from "express";
+import {
+  deleteRoom,
+  getRoom,
+  getRoomList,
+  getRooms,
+  insertRoom,
+  updateRoom,
+} from "../controllers/roomController";
 
 const express = require("express");
 

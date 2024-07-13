@@ -10,7 +10,7 @@ const getUsers = async (options: any): Promise<TPagination<IUser>> => {
 const getEmployees = async (options: any): Promise<TPagination<IUser>> => {
   // // Xây dựng điều kiện để loại bỏ vai trò 'manager' và 'customer'
   const conditions = {
-    role: { $in: ["admin", "employee"] },
+    role: { $in: ["Admin", "Employee"] },
   };
 
   // Kết hợp điều kiện với các options khác nếu cần thiết

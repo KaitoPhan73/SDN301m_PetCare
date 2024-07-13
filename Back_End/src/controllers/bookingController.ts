@@ -4,8 +4,7 @@ import * as bookingService from "../services/bookingService";
 import { IBooking } from "../types/booking";
 import Booking from "../models/Booking";
 import { TPagination } from "../types/pagination";
-import {getByTime} from "../services/bookingService";
-import {getRoomById} from "../services/roomService";
+import { getRoomById } from "../services/roomService";
 
 export const getBookings = async (
   req: Request,
@@ -102,21 +101,21 @@ export const updateBooking = async (
     res.status(500).json({ message: "Server error" });
   }
 };
-export const getBookingByTime = async (req:Request, res: Response) => {
+export const getBookingByTime = async (req: Request, res: Response) => {
   try {
-    const { roomId} = req.body;
-    console.log( req.body);
+    const { roomId } = req.body;
+    console.log(req.body);
     const existingRoom = await getRoomById(roomId);
     if (!existingRoom) {
-     return res.status(400).json()
+      return res.status(400).json();
     }
     // const start:Date = new Date(startDate);
     // const end:Date = new Date(endDate);
-    console.log(existingRoom)
-    const bookings = await getByTime( roomId)
-    res.status(200).json(bookings)
-  }catch(error){
+    console.log(existingRoom);
+    const bookings = await bookingService.getByTime(roomId);
+    res.status(200).json(bookings);
+  } catch (error) {
     console.error("Error updating booking:", error);
     res.status(500).json({ message: "Server error" });
   }
-}
+};
