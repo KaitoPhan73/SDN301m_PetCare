@@ -11,7 +11,7 @@ export default async function createPackage(props: any) {
   };
   const cookieStore = cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
-  const response1 = await ServiceApi.getServices(params, accessToken!);
+  const response1 = await ServiceApi.getServices(accessToken!, params);
 
   return <CreatePackagePage props={props} data1={response1.payload.items} />;
 }

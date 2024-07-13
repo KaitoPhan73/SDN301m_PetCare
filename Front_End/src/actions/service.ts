@@ -3,7 +3,7 @@ import { TServiceResponse } from "@/schemaValidations/service.schema";
 import { TTableResponse } from "@/types/Table";
 
 const ServiceApi = {
-  getServices: (params?: any, accessToken: string) => {
+  getServices: (accessToken: string, params?: any) => {
     return httpPetCare.get<TTableResponse<TServiceResponse>>("/service", {
       params,
       headers: {

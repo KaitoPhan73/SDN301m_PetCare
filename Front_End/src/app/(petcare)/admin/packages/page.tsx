@@ -15,7 +15,7 @@ export default async function PackageAdmin(props: any) {
   const cookieStore = cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
   const response = await PackageApi.getPackages(params);
-  const response1 = await ServiceApi.getServices(params, accessToken!);
+  const response1 = await ServiceApi.getServices(accessToken!, params);
 
   // console.log("dataaaaa:",response.payload.items);
 

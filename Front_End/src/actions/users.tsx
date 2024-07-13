@@ -16,12 +16,10 @@ const userApi = {
       },
     });
   },
-  getEmployees: (params?: any, accessToken?: string) => {
+  getEmployees: ( params?: any) => {
     return httpPetCare.get<TTableResponse<TUserResponse>>("user/employees", {
       params,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+
     });
   },
   disableUser: (userId: string) => {
