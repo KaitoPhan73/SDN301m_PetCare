@@ -1,7 +1,6 @@
-import {Calendar} from "@/components/Calendar/Calendar";
+import { Calendar } from "@/components/Calendar/Calendar";
 
 const Schedule = () => {
-    
-    return <Calendar role={"admin"}/>
-}
-export default Schedule
+  return <Calendar role={"admin"} />;
+};
+export default Schedule;

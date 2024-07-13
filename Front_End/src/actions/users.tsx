@@ -4,9 +4,12 @@ import { TUserResponse } from "@/schemaValidations/user.schema";
 import { TTableResponse } from "@/types/Table";
 
 const userApi = {
-  getUsers: (params?: any) => {
+  getUsers: (accessToken: string, params?: any) => {
     return httpPetCare.get<TTableResponse<TUserResponse>>("/user", {
       params,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
   },
   getUser: (userId: string, accessToken: string) => {
@@ -16,10 +19,9 @@ const userApi = {
       },
     });
   },
-  getEmployees: ( params?: any) => {
+  getEmployees: (params?: any) => {
     return httpPetCare.get<TTableResponse<TUserResponse>>("user/employees", {
       params,
-
     });
   },
   disableUser: (userId: string) => {
@@ -46,7 +48,7 @@ const userApi = {
     return httpPetCare.get<TUserResponse[]>("user/staffs", {
       params,
     });
-  }
+  },
 };
 
 export default userApi;

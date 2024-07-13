@@ -104,16 +104,17 @@ const getCustomer = async (options: any): Promise<TPagination<IUser>> => {
 
   return result;
 };
-const getStaff =async () => {
+const getStaff = async () => {
   try {
     return await User.find({
-      role: "Employee",
-      status: true
-    })
-  }catch (error){
-    throw new Error("Error fetching user")
+      role: "Manager",
+      status: true,
+    });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw new Error("Error fetching user");
   }
-}
+};
 export const userService = {
   getUsers,
   getUserById,
@@ -126,5 +127,5 @@ export const userService = {
   enableUserById,
   updatePassword,
   getCustomer,
-  getStaff
+  getStaff,
 };

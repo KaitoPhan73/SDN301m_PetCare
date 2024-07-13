@@ -8,6 +8,7 @@ import {
   UserOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
 const { Header } = Layout;
 type Props = {
   style?: any;
@@ -15,6 +16,7 @@ type Props = {
   collapsed: boolean;
 };
 const HeaderCustom = ({ style, setCollapsed, collapsed }: Props) => {
+  const router = useRouter();
   return (
     <Header style={style}>
       <Row justify="space-between">
@@ -31,10 +33,11 @@ const HeaderCustom = ({ style, setCollapsed, collapsed }: Props) => {
           />
         </Col>
         <Col>
-          <Avatar size={36} icon={<UserOutlined />} />
-        </Col>
-        <Col>
-          <Button type="text" icon={<LogoutOutlined />}>
+          <Button
+            onClick={() => router.push("/logout")}
+            type="text"
+            icon={<LogoutOutlined />}
+          >
             Logout
           </Button>
         </Col>

@@ -11,7 +11,7 @@ export default async function Admin(props: any) {
   };
   const cookieStore = cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
-  const response = await userApi.getUsers(params);
+  const response = await userApi.getUsers(accessToken!, params);
 
   return (
     <>

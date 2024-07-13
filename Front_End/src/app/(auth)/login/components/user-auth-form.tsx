@@ -40,16 +40,16 @@ export function UserAuthForm() {
         });
         enqueueSnackbar("Login success", { variant: "success" });
         const user = response.payload.user;
-        if (user?.role === "Admin"){
-          router.push("/admin/schedule");
-        }else if (user?.role === "Staff"){
+        if (user?.role === "Admin") {
+          router.push("/admin/users");
+        } else if (user?.role === "Staff") {
           router.push("/staff/schedule");
-        }else if (user?.role === "Manager"){
+        } else if (user?.role === "Manager") {
           router.push("/manager/employee");
-        }else {
+        } else {
           router.push("/homepage");
         }
-        
+
         router.refresh();
       }
     } catch (error: any) {
