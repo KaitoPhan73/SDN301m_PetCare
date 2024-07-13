@@ -37,6 +37,16 @@ const userApi = {
   updatePassword: (data: any) => {
     return httpPetCare.put<TUserResponse>(`/auth/updatePassword`, data);
   },
+  getCustomer: (params?: any) => {
+    return httpPetCare.get<TTableResponse<TUserResponse>>("user/customers", {
+      params,
+    });
+  },
+  getStaff: (params?: any) => {
+    return httpPetCare.get<TUserResponse[]>("user/staffs", {
+      params,
+    });
+  }
 };
 
 export default userApi;

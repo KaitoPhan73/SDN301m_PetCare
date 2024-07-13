@@ -4,7 +4,9 @@ import * as bookingService from "../services/bookingService";
 import { IBooking } from "../types/booking";
 import Booking from "../models/Booking";
 import { TPagination } from "../types/pagination";
+import { getByStaffId, getByTime } from "../services/bookingService";
 import { getRoomById } from "../services/roomService";
+import { User } from "../models";
 
 export const getBookings = async (
   req: Request,
@@ -113,6 +115,21 @@ export const getBookingByTime = async (req: Request, res: Response) => {
     // const end:Date = new Date(endDate);
     console.log(existingRoom);
     const bookings = await bookingService.getByTime(roomId);
+    res.status(200).json(bookings);
+  } catch (error) {
+    console.error("Error updating booking:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+export const getBookingByStaffId = async (req: Request, res: Response) => {
+  try {
+    const { staffId } = req.params;
+    console.log(req.params);
+    const staff = await User.findById(staffId);
+    if (!staff) {
+      res.status(400).json({ message: "User not found" });
+    }
+    const bookings = await bookingService.getByStaffId(staffId);
     res.status(200).json(bookings);
   } catch (error) {
     console.error("Error updating booking:", error);

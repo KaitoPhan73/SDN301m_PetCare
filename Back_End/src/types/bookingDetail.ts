@@ -8,8 +8,8 @@ export enum BookingDetailStatus {
 }
 
 export interface IBookingDetail extends Document {
-  checkInData: Date;
-  checkOutData: Date;
+  checkInDate: Date;
+  checkOutDate: Date;
   price: Number;
   packageId: ObjectId;
   // bookingId: ObjectId;

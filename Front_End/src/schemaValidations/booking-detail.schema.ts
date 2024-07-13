@@ -42,4 +42,18 @@ export type TBookingDetailResponse = {
   feedbackId: TFeedback[];
 };
 
+
+export type TBookingDetailByStaffResponse = {
+    _id: string;
+    status: string;
+    staffId: string;
+    packageId: TPackageResponse;
+    roomId: TRoomResponse;
+    createdAt: string;
+    updatedAt: string;
+    checkOutDate: string;
+    checkInDate: string,
+    price: number,
+};
+
 export default BookingDetailSchema;

@@ -5,6 +5,7 @@ const ROOT_DASHBOARD = "/admin";
 const ROOT_COMPANY = "/company";
 const ROOT_USER = "/users";
 const ROOT_MANAGER = "/manager";
+const ROOT_STAFF = "/staff"
 
 const PATH_DASHBOARD = {
   root: ROOT_DASHBOARD,
@@ -31,10 +32,15 @@ const PATH_MANAGER = {
   employees: path(ROOT_MANAGER, "/employee"),
   schedule: path(ROOT_MANAGER, "/schedule"),
 }
+const PATH_STAFF = {
+  root: ROOT_STAFF,
+  schedule: path(ROOT_STAFF, "/schedule"),
+}
 const PATHS = {
   PATH_DASHBOARD,
   PATH_USER,
-  PATH_MANAGER
+  PATH_MANAGER,
+  PATH_STAFF
 };
 
 export default PATHS;

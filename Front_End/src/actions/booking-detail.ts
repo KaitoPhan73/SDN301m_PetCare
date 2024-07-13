@@ -24,6 +24,11 @@ const BookingDetailApi = {
       staffId,
     });
   },
+  updateStatus: (id: string, status: string) => {
+    return httpPetCare.put<TBookingDetailResponse>(`/booking-detail/status/${id}`, {
+      status,
+    });
+  }
 };
 
 export default BookingDetailApi;

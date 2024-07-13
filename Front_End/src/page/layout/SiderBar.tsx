@@ -17,7 +17,7 @@ function getItem(
     } as MenuItem;
 }
 
-const {UserSiderBarConfig, AdminSiderBarConfig, ManagerSideBarConfig} = SiderBarConfig;
+const {UserSiderBarConfig, AdminSiderBarConfig, ManagerSideBarConfig, StaffSiderBarConfig} = SiderBarConfig;
 // const admin = "admin";
 
 const SiderConfigs = (role: string): MenuItem[] | null => {
@@ -28,6 +28,10 @@ const SiderConfigs = (role: string): MenuItem[] | null => {
         )
     } else if (role === "manager") {
         rs = ManagerSideBarConfig.map(({label, key, icon, children}) =>
+            getItem(label, key, icon, children)
+        )
+    }else if (role === "staff") {
+        rs = StaffSiderBarConfig.map(({label, key, icon, children}) =>
             getItem(label, key, icon, children)
         )
     }
