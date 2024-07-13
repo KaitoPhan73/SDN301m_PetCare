@@ -15,8 +15,6 @@ import {
   updateBooking,
 } from "../controllers/bookingController";
 
-const express = require("express");
-
 const router: Router = express.Router();
 
 router.get("/", protectedRoute, getBookings);
@@ -28,8 +26,6 @@ router.get("/getBooking/:staffId", getBookingByStaffId);
 router.post("/getByRoom", getBookingByTime);
 
 router.post("/", protectedRoute, isHasCustomerRight, insertBooking);
-
-router.delete("/:bookingId", protectedRoute, deleteBooking);
 router.delete("/:bookingId", protectedRoute, deleteBooking);
 
 router.patch("/:bookingId", protectedRoute, updateBooking);

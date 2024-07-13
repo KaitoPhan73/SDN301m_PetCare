@@ -23,73 +23,18 @@ const TablePermission = () => {
 
   useEffect(() => {
     const fetchUsers = async (page: number, limit: number) => {
-      const params = {
-        page: currentPage,
-        limit: pageSize,
-      };
-      
+      const response = await userApi.getEmployees({ page, limit });
 
-
-            const response = await userApi.getEmployees({page, limit});
-
-            const usersWithKey = response.payload?.items?.map((user, index) => ({
-                ...user,
-                key: index + (page - 1) * limit,
-            }));
-            setDataSource(usersWithKey);
-            setTotalPage(response.payload.total);
-
-        };
-
-        fetchUsers(currentPage, pageSize);
-    }, [currentPage, isChange]);
-
-    const columns: TableColumnsType<TUser> = [
-        {
-            title: "User Name",
-            dataIndex: "username",
-        },
-        {
-            title: "Email",
-            dataIndex: "email",
-        },
-        {
-            title: "Role",
-            dataIndex: "role",
-            render: (_value: string) => {
-                return <RoleTag content={_value} />;
-            },
-        },
-        {
-            title: "Status",
-            dataIndex: "status",
-            render: (_value: boolean, record) => {
-                return (
-                    <Tag color={record.status ? "green" : "orange"}>
-                        <span className="uppercase">
-                            {record.status ? "Active" : "Inactive"}
-                        </span>
-                    </Tag>
-                );
-            },
-        },
-        {
-            title: "",
-            key: "operation",
-            render: (record: TUser, _, index) => (
-                <div className="flex justify-center items-center cursor-pointer">
-                    <Operation record={record} handleChange={handleChange} />
-                </div>
-            ),
-        },
-    ];
-
-    const handleTableChange = (pagination: any) => {
-        setCurrentPage(pagination);
+      const usersWithKey = response.payload?.items?.map((user, index) => ({
+        ...user,
+        key: index + (page - 1) * limit,
+      }));
+      setDataSource(usersWithKey);
+      setTotalPage(response.payload.total);
     };
 
     fetchUsers(currentPage, pageSize);
-  }, [currentPage, pageSize, isChange]);
+  }, [currentPage, isChange]);
 
   const columns: TableColumnsType<TUser> = [
     {
